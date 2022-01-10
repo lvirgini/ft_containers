@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2021/12/30 14:36:03 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/01/05 15:14:51 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,13 @@
 
 NAME 	=	a.out
 
-INC_DIR	=	includes
-INCLUDE	=	mutantstack.hpp
+INC_DIR	=	includes includes/map includes/stack includes/vector
+INCLUDE	=	map.hpp	vector.hpp stack.hpp
 			
 HEADERS =	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
 
 SRC_DIR	=	srcs
-SRC		= 	main.cpp mutantstack.cpp
+SRC		= 	main.cpp
 			
 OBJ_DIR =	obj/
 OBJ 	=	$(addprefix $(OBJ_DIR),$(SRC:%.cpp=%.o))
