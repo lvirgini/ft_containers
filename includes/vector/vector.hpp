@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/10 18:04:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/10 20:49:17 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,13 @@ namespace	ft
 
 		 iterator				begin(void)
 		 {
-			 return (iterator(this->_first));
+			 return iterator(this->_first);
 		 }
 		// const_iterator			begin() const ;
 
 		 iterator				end()
 		 {
-			 return (this->_first + this->size());
+			 return iterator( this->_first + this->size() );
 		 }
 		// const iterator			end() const ;
 
@@ -206,7 +206,7 @@ void		reserve(size_type	n) ;
 			*	out_of_range lookups are not defined. */
 			reference		operator[](size_type n)
 			{
-				return *(this->first + n);
+				return *(this->_first + n);
 			}
 
 			const_reference	operator[](size_type n) const
@@ -251,9 +251,20 @@ const_reference	back() const
 /*                                Modifiers                                   */
 /* -------------------------------------------------------------------------- */
 
-/*
-void		push_back(const T & x);
-void		pop_back(void) ;
+
+
+
+void		push_back(const T & x)
+{
+	if (this->_size < this->_capacity)
+	{
+		this->_allocator.construct(this->_first, this->_first + this->_size, x);
+		this->_size++;
+	}	
+}
+
+
+/*1void		pop_back(void) ;
 
 iterator	insert(iterator position, const T & x);
 void		insert(iterator position, size_type n, const T & x);
