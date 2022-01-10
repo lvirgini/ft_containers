@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/10 15:30:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:04:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <memory>
 # include <stdexcept>
 # include <sstream>
-
+# include <iterator>
+# include "vector_iterator.hpp"
 
 /*
 ** ISO : class vector p.508
@@ -40,43 +41,48 @@ namespace	ft
 	class vector
 	{
 		public:		
-			// SURE OK
+
 			typedef T										value_type;
 			typedef Allocator				 				allocator_type;
 			typedef size_t									size_type;
 			typedef ptrdiff_t								difference_type;
 
-			typedef typename Allocator::pointer			pointer;
+			typedef typename Allocator::pointer				pointer;
 			// typedef T * pointer ?
 			typedef typename Allocator::const_pointer		const_pointer;
 			// typedef const T * pointer ?
 
 		
+			// NOPE ? 
+			typedef vector_iterator<T>						iterator;
+			//typedef	std::iterator<std::bidirectional_iterator_tag, T>				iterator;
+		//	typedef std::bidirectional_iterator_tag		iterator;
+		//	typedef std::iterator<std::iterator::random_access_iterator_tag<T>, T>		iterator;
+		//	typedef typename std::iterator<random_access_iterator_tag, const T>	const_iterator;
 		
-			// NOPE ?  std::iterator<random_access_iterator_tag, T> 
 			// typedef std::iterator<pointer, vector>			iterator;
-			// typedef std::iterator<T>						iterator;
+		//	 typedef std::iterator<T>						iterator;
 			// typedef std::iterator<const T>					const_iterator;
 			
 			// OK
-			// typedef std::reverse_iterator<iterator>			reverse_iterator;
-			// typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef std::reverse_iterator<iterator>			reverse_iterator;
+		//	typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 			// ISO et A VOIR
-			typedef T&										reference;
+			typedef T &										reference;
 			//typedef Allocator::reference					reference;			// ISO
-			typedef const T&								const_reference;
+			typedef const T &								const_reference;
 			//typedef Allocator::const_reference			const_reference; // ISO
 
 
-
-	
 		private:
 			size_type		_size;		// taille réelle (demandée) du vector
 			size_type		_capacity; 	// capacité totale allouée (peut etre + que la size)
-			pointer			_start;		// pointeur sur le premier element.
+			pointer			_first;		// pointeur sur le premier element.
 			pointer			_last;		// NOPE ?
 			Allocator		_allocator; // type d'allocateur (std::allocator<T>::allocator_type)
+
+	
 
 
 		public:
@@ -88,17 +94,16 @@ namespace	ft
 
 		// constructor
 			explicit vector(const Allocator & alloc = Allocator())
-			: _size(0), _capacity(0), _start(NULL), _last(NULL), _allocator(alloc)
+			: _size(0), _capacity(0), _first(NULL), _last(NULL), _allocator(alloc)
 			{}
 
 			
 			explicit vector(size_type n, const value_type & val = value_type(), const Allocator & alloc = Allocator())
 			: _size(n), _capacity(n), _allocator(alloc)
 			{
-				this->_start = _allocator.allocate(n);
+				this->_first = _allocator.allocate(n);
+				_allocator.construct(this->_first, val); // for ALL ( VOIR ITERATOR)
 		//		this->_last = this->start + n; //
-				_allocator.construct(this->_start, val); // for ALL ( VOIR ITERATOR)
-
 			}
 			
 /*			template <class InputIterator>
@@ -134,10 +139,16 @@ namespace	ft
 /*                                Iterator                                    */
 /* -------------------------------------------------------------------------- */
 
-		// iterator				begin();
+		 iterator				begin(void)
+		 {
+			 return (iterator(this->_first));
+		 }
 		// const_iterator			begin() const ;
 
-		// iterator				end();
+		 iterator				end()
+		 {
+			 return (this->_first + this->size());
+		 }
 		// const iterator			end() const ;
 
 		// reverse_iterator		rbegin();
@@ -151,25 +162,35 @@ namespace	ft
 /*                                Capacity                                    */
 /* -------------------------------------------------------------------------- */
 
-		size_type	size(void) const
-		{
-			return (this->_size);
-		}
+			size_type	size(void) const
+			{
+				return (this->_size);
+			}
 
 
-		size_type	max_size(void) const
-		{
-			return (this->_allocator.max_size());
-		}
+			size_type	max_size(void) const
+			{
+				return (this->_allocator.max_size());
+			}
 
-		size_type	capacity(void) const
-		{
-			return (this->_capacity);
-		}
+			/**		
+			*	Returns the total number of elements that the %vector can
+			*	hold before needing to allocate more memory.	*/
+			size_type	capacity(void) const
+			{
+				return (this->_capacity);
+			}
+
+			/**
+			*	Returns true if the vector is empty.*/
+			bool		empty(void) const
+			{
+				return ( this->begin() == this->end() );
+			}
+
 
 /*
 void		resize(size_type sz, T c = T()) ;
-bool		empty() const ;
 void		reserve(size_type	n) ;
 */
 
@@ -178,27 +199,52 @@ void		reserve(size_type	n) ;
 /* -------------------------------------------------------------------------- */
 /*                                 Element access                             */
 /* -------------------------------------------------------------------------- */
+		
+			/**
+			*	This operator allows for easy, array-style, data access.
+			*	Note that data access with this operator is unchecked and
+			*	out_of_range lookups are not defined. */
+			reference		operator[](size_type n)
+			{
+				return *(this->first + n);
+			}
+
+			const_reference	operator[](size_type n) const
+			{
+				return *(this->_first + n);
+			}
+
 
 /*
-reference		operator[](size_type n);
-const_reference	operator[](size_type n) const ;
-reference		front();
-const_reference	front() const ;
-reference		back();
-const_reference	back() const ;
+reference		front()
+{
+	return *begin();
+}
+const_reference	front() const
+{
+	return *begin();
+}
+reference		back()
+{
+	return *(end() - 1);
+}
+const_reference	back() const
+{
+	return *(end() - 1);
+}	
 */
 
-const_reference	at(size_type n) const
-{
-	_range_check(n);
-	return *(this->_start + n);
-}
+			const_reference	at(size_type n) const
+			{
+				_range_check(n);
+				return *(this->_first + n);
+			}
 
-reference		at(size_type n)
-{
-	_range_check(n);
-	return *(this->_start + n);
-}
+			reference		at(size_type n)
+			{
+				_range_check(n);
+				return *(this->_first + n);
+			}
 
 
 /* -------------------------------------------------------------------------- */
@@ -217,7 +263,7 @@ void		insert(iterator position, InputIterator first, InputIterator last);
 iterator	erase(iterator position);
 iterator	erase (iterator first, iterator last);
 
-void		swap(vector<T, Allocator >&); // ??
+void		swap(vector<T, Allocator> &); // ??
 void		clear(void);
 */
 
@@ -228,7 +274,7 @@ void		clear(void);
 
 		private : 
 
-			/* Check for at() if out of range : throw exception */
+			/* Check only for at() if out of range : throw exception */
 			void	_range_check(size_type n) const
 			{
 				if (n >= this->size())

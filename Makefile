@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/01/05 15:14:51 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/01/10 17:14:36 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@
 NAME 	=	a.out
 
 INC_DIR	=	includes includes/map includes/stack includes/vector
-INCLUDE	=	map.hpp	vector.hpp stack.hpp
+INCLUDE	=	map.hpp	\
+			vector.hpp \
+			vector_iterator.hpp \
+			stack.hpp
 			
 HEADERS =	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
 
