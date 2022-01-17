@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/12 14:15:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/17 09:51:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,22 +148,22 @@ class vector
 
 		reverse_iterator		rbegin(void)
 		{
-			return reverse_iterator(this->first);
+			return reverse_iterator(this->first - 1);
 		}
 
 		const_reverse_iterator	rbegin() const
 		{
-			return const_reverse_iterator(this->first);
+			return const_reverse_iterator(this->first - 1);
 		}
 	
 		reverse_iterator		rend(void)
 		{
-			return reverse_iterator(this->first + this->size() );
+			return reverse_iterator(this->first + this->size() - 1 );
 		}
 	
 		const_reverse_iterator	rend(void) const
 		{
-			return const_reverse_iterator(this->first + this->size() );
+			return const_reverse_iterator(this->first + this->size() - 1 );
 		}
 
 

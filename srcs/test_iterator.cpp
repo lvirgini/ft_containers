@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:13:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/12 14:24:33 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:40:59 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void	test_const_iterator(void)
 	it_ft -= 13;
 
 	// change the value of position 6  (4 + 2); NOT possible in const
-	//it_ft[4] = 0;
-	//it_std[4] = 0;
+	//	it_ft[4] = 0;
+	//	it_std[4] = 0;
 
 	//return to pos 0
 	it_std--;

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 19:23:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/15 14:28:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:16:47 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,34 @@ namespace ft
 	struct		false_type
 	{}; 
 
+/*
+** ENABLE IF:
+*/
+
+	template <bool B, typename T>
+	struct enable_if
+	{};
+
+	template <typename T>
+	struct enable_if<true, T>
+	{
+		typedef	T	type;
+	};
+
+
 
 /*		ARE_SAME : compare for equality of types
 **		if template have only one parameters typename (T) it use the second
 **		struct are same and get true_type. else get false_type;
 **/
 
-	template <typename T, typename U >
+	template <typename , typename >
 	struct are_same
 	{
-		bool	value = false;
+		enum	val
+		{
+			value = 0
+		};
 		typedef	false_type	type;
 	};
 
@@ -53,23 +71,14 @@ namespace ft
 	template<typename T>
 	struct are_same<T, T>
 	{
-		bool	value = true;
+		enum val
+		{
+			value = 1
+		};
 		typedef true_type	type;
 	};
 
 
-
-
-
-template <bool B, typename T >
-struct	enable_if
-{};
-
-template<typename T>
-struct enable_if<true, T>
-{
-	typedef T		type;
-};
 /*
 
 template <class T, T v>

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/16 12:54:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:43:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,8 @@
 
 namespace ft {
 
-	template <typename T>
-	struct remove_const
-	{
-		typedef T type;
-	};
-
-	template <typename T>
-	struct remove_const<const T>
-	{
-		typedef T	type;
-	};
 	
-template <typename Category, typename T>
+template <typename Category, typename T> //
 struct iterator
 {
 	typedef Category						iterator_category;
@@ -71,7 +60,6 @@ struct	iterator_traits<T*>
 template <typename T>
 struct	iterator_traits<const T*>
 {
-	//typedef typename remove_const<const T>::type		m_T;
 	typedef std::random_access_iterator_tag	iterator_category;
 	typedef T							  	value_type;
 	typedef ptrdiff_t						difference_type;

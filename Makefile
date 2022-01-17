@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/01/17 09:38:37 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/01/17 11:09:18 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NAME 	=	a.out
 
 INC_DIR	=	includes includes/map includes/stack includes/vector
 INCLUDE	=	ft_stl.hpp \
+			type_traits.hpp \
 			vector.hpp \
 			vector_iterator.hpp \
 			vector_iterator_traits.hpp \

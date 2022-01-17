@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 09:36:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:42:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_ITERATOR_HPP
 
 # include "vector_iterator_traits.hpp"
+# include "type_traits.hpp"
 # include <iostream>
 template <typename T>
 class	vector;
@@ -27,8 +28,7 @@ class	vector_iterator
 {
 	private:
 		typedef ft::iterator_traits<Iterator>			_trait_type;
-	//	typedef typename ft::remove_const<Container>::type				_type;
-		Iterator		_ptr;
+		Iterator										_ptr;
 	
 	
 	public:
@@ -37,24 +37,6 @@ class	vector_iterator
 		typedef typename _trait_type::reference			reference;
 		typedef typename _trait_type::difference_type	difference_type;
 		typedef typename _trait_type::iterator_category	iterator_category;
-
-
-
-/*template<class T> struct iterator_traits<T*> {
-typedef ptrdiff_t difference_type;
-typedef T value_type;
-typedef T* pointer;
-typedef T& reference;
-typedef random_access_iterator_tag iterator_category;
-};
-and for pointers to const as
-template<class T> struct iterator_traits<const T*> {
-typedef ptrdiff_t difference_type;
-typedef T value_type;
-typedef const T* pointer;
-typedef const T& reference;
-typedef random_access_iterator_tag iterator_category;
-};*/
 
 
 /* -------------------------------------------------------------------------- */
@@ -75,40 +57,35 @@ typedef random_access_iterator_tag iterator_category;
 		*this = copy;
 	}
 
-	/*vector_iterator(const Iterator & i)
-	: _ptr(i.base())
-	{}
-	*/
-	/*explicit vector_iterator(vector_iterator & Iter)
-	: _ptr(vector_iterator<Iterator, ft::remove_const<vector_iterator>::type)
-
-	{}*/
-
-
-	/*template <typename pointer, typename  = typename ft::remove_const<pointer>::type>
-	vector_iterator(typename ft::remove_const<pointer>::type	ptr)
-	: _ptr( ptr)
-	{}*/
-
-
 /*
-	template <typename Iter>
-	vector_iterator(const vector_iterator <Iter, typename ft::enable_if<ft::are_same(Iter, typename Container::pointer::__value), Container>::type & _i)
+**	Check if Iterator and container pointer are same (value == true or false)
+**	ft::are_same<Iter, typename Container::pointer>::value)
+**
+**	enable if (if value ==true):
+**	get Containrer
+**	if same type between container pointer and Iterator :  (are same value == true)
+**	return container
+
+** ex for int : 
+** 	typedef vector_iterator<const int *, ft::vector<int>> ft::vector<int>::const_iterator
+**	typedef vector_iterator<int *, ft::vector<int>> ft::vector<int>::iterator
+*/
+
+	/*template <typename Iter>
+	vector_iterator(const vector_iterator <Iter, 
+		typename ft::enable_if<
+			(ft::are_same<Iter, typename Container::pointer>::value), Container>::type> & i)
 	: _ptr(i.base())
 	{}*/
 	
 
-
-
-
-// Allow iterator to const_iterator conversion
-      template<typename _Iter>
-    vector_iterator(const vector_iterator<_Iter,
-			  typename __gnu_cxx::__enable_if<
-      	       (std::__are_same<_Iter, typename Container::pointer>::__value), Container>::__type>& __i) _GLIBCXX_NOEXCEPT
-        : _ptr(__i.base()) {
-		 }
-
+/*
+**	if const_iter : Iterator != Iter (like int and const int)
+*/
+	template <typename Iter>
+	vector_iterator(const vector_iterator <Iter,typename ft::remove_const<Container>::type> & i)
+	: _ptr(i.base())
+	{}
 
 	~vector_iterator(void)
 	{}
@@ -188,32 +165,32 @@ typedef random_access_iterator_tag iterator_category;
 		return (*this);
 	}
 
-	bool				operator==(const vector_iterator & other)
+	bool				operator==(const vector_iterator & other) const
 	{
 		return (this->_ptr == other._ptr);
 	}
 
-	bool				operator!=(const vector_iterator & other)
+	bool				operator!=(const vector_iterator & other) const
 	{
 		return (this->_ptr != other._ptr);
 	}
 
-	bool				operator<(const vector_iterator & other)
+	bool				operator<(const vector_iterator & other) const
 	{
 		return (this->_ptr < other._ptr);
 	}
 
-	bool				operator<=(const vector_iterator & other)
+	bool				operator<=(const vector_iterator & other) const
 	{
 		return (this->_ptr <= other._ptr);
 	}
 
-	bool				operator>(const vector_iterator & other)
+	bool				operator>(const vector_iterator & other) const
 	{
 		return (this->_ptr > other._ptr);
 	}	
 
-	bool				operator>=(const vector_iterator & other)
+	bool				operator>=(const vector_iterator & other) const
 	{
 		return (this->_ptr >= other._ptr);
 	}
