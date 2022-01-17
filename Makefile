@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/01/10 17:14:36 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/01/17 09:38:37 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,18 @@
 NAME 	=	a.out
 
 INC_DIR	=	includes includes/map includes/stack includes/vector
-INCLUDE	=	map.hpp	\
+INCLUDE	=	ft_stl.hpp \
 			vector.hpp \
 			vector_iterator.hpp \
+			vector_iterator_traits.hpp \
+			map.hpp	\
 			stack.hpp
 			
 HEADERS =	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
 
 SRC_DIR	=	srcs
-SRC		= 	main.cpp
+SRC		= 	main.cpp \
+			test_iterator.cpp \
 			
 OBJ_DIR =	obj/
 OBJ 	=	$(addprefix $(OBJ_DIR),$(SRC:%.cpp=%.o))

@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/10 23:12:31 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/12 11:16:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
 #include <iostream>
-# include <cstring>
-#include "vector.hpp"
+#include <cstring>
+#include "ft_stl.hpp"
 
 int main2(void)
 {
@@ -26,77 +26,12 @@ int main2(void)
 	return (0);
 }
 
-void	test_iterator(void)
-{
-	std::vector<int>	stdV(10);
-	ft::vector<int>		ftV(10);
-
-	for( int i = 0; i < 10; i++)
-	{
-		stdV[i] = i;
-		ftV[i] = i;
-	}
-
-
-	std::vector<int>::iterator	it_std = stdV.begin();
-	ft::vector<int>::iterator	it_ft = ftV.begin();
-
-	std::vector<int>::iterator	ite_std = stdV.end();
-	ft::vector<int>::iterator	ite_ft = ftV.end();
-
-	//std::cout << *(it_ft + it_ft) << std::endl;
-	
-	// in pos 1
-	it_std += 15;
-	it_std -= 13;
-
-	it_ft += 15;
-	it_ft -= 13;
-
-	//ite_std - 
-
-	// change the position 6;
-	it_ft[4] = 0;
-	it_std[4] = 0;
-
-	//in pos 0
-	it_std--;
-	it_ft--;
-
-	--it_ft;
-	--it_std;
-
-	
-
-	while (it_std < ite_std)
-	{
-		std::cout << *it_std << " ";
-		it_std++;
-	//	++it_std;
-	//	it_std += 2;
-	//	it_std += 12;
-	}
-	std::cout << std::endl;
-
-
-	while (it_ft < ite_ft)
-	{
-		std::cout << *it_ft << " ";
-		it_ft++;
-	//	++it_ft;
-	//	it_ft += 2;
-	//	it_ft += 12;
-	}
-	std::cout << std::endl;
-
-
-}
 
 int main(void)
 {
 
 	test_iterator();
-	return (0);
+	//return (0);
 
 	std::string			sep = " | ";
 
@@ -145,7 +80,7 @@ int main(void)
 	for (size_t i = 0; i < stdValue.size(); i++)
 		std::cout << i << " " << stdValue.at(i) << std::endl;*/
 
-
+	//stdValue.assign()
 	// push_back()
 	stdValue.push_back(123);
 	stdValue.push_back(123);
