@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/18 20:11:08 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:02:42 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ class	vector_iterator
 };
 
 // random access iterator requirements:
+// for operator with no instanciation (ex: vector.begin() == vector.end())
 
 
 	template < typename IteratorL, typename IteratorR, typename Container>
@@ -219,7 +220,6 @@ class	vector_iterator
 	{
 		return lhs.base() == rhs.base();
 	}
-
 
 
 	template <typename IteratorL, typename IteratorR, typename Container>

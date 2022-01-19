@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 14:06:52 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:02:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ struct bidirectional_iterator_tag : public forward_iterator_tag
 struct random_access_iterator_tag : public bidirectional_iterator_tag
 {};
 
+
 /*
 ** standard declaration of iterator
 */
 
-
-template <typename Category, typename T> //
+template <typename Category, typename T> // no need more ?
 struct iterator
 {
 	typedef Category						iterator_category;

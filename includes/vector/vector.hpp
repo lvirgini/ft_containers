@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 10:22:02 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:02:22 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,29 +392,31 @@ void		push_back(const T & x)
 ** 		in move : construct then destroy for calling constructor and destructor of <T>
 */
 
-iterator	erase (iterator first, iterator last)
-{
-	size_type	size_to_erase = last - first;
-	size_type	index = this->begin() - first;
-	size_type	new_size = this->size() - size_to_erase;
-
-	for (size_type i = index; i < size_to_erase; i++)
-		this->_allocator.destroy(this->_first + i);
-
-	for (size_type i = index; i < new_size; i++)
+	iterator	erase (iterator first, iterator last)
 	{
-	//	this->_first[i] = this->_first[i + size_to_erase];
-		this->_allocator.construct(this->_first + i, *(this->_first + i + size_to_erase));
-		this->_allocator.destroy(this->_first + i + size_to_erase);
-	}
-	this->_size = new_size;
-	return (first);
-}
+		size_type	size_to_erase = last - first;
+		size_type	index = this->begin() - first;
+		size_type	new_size = this->size() - size_to_erase;
 
-iterator	erase(iterator position)
-{
-	return (this->erase(position, position + 1));
-}
+		for (size_type i = index; i < size_to_erase; i++)
+			this->_allocator.destroy(this->_first + i);
+
+		for (size_type i = index; i < new_size; i++)
+		{
+		//	this->_first[i] = this->_first[i + size_to_erase];
+			this->_allocator.construct(this->_first + i, *(this->_first + i + size_to_erase));
+			this->_allocator.destroy(this->_first + i + size_to_erase);
+		}
+		this->_size = new_size;
+		return (first);
+	}
+
+	iterator	erase(iterator position)
+	{
+		return (this->erase(position, position + 1));
+	}
+
+	
 	// if (position == this->end() - 1)
 	// {
 	// 	this->_allocator.destroy(this->_first + this->size() - 1);
