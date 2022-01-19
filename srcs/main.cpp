@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/12 11:16:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:19:33 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,67 @@
 #include <iostream>
 #include <cstring>
 #include "ft_stl.hpp"
+
+template <typename T>
+void	print_all_functions(std::vector<T> & STD, ft::vector<T> & FT)
+{
+	
+	std::string			sep = " | ";
+
+
+	// std::cout << std::endl << "vector.maxSize()" << std::endl;
+	// std::cout << STD.max_size() << sep << FT.max_size() << std::endl;
+
+	// SIZE()
+	std::cout << std::endl << "vector.size() : " << std::endl << "std | ft" << std::endl; 
+	std::cout << STD.size() << sep << FT.size() << std::endl;
+
+
+	// capacity()
+	std::cout << std::endl << "vector.capacity()" << std::endl;
+	std::cout << STD.capacity() << sep << FT.capacity() << std::endl;
+
+
+	//empty()
+	std::cout << std::endl << "vector.empty()" << std::endl;
+	std::cout << STD.empty() << sep << FT.empty() << std::endl;
+
+}
+
+template <typename T>
+void	print_all_value(std::vector<T> & v)
+{
+	int i = 0;
+	typename std::vector<T>::iterator 	std_it = v.begin();
+	typename std::vector<T>::iterator 	std_ite = v.end();
+
+	while (std_it != std_ite)
+	{
+		std::cout << i++ << "	value = " << *std_it << std::endl;
+		std_it++;
+	}
+	std::cout << std::endl;
+
+}
+
+template <typename T>
+void	print_all_value(ft::vector<T> & v)
+{
+	int i = 0;
+	typename ft::vector<T>::iterator 	std_it = v.begin();
+	typename ft::vector<T>::iterator 	std_ite = v.end();
+
+	while (std_it != std_ite)
+	{
+		std::cout << i++ << "	value = " << *std_it << std::endl;
+		std_it++;
+	}
+	std::cout << std::endl;
+}
+
+
+
+
 
 int main2(void)
 {
@@ -27,12 +88,13 @@ int main2(void)
 }
 
 
+
+
+
 int main(void)
 {
 
 	test_iterator();
-	//return (0);
-
 	std::string			sep = " | ";
 
 	std::vector<int>	stdEmpty;
@@ -44,57 +106,7 @@ int main(void)
 	std::vector<int>	stdValue(10, 10);
 	ft::vector<int>		ftValue(10, 10);
 
-	//std::vector<int>	stdInit = { 0, 1, 2, 3, 4};
-	//ft::vector<int>		ftInit = {0, 1, 2, 3, 4};
-
-
-
-	//double j = std::vector<double>::allocator_type();
-
-	/*stdEmpty.assign(15, 789);
-	stdEmpty.assign(0, 456);*/
-
-/*	stdEmpty.insert(stdEmpty.begin(), 15);
-	stdEmpty.push_back(456);
-
-	for (size_t i = 0; i < stdEmpty.size(); i++)
-		std::cout << i << " " << stdEmpty.at(i) << std::endl;
-*/
-
-
-/*	for (size_t i = 0; i < ftEmpty.size(); i++)
-		std::cout << i << " " << ftEmpty.at(i) << std::endl;
-
-	//stdFive.insert(stdFive.begin(), 15);
-	//stdFive.push_back(456);
-
-	for (size_t i = 0; i < stdFive.size(); i++)
-		std::cout << i << " " << stdFive.at(i) << std::endl;
-
-	for (size_t i = 0; i < ftFive.size(); i++)
-		std::cout << i << " " << ftFive.at(i) << std::endl;
-
-	for (size_t i = 0; i < ftValue.size(); i++)
-		std::cout << i << " " << ftValue.at(i) << std::endl;
-
-	for (size_t i = 0; i < stdValue.size(); i++)
-		std::cout << i << " " << stdValue.at(i) << std::endl;*/
-
-	//stdValue.assign()
-	// push_back()
 	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-	stdValue.push_back(123);
-/*	ftValue.push_back(123);
-	ftValue.push_back(123);
-	ftValue.push_back(123);*/
 
 	// MAXSIZE()
 
@@ -148,16 +160,100 @@ int main(void)
 	}
 
 
-	// iterator : 
+	// TESTING ASSIGNEMENT : 
+	std::cout << "TESTING ASSIGN()" << std::endl;
 
 
-	std::vector<int>::iterator 	stdIt;
-	ft::vector<int>::iterator 	ftIt;
+	stdEmpty.assign(5, 10);
+	stdEmpty.assign(2, 10);
+	stdEmpty.assign(3, 10);
+	stdEmpty.resize(4, 45);
 
-	std::cout << *stdIt << std::endl;
-	std::cout << *ftIt << std::endl;
-//	std::vector<int>::iterator	stdit = stdValue.begin();
-//	ft::vector<int>::iterator	ftit = ftValue.begin();
+	// ftEmpty.assign(5, 10);
+
+
+	// print_all_value(stdEmpty);
+	// print_all_value(ftEmpty);
+	// print_all_functions(stdEmpty, ftEmpty);
+	// std::vector<int>::iterator 	std_it = stdEmpty.begin();
+	// std::vector<int>::iterator 	std_ite = stdEmpty.end();
+
+	// while (std_it != std_ite)
+	// {
+	// 	std::cout << "value = " << *std_it << std::endl;
+	// 	std_it++;
+	// }
+
+
+	// std::cout << std::endl << "vector.maxSize()" << std::endl;
+	// std::cout << stdEmpty.max_size() << sep << ftEmpty.max_size() << std::endl;
+
+	// // SIZE()
+	// std::cout << std::endl << "vector.size() : " << std::endl << "std | ft" << std::endl; 
+	// std::cout << stdEmpty.size() << sep << ftEmpty.size() << std::endl;
+
+
+	// // capacity()
+	// std::cout << std::endl << "vector.capacity()" << std::endl;
+	// std::cout << stdEmpty.capacity() << sep << ftEmpty.capacity() << std::endl;
+
+
+
+	// //empty()
+	// std::cout << std::endl << "vector.empty()" << std::endl;
+	// std::cout << stdEmpty.empty() << std::endl;
+
+
+
+
+/// test
+
+	std::vector<int>	std_insert(10, 10);
+	ft::vector<int>		ft_insert(10, 10); 
+
+	//std_insert.push_back(77);
+	// std_insert.push_back(77);
+
+	std::vector<int>::iterator 	std_it_erase = std_insert.erase(std_insert.end() - 5, std_insert.end());
+	ft::vector<int>::iterator 	ft_it_erase = ft_insert.erase(ft_insert.end() - 5, ft_insert.end());
+
+	std_insert.back() = 22;
+	ft_insert.back() = 22;
+
+	std_it_erase = std_insert.erase(std_insert.end() - 1);
+	ft_it_erase = ft_insert.erase(ft_insert.end() - 1);	
+
+
+	std::cout << "Erase medium data" << std::endl << *std_it_erase << std::endl;
+	std::cout << *ft_it_erase << std::endl;
+
+
+//  std_insert.insert(std_insert.end(), 5);
+//  std_insert.insert(std_insert.end(), 5);
+
+
+//std_insert.clear();
+//std_insert.insert(std_insert.end() - 2, 44);
+
+	std_insert.front() = 55;
+	ft_insert.front() = 55;
+
+	std_insert.back() = 22;
+	ft_insert.back() = 22;
+
+	std_insert.pop_back();
+	ft_insert.pop_back();
+
+	std_insert.clear();
+	ft_insert.clear();
+
+	print_all_functions(std_insert, ft_insert);
+	print_all_value(std_insert);
+	print_all_value(ft_insert);
+
 
 	return (0);
 }
+
+
+

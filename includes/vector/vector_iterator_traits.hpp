@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 11:43:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/17 14:06:52 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,31 @@
 
 namespace ft {
 
-	
+/*
+** define empy struct for iterator_tags :
+** only used to distinguish different iterator category
+*/
+
+struct input_iterator_tag
+{};
+
+struct output_iterator_tag
+{};
+
+struct forward_iterator_tag : public input_iterator_tag
+{};
+
+struct bidirectional_iterator_tag : public forward_iterator_tag
+{};
+
+struct random_access_iterator_tag : public bidirectional_iterator_tag
+{};
+
+/*
+** standard declaration of iterator
+*/
+
+
 template <typename Category, typename T> //
 struct iterator
 {
@@ -28,8 +52,12 @@ struct iterator
 };
 
 
+/*
+** Iterator_traits : nested typedef of iterator
+** usefull for correct semantics for pointer and const_pointer
+*/
 
-template <class _Iterator>
+template <typename _Iterator>
 struct iterator_traits
 {
 	typedef typename _Iterator::iterator_category iterator_category;

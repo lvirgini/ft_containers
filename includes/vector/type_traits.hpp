@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 19:23:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 11:16:47 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:56:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 
 namespace ft
 {
-
-
+	/* Remove Const for const_iterator */
 	template <typename T>
 	struct remove_const
 	{
@@ -29,7 +28,8 @@ namespace ft
 	{
 		typedef T	type;
 	};
-	
+
+	/* Struct true_type and false_type */	
 	struct		true_type
 	{};
 
@@ -37,7 +37,18 @@ namespace ft
 	{}; 
 
 /*
+template<typename T>
+struct false_type
+{};
+
+template <typename T>
+struct true_type
+{};
+*/
+
+/*
 ** ENABLE IF:
+**		enable typedef type only (condition bool) is true.
 */
 
 	template <bool B, typename T>
@@ -77,45 +88,6 @@ namespace ft
 		};
 		typedef true_type	type;
 	};
-
-
-/*
-
-template <class T, T v>
-struct integral_constant
-{
-	static T value = v;
-
-	typedef T							value_type;
-	typedef integral_constant<T, v>		type;
-	typedef bool_constant<false>		false_type;
-};
-
-typedef integral_constant<bool, B>	bool_constant;*/
-//template <>
-//typedef bool_constant<true>			true_type;
-
-/*
-
-template <bool B>
-struct bool_constant
-{
-	typedef
-}
-using	bool_constant = integral_constant<bool, B>;
-using	true_type = bool_constant<true>;
-using	false_type = bool_constant<false>
-*/
-/*
-template<typename T>
-struct false_type
-{};
-
-template <typename T>
-struct true_type
-{};
-*/
-
 	
 } // end namespace ft
 

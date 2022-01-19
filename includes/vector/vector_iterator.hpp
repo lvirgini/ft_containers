@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 11:42:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:11:08 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,29 @@
 # include "vector_iterator_traits.hpp"
 # include "type_traits.hpp"
 # include <iostream>
-template <typename T>
+
+
+namespace ft 
+{
+
+// defined for double_inclusion
+template <typename, class>
 class	vector;
-
-
-
-
 
 template <typename Iterator, typename Container>
 class	vector_iterator 
 {
 	private:
-		typedef ft::iterator_traits<Iterator>			_trait_type;
+		typedef ft::iterator_traits<Iterator>			__trait_type;
 		Iterator										_ptr;
 	
 	
 	public:
-		typedef typename _trait_type::value_type		value_type;
-		typedef typename _trait_type::pointer			pointer;
-		typedef typename _trait_type::reference			reference;
-		typedef typename _trait_type::difference_type	difference_type;
-		typedef typename _trait_type::iterator_category	iterator_category;
+		typedef typename __trait_type::value_type			value_type;
+		typedef typename __trait_type::pointer				pointer;
+		typedef typename __trait_type::reference			reference;
+		typedef typename __trait_type::difference_type		difference_type;
+		typedef typename __trait_type::iterator_category	iterator_category;
 
 
 /* -------------------------------------------------------------------------- */
@@ -82,8 +84,8 @@ class	vector_iterator
 /*
 **	if const_iter : Iterator != Iter (like int and const int)
 */
-	template <typename Iter>
-	vector_iterator(const vector_iterator <Iter,typename ft::remove_const<Container>::type> & i)
+	template <typename __Iter>
+	vector_iterator(const vector_iterator <__Iter,typename ft::remove_const<Container>::type> & i)
 	: _ptr(i.base())
 	{}
 
@@ -201,4 +203,124 @@ class	vector_iterator
 	}
 };
 
+// random access iterator requirements:
+
+
+	template < typename IteratorL, typename IteratorR, typename Container>
+	inline bool		operator==(const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() == rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline bool		operator==(const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() == rhs.base();
+	}
+
+
+
+	template <typename IteratorL, typename IteratorR, typename Container>
+	inline bool		operator!= (const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() != rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline bool		operator!= (const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() != rhs.base();
+	}
+
+
+	template <typename IteratorL, typename IteratorR, typename Container>
+	inline bool		operator< (const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() < rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline bool		operator<(const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() < rhs.base();
+	}
+
+
+		template <typename IteratorL, typename IteratorR, typename Container>
+	inline bool		operator> (const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() > rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline bool		operator>(const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() > rhs.base();
+	}
+
+
+	template <typename IteratorL, typename IteratorR, typename Container>
+	inline bool		operator<= (const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() <= rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline bool		operator<=(const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() <= rhs.base();
+	}
+
+
+		template <typename IteratorL, typename IteratorR, typename Container>
+	inline bool		operator>= (const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() >= rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline bool		operator>=(const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() >= rhs.base();
+	}
+
+
+	template <typename IteratorL, typename IteratorR, typename Container>
+	inline typename vector_iterator<IteratorL, Container>::difference_type
+					operator- (const vector_iterator<IteratorL, Container> & lhs,
+								const vector_iterator<IteratorR, Container> & rhs)
+	{
+		return lhs.base() - rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline typename vector_iterator<Iterator, Container>::difference_type
+					operator- (const vector_iterator<Iterator, Container> & lhs,
+								const vector_iterator<Iterator, Container> & rhs)
+	{
+		return lhs.base() - rhs.base();
+	}
+
+	template <typename Iterator, typename Container>
+	inline vector_iterator<Iterator, Container>
+					operator+(typename vector_iterator<Iterator, Container>::difference_type n,
+							const vector_iterator<Iterator, Container> & i)
+	{
+		return (vector_iterator<Iterator, Container>(i.base() + n));
+	}
+
+
+} // end of namespace ft
 # endif

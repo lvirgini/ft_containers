@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 09:51:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:22:02 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ class vector
 		typedef T &										reference;
 		typedef const T &								const_reference;
 
-		typedef vector_iterator<pointer, vector>						iterator;
-		typedef vector_iterator<const_pointer, vector>				const_iterator;
+		typedef vector_iterator<pointer, vector>		iterator;
+		typedef vector_iterator<const_pointer, vector>	const_iterator;
 		typedef std::reverse_iterator<iterator>			reverse_iterator;
 		typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
@@ -82,12 +82,14 @@ class vector
 		explicit vector(size_type n, const value_type & val = value_type(), const Allocator & alloc = Allocator())
 		: _size(n), _capacity(n), _allocator(alloc)
 		{
-			// if n == 0 first = pointer();
-			this->_first = _allocator.allocate(n);
-			_allocator.construct(this->_first, val); // for ALL ( VOIR ITERATOR)
-	//		this->_last = this->start + n; //
+
+			this->_first = _allocate(n);
+			for (size_type i = 0; i < n; i++)
+				this->_allocator.construct(this->_first + i, val);
 		}
 		
+		// COPY CONSTRUCTOR TO DO
+
 /*			template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const Allocator & alloc = Allocator())
 		: _allocator(alloc)
@@ -97,7 +99,11 @@ class vector
 */
 		
 	// destructor	
-		~vector(void) {};
+		~vector(void)
+		{
+			this->clear();
+			this->_allocator.deallocate(this->_first, this->capacity());
+		};
 
 
 /* -------------------------------------------------------------------------- */
@@ -116,9 +122,40 @@ class vector
 		void 			assign(size_type n, const T & u);
 		// erase(begin(), end())
 		// insert (begin(), n, last)
-
-		allocator_type	get_allocator() const;
 */
+
+
+// if n > capacity
+//	realloc
+// if n > size but < capacity : not realloc capacity is == before
+// else  nothing
+
+
+		/*template <typename InputIterator>
+		void			assign(InputIterator first, InputIterator Last)
+		{
+
+		}
+
+		void			assign(size_type n, const value_type & val)
+		{
+			if (n > this->capacity())
+			{
+				this->resize(n);
+				this->_m_assign(n, val);
+				for(int i = 0, i < n, i++)
+					this->_allocator.construct(this->_first + i, val)
+			}
+			else if (n > this->size())
+			{
+				
+			}
+			erase(this->begin(), this->end())
+			insert(this->begin(), n, )
+		}*/
+
+//		allocator_type	get_allocator() const;
+
 
 
 
@@ -143,27 +180,27 @@ class vector
 		
 		const_iterator			end(void) const
 		{
-			return const_iterator(this->first + this->size() );
+			return const_iterator(this->_first + this->size() );
 		}
 
 		reverse_iterator		rbegin(void)
 		{
-			return reverse_iterator(this->first - 1);
+			return reverse_iterator(this->_first - 1);
 		}
 
 		const_reverse_iterator	rbegin() const
 		{
-			return const_reverse_iterator(this->first - 1);
+			return const_reverse_iterator(this->_first - 1);
 		}
 	
 		reverse_iterator		rend(void)
 		{
-			return reverse_iterator(this->first + this->size() - 1 );
+			return reverse_iterator(this->_first + this->size() - 1 );
 		}
 	
 		const_reverse_iterator	rend(void) const
 		{
-			return const_reverse_iterator(this->first + this->size() - 1 );
+			return const_reverse_iterator(this->_first + this->size() - 1 );
 		}
 
 
@@ -196,6 +233,52 @@ class vector
 		{
 			return ( this->begin() == this->end() );
 		}
+
+
+// if n != 0
+//	if 
+
+void		_m_fill(iterator first, iterator last, const value_type & val)
+{
+	while (first != last)
+	{
+		this->_allocator.construct(first, val);
+		++first;
+	}
+}
+/*
+void		insert(iterator pos, size_type n, const value_type & val)
+{
+	pointer		new_allocation;
+	size_type	new_size;
+	iterator it = this->begin();
+
+	if (n == 0)
+		return ;
+		if (this->end() - pos)
+	new_size = this->end() - pos + n;
+	if ( new_size > this->capacity())
+	{
+		new_allocation = this->_allocator.allocate(new_size);
+		for (size_type i = 0; it != pos; it++, i++)
+			new_allocation + i = this->_allocator.construct(this->_first + i;
+	}
+	else
+	{
+		this->insert
+	}
+}
+*/
+
+void		resize(size_type new_size, value_type val = value_type()) 
+{
+	if (new_size > this->size())
+	{
+		this->insert(this->end(), new_size - this->size(), val);
+	}
+	else if (new_size < this->size())
+		this->erase(this->_first + new_size, this->end());
+}
 
 
 /*
@@ -234,25 +317,25 @@ void		reserve(size_type	n) ;
 			return *(this->_first + n);
 		}
 
+		reference		front()
+		{
+			return *begin();
+		}
 
-/*
-reference		front()
-{
-return *begin();
-}
-const_reference	front() const
-{
-return *begin();
-}
-reference		back()
-{
-return *(end() - 1);
-}
-const_reference	back() const
-{
-return *(end() - 1);
-}	
-*/
+		const_reference	front() const
+		{
+			return *begin();
+		}
+
+		reference		back()
+		{
+			return *(end() - 1);
+		}
+
+		const_reference	back() const
+		{
+			return *(end() - 1);
+		}	
 
 		const_reference	at(size_type n) const
 		{
@@ -289,19 +372,84 @@ void		push_back(const T & x)
 }
 
 
-/*1void		pop_back(void) ;
+ void		pop_back(void)
+ {
+	 this->erase(this->end() - 1);
+ }
 
-iterator	insert(iterator position, const T & x);
-void		insert(iterator position, size_type n, const T & x);
-template <class InputIterator>
-void		insert(iterator position, InputIterator first, InputIterator last);
+// iterator	insert(iterator position, const T & x);
+// void		insert(iterator position, size_type n, const T & x);
+// template <class InputIterator>
+// void		insert(iterator position, InputIterator first, InputIterator last);
 
-iterator	erase(iterator position);
-iterator	erase (iterator first, iterator last);
 
-void		swap(vector<T, Allocator> &); // ??
-void		clear(void);
+
+/*
+**		this->-first	...		first  ... last 	last + 1 .... end
+**
+**		destroy all element inside [first - last] 
+**		move last + 1 to first;
+** 		in move : construct then destroy for calling constructor and destructor of <T>
 */
+
+iterator	erase (iterator first, iterator last)
+{
+	size_type	size_to_erase = last - first;
+	size_type	index = this->begin() - first;
+	size_type	new_size = this->size() - size_to_erase;
+
+	for (size_type i = index; i < size_to_erase; i++)
+		this->_allocator.destroy(this->_first + i);
+
+	for (size_type i = index; i < new_size; i++)
+	{
+	//	this->_first[i] = this->_first[i + size_to_erase];
+		this->_allocator.construct(this->_first + i, *(this->_first + i + size_to_erase));
+		this->_allocator.destroy(this->_first + i + size_to_erase);
+	}
+	this->_size = new_size;
+	return (first);
+}
+
+iterator	erase(iterator position)
+{
+	return (this->erase(position, position + 1));
+}
+	// if (position == this->end() - 1)
+	// {
+	// 	this->_allocator.destroy(this->_first + this->size() - 1);
+	// 	this->_size--;
+	// 	return (this->end());
+	// }
+	// else
+	// {
+	// 	size_type	index = position - this->begin();
+	// 	this->_allocator.destroy(this->_first + index);
+	// 	this->_m_fill(position, this->end())
+	// 	for (size_type i = index; i < this->size() - 1; i++)
+	// 	{
+	// 		this->_allocator.destroy(this->_first + i);
+	// 		this->_allocator.construct(this->_first + i, *(this->_first + i + 1));
+	// 	}
+	// 	this->_allocator.destroy(this->_first + size());
+	// 		// this->_first[i] = this->_first[i + 1]; // destroy and construct ?
+	// 	if (index == this->size())
+	// 		return (position - 1);
+	// 	return (position);
+	// }*
+
+
+// void		swap(vector<T, Allocator> &); // ??
+
+ void		clear(void)
+ {
+	if (this->size() > 0)
+	{
+		for (size_type	i = 0; i < this->size(); i++)
+			this->_allocator.destroy(this->_first + i);
+		this->_size = 0;
+	}
+ }
 
 
 /* -------------------------------------------------------------------------- */
@@ -326,10 +474,21 @@ void		clear(void);
 		pointer	_allocate(size_type n)
 		{
 			if (n != 0)
-				return (Allocator::allocate(this->_first), n);
+				return (this->_allocator.allocate(n));
 			return (pointer());
 		}
 
+
+
+
+/*
+
+		template <typename InputIterator>
+		void	_assign_dispatch(InputIterator first, InputIterator laste, true_type)
+		{
+
+		}
+*/
 };
 
 /*
