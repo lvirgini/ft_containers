@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 11:02:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/20 14:26:16 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ class vector
 
 // if n != 0
 //	if 
-
+// PRIVATE
 void		_m_fill(iterator first, iterator last, const value_type & val)
 {
 	while (first != last)
@@ -246,6 +246,13 @@ void		_m_fill(iterator first, iterator last, const value_type & val)
 		++first;
 	}
 }
+
+void		_m_fill(iterator first, size_type n, const value_type & val)
+{
+	for (size_type i = 0; i < n; i++)
+		this->_allocator.construct(first + i, val);
+}
+
 /*
 void		insert(iterator pos, size_type n, const value_type & val)
 {
@@ -270,6 +277,12 @@ void		insert(iterator pos, size_type n, const value_type & val)
 }
 */
 
+/*
+** if (new_size == size) do nothing;
+** if (new_size < size) : erase all after new_size;
+** if (new_size > size) : insert from this->end() (val) until new_size();
+*/
+
 void		resize(size_type new_size, value_type val = value_type()) 
 {
 	if (new_size > this->size())
@@ -289,15 +302,31 @@ else if (sz < size())
 erase(begin()+sz, end());
 else
 ; // do nothing
-
-
-void		reserve(size_type	n) ;
-	// if capacity < n : realloc else nothing to do
-	// Throws: length_error if n > max_size().
-
 */
 
 
+/*
+**	reserve : only if capacity < n : reallocation of n
+*/
+
+void		reserve(size_type	n)
+{
+	pointer		new_ptr;
+
+	if (n > this->max_size())
+		throw std::length_error("vector::reserve");
+	if (n <= this->capacity())
+		return ;
+	new_ptr = _allocate(n);
+	for (size_type i = 0; i < this->size(); i++)
+	{
+		this->_allocator.construct(new_ptr + i, this->_first[i]);
+		this->_allocator.destroy(this->_first + i);
+	}
+	this->_allocator.deallocate(this->_first, this->size());
+	this->_first = new_ptr;
+	this->_capacity = n;
+}	
 
 /* -------------------------------------------------------------------------- */
 /*                                 Element access                             */
@@ -378,7 +407,21 @@ void		push_back(const T & x)
  }
 
 // iterator	insert(iterator position, const T & x);
-// void		insert(iterator position, size_type n, const T & x);
+/*
+void		insert(iterator position, size_type n, const T & x)
+{
+	if (n == 0)
+		return ;
+	if (this->capacity() - this->size() >= n)
+	{
+		
+	}	
+	else
+	{
+
+	}
+}*/
+
 // template <class InputIterator>
 // void		insert(iterator position, InputIterator first, InputIterator last);
 
@@ -473,6 +516,30 @@ void		push_back(const T & x)
 		}
 
 
+		size_type	_get_len(size_type n, const char * msg) const
+		{
+			size_type	len;
+
+			if (this->max_size() - this->size() < n)
+				throw std::length_error(msg);
+			len = this->size() + std::max(size(), n);
+			if (len > max_size())
+				return (max_size());
+			return (len);
+		}
+
+ /*
+      size_type
+      _M_check_len(size_type __n, const char* __s) const
+      {
+	if (max_size() - size() < __n)
+	  __throw_length_error(__N(__s));
+	  	const size_type __len = size() + std::max(size(), __n);
+	return (__len < size() || __len > max_size()) ? max_size() : __len;
+      }
+*/
+
+
 		pointer	_allocate(size_type n)
 		{
 			if (n != 0)
@@ -481,6 +548,14 @@ void		push_back(const T & x)
 		}
 
 
+		// void	_reallocate(size_type n)
+		// {
+		// 	pointer		new_pointer
+
+		// 	if (n == 0)
+		// 		return ;
+			
+		// }
 
 
 /*

@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 11:02:42 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:04:27 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_ITERATOR_HPP
 # define VECTOR_ITERATOR_HPP
 
-# include "vector_iterator_traits.hpp"
+# include "iterator_traits.hpp"
 # include "type_traits.hpp"
 # include <iostream>
 

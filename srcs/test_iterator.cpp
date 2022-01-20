@@ -6,17 +6,15 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:13:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/17 11:40:59 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:02:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
-#include <iostream>
-#include <cstring>
-#include <vector>
 
 void	test_iterator(void)
 {
+	PRINT("TESTING ITERATOR");
 	std::vector<int>	stdV(10);
 	ft::vector<int>		ftV(10);
 
@@ -77,12 +75,14 @@ void	test_iterator(void)
 	//	it_ft += 2;
 	//	it_ft += 12;
 	}
-	std::cout << std::endl;
+	PRINT(SEP_FUNCTIONS);
 }
 
 
 void	test_const_iterator(void)
 {
+	PRINT("TESTING CONST_ITERATOR");
+
 	std::vector<int>	stdV(10);
 	ft::vector<int>		ftV(10);
 
@@ -95,7 +95,7 @@ void	test_const_iterator(void)
 
 	// create iterator + 1
 	std::vector<int>::const_iterator	it_std = stdV.begin() + 1;
-	ft::vector<int>::const_iterator		it_ft = ftV.begin();
+	ft::vector<int>::const_iterator		it_ft = ftV.begin() + 1;
 
 	// return iterator to iterator begin (-1)
 	it_std = it_std - 1;
@@ -143,5 +143,5 @@ void	test_const_iterator(void)
 	//	it_ft += 2;
 	//	it_ft += 12;
 	}
-	std::cout << std::endl;
+	PRINT(SEP_FUNCTIONS);
 }

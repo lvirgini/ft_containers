@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_iterator_traits.hpp                         :+:      :+:    :+:   */
+/*   iterator_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 11:02:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/19 11:04:42 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_ITERATOR_TRAIT_HPP
-# define VECTOR_ITERATOR_TRAIT_HPP
+#ifndef ITERATOR_TRAIT_HPP
+# define ITERATOR_TRAIT_HPP
 
 
 namespace ft {
