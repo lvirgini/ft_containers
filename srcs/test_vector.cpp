@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/20 14:13:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:10:33 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	test_vector(void)
 
 	PRINT("test reserve() : for vector created with 5 capacity and no value :");
 
+
+	PRINT("try reserve(-1)");
 	try
 	{
 		std_v.reserve(-1);
@@ -42,14 +44,47 @@ void	test_vector(void)
 		std::cerr << e.what() << std::endl;
 	}
 
-
+	PRINT("reserve(666)");
 	std_v.reserve(666);
 	ft_v.reserve(666);
 
+	PRINT("reserve(0)");
 	std_v.reserve(0);
 	ft_v.reserve(0);
 
 	print_all_functions(std_v, ft_v);
+
+	PRINT("resize(5)");
+	std_v.resize(5);
+	ft_v.resize(5);
+
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
+	PRINT("resize(3)");
+	std_v.resize(3);
+	ft_v.resize(3);
+
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
+	PRINT("resize(8)");
+	std_v.resize(8, 5);
+	ft_v.resize(8, 5);
+
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
+
+
+	std::vector<int>::iterator i_std = std_v.insert(std_v.end(), 42);
+	ft::vector<int>::iterator i_ft = ft_v.insert(ft_v.end(), 42);
+
+	std::cout << *i_std << SEP << *i_ft << std::endl;
+
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
 
 // 	//PRINT(std_v.capacity());
 // 	std_v.resize(100, 42);

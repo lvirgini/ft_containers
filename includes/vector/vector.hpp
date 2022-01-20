@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/20 14:26:16 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:43:47 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,47 +235,7 @@ class vector
 		}
 
 
-// if n != 0
-//	if 
-// PRIVATE
-void		_m_fill(iterator first, iterator last, const value_type & val)
-{
-	while (first != last)
-	{
-		this->_allocator.construct(first, val);
-		++first;
-	}
-}
 
-void		_m_fill(iterator first, size_type n, const value_type & val)
-{
-	for (size_type i = 0; i < n; i++)
-		this->_allocator.construct(first + i, val);
-}
-
-/*
-void		insert(iterator pos, size_type n, const value_type & val)
-{
-	pointer		new_allocation;
-	size_type	new_size;
-	iterator it = this->begin();
-
-	if (n == 0)
-		return ;
-		if (this->end() - pos)
-	new_size = this->end() - pos + n;
-	if ( new_size > this->capacity())
-	{
-		new_allocation = this->_allocator.allocate(new_size);
-		for (size_type i = 0; it != pos; it++, i++)
-			new_allocation + i = this->_allocator.construct(this->_first + i;
-	}
-	else
-	{
-		this->insert
-	}
-}
-*/
 
 /*
 ** if (new_size == size) do nothing;
@@ -286,24 +246,10 @@ void		insert(iterator pos, size_type n, const value_type & val)
 void		resize(size_type new_size, value_type val = value_type()) 
 {
 	if (new_size > this->size())
-	{
 		this->insert(this->end(), new_size - this->size(), val);
-	}
 	else if (new_size < this->size())
 		this->erase(this->_first + new_size, this->end());
 }
-
-
-/*
-void		resize(size_type sz, T c = T()) ;
-if (sz > size())
-insert(end(), sz-size(), c);
-else if (sz < size())
-erase(begin()+sz, end());
-else
-; // do nothing
-*/
-
 
 /*
 **	reserve : only if capacity < n : reallocation of n
@@ -405,25 +351,68 @@ void		push_back(const T & x)
  {
 	 this->erase(this->end() - 1);
  }
+// if n != 0
+//	if 
+// PRIVATE
 
-// iterator	insert(iterator position, const T & x);
-/*
-void		insert(iterator position, size_type n, const T & x)
+void		_check_capacity_for_insert(size_type new_size)
+{
+	if ( new_size > this->capacity())
+		this->reserve(new_size);				// maybe can be more optimize without copiing all decaled value. good innegliche
+	this->_size = new_size;
+}
+
+
+//PRIVATE
+void		_move_elements(iterator first, iterator last, iterator move_on)
+{
+	for (; first != last; first++, move_on++)
+	{
+		this->_allocator.construct(move_on.base(), *(first));
+		this->_allocator.destroy(first.base());
+	}
+}
+
+// void		_move_elements(iterator first, size_type n, iterator move_on)
+// {
+// 	for (size_type i = 0; i < n; i++)
+
+// }
+
+void		insert(iterator pos, size_type n, const value_type & val)
 {
 	if (n == 0)
 		return ;
-	if (this->capacity() - this->size() >= n)
-	{
-		
-	}	
-	else
-	{
+	_check_capacity_for_insert(this->size() + n);
+	_move_elements(pos, this->end(), pos + n - 1);
+	for (size_type i = 0; i <= n; i++)
+		this->_allocator.construct(pos.base() + i, val);
+}
 
+iterator	insert(iterator position, const value_type & val)
+{
+	size_type	return_pos = position - this->begin();
+	
+	this->insert(position, 1, val);
+	return (this->begin() + return_pos);
+}
+
+ template <class InputIterator>
+ void		insert(iterator position, InputIterator first, InputIterator last)
+ {
+	 size_type	n;
+
+	 if (first == last)
+	 	return ;
+	n = last - first + this->size();
+	_check_capacity_for_insert(last - first + this->size());
+	_move_elements(position, this->end(), position + n - 1);
+	for(;first != last; first++, position++)
+	{
+		this->_allocator.construct(position.base(), *(first.base())); ////////////////
 	}
-}*/
 
-// template <class InputIterator>
-// void		insert(iterator position, InputIterator first, InputIterator last);
+ }
 
 
 
@@ -528,19 +517,22 @@ void		insert(iterator position, size_type n, const T & x)
 			return (len);
 		}
 
- /*
-      size_type
-      _M_check_len(size_type __n, const char* __s) const
-      {
-	if (max_size() - size() < __n)
-	  __throw_length_error(__N(__s));
-	  	const size_type __len = size() + std::max(size(), __n);
-	return (__len < size() || __len > max_size()) ? max_size() : __len;
-      }
-*/
+		void		_m_fill(iterator first, iterator last, const value_type & val)
+		{
+			while (first != last)
+			{
+				this->_allocator.construct(first, val);
+				++first;
+			}
+		}
 
+		void		_m_fill(iterator first, size_type n, const value_type & val)
+		{
+			for (size_type i = 0; i < n; i++)
+				this->_allocator.construct(first + i, val);
+		}
 
-		pointer	_allocate(size_type n)
+		pointer		_allocate(size_type n)
 		{
 			if (n != 0)
 				return (this->_allocator.allocate(n));

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 11:07:36 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 13:28:55 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:06:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ template <typename T>
 void	print_all_functions(std::vector<T> & STD, ft::vector<T> & FT)
 {
 	
-	std::string			sep = " | ";
+	std::string			sep = "	| ";
 
 
 	// std::cout << std::endl << "vector.maxSize()" << std::endl;
 	// std::cout << STD.max_size() << sep << FT.max_size() << std::endl;
 
 	// SIZE()
-	std::cout << std::endl << "vector.size() : " << std::endl << "std | ft" << std::endl; 
+	std::cout <<  "			std	| ft " << std::endl << "vector.size()		"; 
 	std::cout << STD.size() << sep << FT.size() << std::endl;
 
 
 	// capacity()
-	std::cout << std::endl << "vector.capacity()" << std::endl << "std | ft" << std::endl; 
+	std::cout << "vector.capacity()	"; 
 	std::cout << STD.capacity() << sep << FT.capacity() << std::endl;
 
 
 	//empty()
-	std::cout << std::endl << "vector.empty()" << std::endl << "std | ft" << std::endl; 
+	std::cout << "vector.empty()		"; 
 	std::cout << STD.empty() << sep << FT.empty() << std::endl;
 }
 
