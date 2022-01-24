@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/20 16:10:33 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:30:36 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	test_vector(void)
 {
+	int test[] = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+
+
 	PRINT("TEST CONSTRUCTOR");
 
 	std::vector<int>	std_v(5);
@@ -82,6 +85,25 @@ void	test_vector(void)
 
 	std::cout << *i_std << SEP << *i_ft << std::endl;
 
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
+	PRINT("TESTING assign()");
+
+	std_v.assign(5, 123);
+	ft_v.assign(5, 123);
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
+
+	std_v.assign(0, 123);
+	ft_v.assign(0, 123);
+	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+
+
+	std_v.insert(std_v.begin(), test, test + 10);
+	ft_v.insert(ft_v.begin(), test, test + 10);
 	print_all_functions(std_v, ft_v);
 	print_all_value(std_v, ft_v);
 

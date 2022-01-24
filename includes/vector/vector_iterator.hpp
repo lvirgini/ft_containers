@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 11:04:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/24 18:19:22 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,4 +323,5 @@ class	vector_iterator
 
 
 } // end of namespace ft
+
 # endif
