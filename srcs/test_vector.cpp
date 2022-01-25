@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/24 19:30:36 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:27:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,15 @@ void	test_vector(void)
 //	PRINT(std_v.capacity());
 //	std_v.resize(5, 3);
 
+
+	ft::vector<int> foo (3,0);
+	ft::vector<int> bar (5,0);
+
+	bar = foo;
+	foo = ft::vector<int>();
+
+	std::cout << "Size of foo: " << int(foo.size()) << '\n';
+	std::cout << "Size of bar: " << int(bar.size()) << '\n';
 	PRINT(SEP_FUNCTIONS);
 
 }
