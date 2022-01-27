@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 23:23:05 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 23:59:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,14 +471,13 @@ class vector
 		void		insert(iterator position, size_type n, const value_type & val)
 		{
 			difference_type pos_index = position - this->begin();
-			size_type		old_size = this->_size;
 			bool			is_in_the_end = (position.base() == this->end().base());
 			
 			if (n == 0)
 				return ;
 			_check_capacity_for_insert(this->_size + n);
 			position = this->begin() + pos_index;
-			if (old_size > 0 && is_in_the_end == false)
+			if (n == this->_size && is_in_the_end == false)
 				_move_elements_to_the_end(this->_first + this->_size - 1, n, this->_first + pos_index);
 				// _move_elements_to_the_end(this->rend(), n, this->rbegin() - pos_index);
 			_m_fill(this->begin() + pos_index, n, val);
@@ -490,7 +489,6 @@ class vector
 		{
 			difference_type pos_index = position - this->begin();
 			difference_type size_insert = last - first;
-			size_type		old_size = this->_size;
 			bool			is_in_the_end = position == this->end();
 
 
@@ -498,7 +496,7 @@ class vector
 				return ;
 			_check_capacity_for_insert(size_insert + this->_size);
 			position = this->begin() + pos_index;
-			if (old_size > 0 && is_in_the_end == false)
+			if (size_insert == this->_size && is_in_the_end == false)
 				_move_elements_to_the_end(this->_first + this->_size - 1, size_insert, this->_first + pos_index + 1);
 				// _move_elements_to_the_end(this->rend(), size_insert, this->rbegin() - pos_index);
 			 for(;first != last; first++, position++)
@@ -625,8 +623,6 @@ class vector
 
 		void	_move_elements_to_the_end(pointer end, size_type size_insert, pointer position)
 		{
-			if (size_insert == this->_size)
-				return ;
 			for (size_type i = 0; (end - i) > position; i++)
 			{
 				this->_allocator.construct(end - i, *(end - i - size_insert));
@@ -651,16 +647,14 @@ class vector
 // Fichier : stl_iterator.h
 // std::reverse_iterator<std::vector<int, std::allocator<int>>::iterator>::iterator_type base() const
 
-		// void	_move_elements_to_the_end(reverse_iterator end, size_type size_insert, reverse_iterator position)
-		// {
-		// 	if (size_insert == this->_size)
-		// 		return ;
-		// 	for (; end != position; end++)
-		// 	{
-		// 		this->_allocator.construct(end.base().base(), *(end.base().base() + size_insert));
-		// 		this->_allocator.destroy(end.base().base() + size_insert);
-		// 	}
-		//  }
+		void	_move_elements_to_the_end(reverse_iterator end, size_type size_insert, reverse_iterator position)
+		{
+			for (; end != position; end++)
+			{
+				this->_allocator.construct(end.base().base(), *(end.base().base() + size_insert));
+				this->_allocator.destroy(end.base().base() + size_insert);
+			}
+		 }
 };
 
 /*
