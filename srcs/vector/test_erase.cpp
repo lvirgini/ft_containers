@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:42:33 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 14:00:09 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 14:27:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	test_erase(void)
 	ft_insert.clear();
 
 	 print_all_functions(std_insert, ft_insert);
-	print_all_value(std_insert);
-	print_all_value(ft_insert);
+	print_all_value(std_insert, ft_insert);
 
 	PRINT(SEP_FUNCTIONS);
 }

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/19 11:04:42 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 10:13:03 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,17 @@
 namespace ft {
 
 /*
-** define empy struct for iterator_tags :
-** only used to distinguish different iterator category
-*/
-
-struct input_iterator_tag
-{};
-
-struct output_iterator_tag
-{};
-
-struct forward_iterator_tag : public input_iterator_tag
-{};
-
-struct bidirectional_iterator_tag : public forward_iterator_tag
-{};
-
-struct random_access_iterator_tag : public bidirectional_iterator_tag
-{};
-
-
-/*
 ** standard declaration of iterator
 */
 
-template <typename Category, typename T> // no need more ?
+template <typename T,typename Category = std::random_access_iterator_tag, typename Distance = std::ptrdiff_t, typename Pointer = T*, typename Reference = T&>
 struct iterator
 {
-	typedef Category						iterator_category;
-	typedef T								value_type;
-	typedef std::ptrdiff_t					difference_type;
-	typedef T*								pointer;
-	typedef T&								reference;
+	typedef Category		iterator_category;
+	typedef T				value_type;
+	typedef Distance		difference_type;
+	typedef Pointer			pointer;
+	typedef Reference		reference;
 };
 
 

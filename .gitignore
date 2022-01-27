@@ -1,4 +1,7 @@
 .vscode
 /piscinecpp
-a.out
-/obj
+/obj*
+ft_containers
+std_containers
+ft.log
+std.log

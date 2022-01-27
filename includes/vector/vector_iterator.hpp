@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/24 18:19:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:26:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ template <typename, class>
 class	vector;
 
 template <typename Iterator, typename Container>
-class	vector_iterator 
+class	vector_iterator
+	: public iterator < 
+		typename iterator_traits<Iterator>::iterator_category,
+		typename iterator_traits<Iterator>::value_type,
+		typename iterator_traits<Iterator>::difference_type,
+		typename iterator_traits<Iterator>::pointer,
+		typename iterator_traits<Iterator>::reference >
 {
 	private:
 		typedef ft::iterator_traits<Iterator>			__trait_type;
-		Iterator										_ptr;
+		Iterator										_current;
 	
 	
 	public:
@@ -47,17 +53,16 @@ class	vector_iterator
 	public:
 
 	vector_iterator(void)
-	: _ptr(Iterator())
+	: _current(Iterator())
 	{}
 
-	vector_iterator(pointer ptr)
-	: _ptr(ptr)
+	vector_iterator(Iterator ptr)
+	: _current(ptr)
 	{}
 
 	vector_iterator(const vector_iterator & copy)
-	{
-		*this = copy;
-	}
+	: _current(copy._current)
+	{}
 
 /*
 **	Check if Iterator and container pointer are same (value == true or false)
@@ -77,7 +82,7 @@ class	vector_iterator
 	vector_iterator(const vector_iterator <Iter, 
 		typename ft::enable_if<
 			(ft::are_same<Iter, typename Container::pointer>::value), Container>::type> & i)
-	: _ptr(i.base())
+	: _current(i.base())
 	{}*/
 	
 
@@ -85,9 +90,14 @@ class	vector_iterator
 **	if const_iter : Iterator != Iter (like int and const int)
 */
 	template <typename __Iter>
-	vector_iterator(const vector_iterator <__Iter,typename ft::remove_const<Container>::type> & i)
-	: _ptr(i.base())
+	vector_iterator(const vector_iterator <__Iter, Container> & i)
+	: _current(i.base())
 	{}
+/*
+	template <typename __Iter>
+	vector_iterator(const vector_iterator <__Iter,typename ft::remove_const<Container>::type> & i)
+	: _current(i.base())
+	{}*/
 
 	~vector_iterator(void)
 	{}
@@ -99,107 +109,107 @@ class	vector_iterator
 	vector_iterator &	operator=(const vector_iterator & copy)
 	{
 		if (this != &copy)
-			this->_ptr = copy._ptr;
+			this->_current = copy._current;
 		return (*this);
 	}
 	
 	reference			operator*(void) const
 	{
-		return *_ptr;
+		return *_current;
 	}
 
 	pointer				operator->(void)
 	{
-		return _ptr;
+		return _current;
 	}
 
 	reference			operator[](difference_type	n)
 	{
-		return *(this->_ptr + n);
+		return *(this->_current + n);
 	}
 
 
 	vector_iterator &	operator++(void)
 	{
-		_ptr++;
+		_current++;
 		return *this;
 	}
 
 	vector_iterator		operator++(int)
 	{
 		vector_iterator it = *this;
-		_ptr++;
+		_current++;
 		return (it);
 	}
 
 	vector_iterator &	operator--(void)
 	{
-		_ptr--;
+		_current--;
 		return (*this);
 	}
 
 	vector_iterator		operator--(int)
 	{
 		vector_iterator it = *this;
-		_ptr--;
+		_current--;
 		return (it);
 	}	
 
 	vector_iterator		operator+(difference_type n) const
 	{
-		return (vector_iterator(_ptr + n));
+		return (vector_iterator(_current + n));
 	}
 
 	vector_iterator		operator-(difference_type n) const
 	{
-		return (vector_iterator(_ptr - n));
+		return (vector_iterator(_current - n));
 	}
 
 	vector_iterator	&	operator-=(difference_type n)
 	{
-		_ptr -= n;
+		_current -= n;
 		return (*this);
 	}
 
 	vector_iterator	&	operator+=(difference_type n)
 	{
-		_ptr += n;
+		_current += n;
 		return (*this);
 	}
 
 	bool				operator==(const vector_iterator & other) const
 	{
-		return (this->_ptr == other._ptr);
+		return (this->_current == other._current);
 	}
 
 	bool				operator!=(const vector_iterator & other) const
 	{
-		return (this->_ptr != other._ptr);
+		return (this->_current != other._current);
 	}
 
 	bool				operator<(const vector_iterator & other) const
 	{
-		return (this->_ptr < other._ptr);
+		return (this->_current < other._current);
 	}
 
 	bool				operator<=(const vector_iterator & other) const
 	{
-		return (this->_ptr <= other._ptr);
+		return (this->_current <= other._current);
 	}
 
 	bool				operator>(const vector_iterator & other) const
 	{
-		return (this->_ptr > other._ptr);
+		return (this->_current > other._current);
 	}	
 
 	bool				operator>=(const vector_iterator & other) const
 	{
-		return (this->_ptr >= other._ptr);
+		return (this->_current >= other._current);
 	}
 
 	Iterator		base(void) const
 	{
-		return this->_ptr;
+		return this->_current;
 	}
 };
 

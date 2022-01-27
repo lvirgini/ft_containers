@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 11:07:36 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/20 15:06:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:43:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,60 +16,58 @@
 template <typename T>
 void	print_all_functions(std::vector<T> & STD, ft::vector<T> & FT)
 {
-	
-	std::string			sep = "	| ";
-
-
 	// std::cout << std::endl << "vector.maxSize()" << std::endl;
 	// std::cout << STD.max_size() << sep << FT.max_size() << std::endl;
 
 	// SIZE()
-	std::cout <<  "			std	| ft " << std::endl << "vector.size()		"; 
-	std::cout << STD.size() << sep << FT.size() << std::endl;
-
+	std::cout <<  "vector.size()		"; 
+	std::cout << STD.size() << SEP << FT.size() << std::endl;
 
 	// capacity()
 	std::cout << "vector.capacity()	"; 
-	std::cout << STD.capacity() << sep << FT.capacity() << std::endl;
-
+	std::cout << STD.capacity() << SEP << FT.capacity() << std::endl;
 
 	//empty()
 	std::cout << "vector.empty()		"; 
-	std::cout << STD.empty() << sep << FT.empty() << std::endl;
+	std::cout << STD.empty() << SEP << FT.empty() << std::endl;
 }
 
 
 template <typename T>
-void	print_all_value(std::vector<T> & v)
+void	print_all_functions(M_NAMESPACE::vector<T> & v)
 {
-	int i = 0;
-	typename std::vector<T>::iterator 	std_it = v.begin();
-	typename std::vector<T>::iterator 	std_ite = v.end();
+	// std::cout << "vector.maxSize()		";
+	// std::cout << v.max_size()  << std::endl;
 
-	while (std_it != std_ite)
-	{
-		std::cout << i++ << "	value = " << *std_it << std::endl;
-		std_it++;
-	}
-	std::cout << std::endl;
+	// SIZE()
+	std::cout << "vector.size()		"; 
+	std::cout << v.size() << std::endl;
 
+	// capacity()
+	std::cout << "vector.capacity()	"; 
+	std::cout << v.capacity() << std::endl;
+
+	//empty()
+	std::cout << "vector.empty()		"; 
+	std::cout << v.empty() << std::endl;
 }
+
 
 template <typename T>
-void	print_all_value(ft::vector<T> & v)
+void	print_all_value(M_NAMESPACE::vector<T> & v)
 {
 	int i = 0;
-	typename ft::vector<T>::iterator 	std_it = v.begin();
-	typename ft::vector<T>::iterator 	std_ite = v.end();
+	typename M_NAMESPACE::vector<T>::iterator 	it = v.begin();
+	typename M_NAMESPACE::vector<T>::iterator 	ite = v.end();
 
-	while (std_it != std_ite)
+	while (it != ite)
 	{
-		std::cout << i++ << "	value = " << *std_it << std::endl;
-		std_it++;
+		std::cout << i++ << "	value = " << *it << std::endl;
+		it++;
 	}
 	std::cout << std::endl;
-}
 
+}
 
 template <typename T>
 void	print_all_value(std::vector<T> & STD, ft::vector<T> & FT)
