@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 15:33:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 23:23:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ class vector
 		{
 			if (this != &copy)
 			{
-				//this->clear();
+				this->clear();
 				this->assign(copy.begin(), copy.end());
 			}
 			return (*this);
@@ -339,10 +339,6 @@ class vector
 
 			if (_check_reserve(n))
 				return ;
-			if (n > this->max_size())
-				throw std::length_error("vector::reserve");
-			if (n <= this->capacity())
-				return ;
 			new_ptr = _m_allocate(n);
 			for (size_type i = 0; i < this->size(); i++)
 			{
@@ -469,46 +465,44 @@ class vector
 			size_type	pos_index = position - this->begin();
 			
 			this->insert(position, 1, val);
-			return (iterator(this->_first + pos_index));
-			//return (this->begin() + pos_index);
+			return (this->begin() + pos_index);
 		}
 		
 		void		insert(iterator position, size_type n, const value_type & val)
 		{
 			difference_type pos_index = position - this->begin();
-
+			size_type		old_size = this->_size;
+			bool			is_in_the_end = (position.base() == this->end().base());
+			
 			if (n == 0)
 				return ;
-			_check_capacity_for_insert(this->size() + n);
+			_check_capacity_for_insert(this->_size + n);
 			position = this->begin() + pos_index;
-		//	_move_elements_to_new_end(position, n, this->rbegin());
-			// _move_elements(position, this->end(), position + n);
-			_m_fill(position, n, val);
+			if (old_size > 0 && is_in_the_end == false)
+				_move_elements_to_the_end(this->_first + this->_size - 1, n, this->_first + pos_index);
+				// _move_elements_to_the_end(this->rend(), n, this->rbegin() - pos_index);
+			_m_fill(this->begin() + pos_index, n, val);
 		}
 
 		template<class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last, 
 			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
 		{
-			difference_type	new_size;
-			difference_type pos_index;
-			difference_type size_insert;
+			difference_type pos_index = position - this->begin();
+			difference_type size_insert = last - first;
+			size_type		old_size = this->_size;
+			bool			is_in_the_end = position == this->end();
+
 
 			if (first == last)
 				return ;
-			pos_index = position - this->begin();
-			size_insert = last - first;
-			new_size = size_insert + this->size();
-			_check_capacity_for_insert(new_size);
+			_check_capacity_for_insert(size_insert + this->_size);
 			position = this->begin() + pos_index;
-
-			//for (thi)
-
-
-			//_move_elements_to_new_end(this->end() - size_insert, size_insert, this->end());
-			// _move_elements(position, this->end(), position + size_insert + 1);
-			for(;first != last; first++, position++)
-				this->_allocator.construct(position.base(), *first);
+			if (old_size > 0 && is_in_the_end == false)
+				_move_elements_to_the_end(this->_first + this->_size - 1, size_insert, this->_first + pos_index + 1);
+				// _move_elements_to_the_end(this->rend(), size_insert, this->rbegin() - pos_index);
+			 for(;first != last; first++, position++)
+			 	this->_allocator.construct(position.base(), *first);
 		}
 
 
@@ -544,7 +538,9 @@ class vector
 
 		iterator	erase(iterator position)
 		{
-			return (this->erase(position, position + 1));
+			if (position + 1 != this->end())
+				return (this->erase(position, position + 1));
+			this->_allocator.destroy(position.base());
 		}
 
 
@@ -590,8 +586,8 @@ class vector
 			if (new_size > this->max_size())
 				throw std::length_error("vector::reserve");
 			if (new_size <= this->capacity())
-				return false;
-			return true;
+				return true;
+			return false;
 		}
 
 		size_type	_get_len(size_type n, const char * msg) const
@@ -606,22 +602,10 @@ class vector
 			return (len);
 		}
 
-		void		_m_fill(iterator first, iterator last, const value_type & val)
-		{
-			while (first != last)
-			{
-				this->_allocator.construct(first.base(), val);
-				++first;
-			}
-		}
-
 		void		_m_fill(iterator first, size_type n, const value_type & val)
 		{
-			while (n--)
-			{
+			for (size_type i = 0; i < n; i++, first++)
 				this->_allocator.construct(first.base(), val);
-				++first;
-			}	
 		}
 
 		pointer		_m_allocate(size_type n)
@@ -639,62 +623,44 @@ class vector
 			this->_size = new_size;
 		}
 
-
-		void		_move_elements(iterator first, iterator last, iterator move_on)
+		void	_move_elements_to_the_end(pointer end, size_type size_insert, pointer position)
 		{
-			for (; first != last; first++, move_on++)
+			if (size_insert == this->_size)
+				return ;
+			for (size_type i = 0; (end - i) > position; i++)
 			{
-				this->_allocator.construct(move_on.base(), *(first));
-				this->_allocator.destroy(first.base());
+				this->_allocator.construct(end - i, *(end - i - size_insert));
+				this->_allocator.destroy(end - i - size_insert);
 			}
 		}
 
-		// void		_move_elements_from_last(reverse_iterator first, reverse_iterator last, reverse_iterator move_on)
+		// void	_move_elements_to_the_end(iterator end, size_type size_insert, iterator position)
 		// {
-		// 	for (; first != last; first++, move_on++)
-		// 	{
-		// 		this->_allocator.construct(move_on.base(), *(first));
-		// 		this->_allocator.destroy(first.base());
-		// 	}
-		// }
-
-		void		_move_elements_to_new_end(reverse_iterator old_end, size_type n, reverse_iterator new_end)
-		{
-				while (n--)
-				{
-					this->_allocator.construct(new_end.base(), *old_end );
-					this->_allocator.destroy(old_end.base());
-					new_end++;
-					old_end++;
-				}
-		}
-/*
-		void		_move_elements_to_new_end(iterator old_end, size_type n, iterator new_end)
-		{
-				while (n--)
-				{
-					this->_allocator.construct(new_end.base(), *old_end );
-					this->_allocator.destroy(old_end.base());
-					new_end--;
-					old_end--;
-				}
-		}*/
-
-		// void		_move_elements(iterator first, size_type n, iterator move_on)
-		// {
-		// 	for (size_type i = 0; i < n; i++)
-
-		// }
-
-		// void	_reallocate(size_type n)
-		// {
-		// 	pointer		new_pointer
-
-		// 	if (n == 0)
+		// 	if (size_insert == this->_size)
 		// 		return ;
-			
-		// }
+		// 	for (; end != position; end--)
+		// 	{
+		// 		this->_allocator.construct(end.base(), *(end.base() - size_insert));
+		// 		this->_allocator.destroy(end.base() - size_insert);
+		// 	}
+		// }inline std::reverse_iterator<std::vector<int>::iterator>::iterator_type std::reverse_iterator<std::vector<int>::iterator>::base() const
 
+// Retourne :
+// current, the %iterator used for underlying work.
+
+// Fichier : stl_iterator.h
+// std::reverse_iterator<std::vector<int, std::allocator<int>>::iterator>::iterator_type base() const
+
+		// void	_move_elements_to_the_end(reverse_iterator end, size_type size_insert, reverse_iterator position)
+		// {
+		// 	if (size_insert == this->_size)
+		// 		return ;
+		// 	for (; end != position; end++)
+		// 	{
+		// 		this->_allocator.construct(end.base().base(), *(end.base().base() + size_insert));
+		// 		this->_allocator.destroy(end.base().base() + size_insert);
+		// 	}
+		//  }
 };
 
 /*

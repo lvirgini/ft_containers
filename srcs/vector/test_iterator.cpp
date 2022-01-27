@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:13:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 14:43:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 23:23:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,16 +228,7 @@ void	test_reverse_iterator(void)
 	*(rit - 1) = -42;
 	std::cout << "*(rit - 1) = 42 : " << *(rit - 1) << SEP << *(crit - 1) << std::endl;
 
-
-	// NO VIABLE OVERLOAD 
-	// it = crit;
-
-	rit += 666;
-	crit = rit;
-	crit -= 665;
-	std::cout << "it += 666; crit = it; it -= 665 : " << *rit << SEP << *crit << std::endl; // no segfault ???
-
-
+	
 	std::cout << "(rit == crit): " << (rit == crit) << std::endl;
 	std::cout << "(rit - crit) : " << (rit - crit) << std::endl;
 	std::cout << "(rit + 3 == it): " << (rit + 3 == crit) << std::endl;

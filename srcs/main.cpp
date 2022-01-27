@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 15:35:47 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 22:22:21 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ int main(void)
 	PRINT(STR_NAMESPACE);
 	PRINT(SEP_FUNCTIONS);
 	
-	test_iterator();
-	test_reverse_iterator();
-	test_empty();
-	//test_insert();
+	// test_iterator();
+	// test_reverse_iterator();
+	// test_empty();
+	test_insert();
+	//test_erase();
 	//test_vector();
 
 	return (0);

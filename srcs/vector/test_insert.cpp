@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 22:42:31 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 15:09:24 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 22:49:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,50 +17,82 @@ void	test_insert(void)
 
   PRINT("TEST INSERT()");
 
-  M_NAMESPACE::vector<int>    v(10);
+  M_NAMESPACE::vector<int>    v;
 
-  v[1] = 2;
-/*
-  M_NAMESPACE::vector<int> myvector (3,100);
-  M_NAMESPACE::vector<int>::iterator it;
+  // v.insert(v.begin(), -421);
+  // v.insert(v.begin(), -422);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
+  // v.insert(v.begin(), -423);
 
-  std::vector<int> stdmyvector (3,100);
-  std::vector<int>::iterator stdit;
+  // print_all_functions(v);
+  // print_all_value(v);
 
-  print_all_value(stdmyvector, myvector);
-  print_all_functions(stdmyvector, myvector);
-
-  it = myvector.begin();
-  it = myvector.insert ( it , 200 );
-
-  stdit = stdmyvector.begin();
-  stdit = stdmyvector.insert( stdit , 200 );
   
-  print_all_value(stdmyvector, myvector);
-  print_all_functions(stdmyvector, myvector);
-  
+  int   tab[] = {100, 200, 300, 400, 500, 600, 700, 800, 900};
 
-  myvector.insert (it,2,300);
-  stdmyvector.insert (stdit,2,300);
-  PRINT(*it);
+  PRINT("insert (begin, 3, 5) on empty vector");
+  v.insert(v.begin(), 3, 5);
+  print_all_functions(v);
+  print_all_value(v);
 
-  print_all_value(stdmyvector, myvector);
-  print_all_functions(stdmyvector, myvector);
+  PRINT("insert (end(), 42)");
 
-  // "it" no longer valid, get a new one:
-  it = myvector.begin();
+  v.insert(v.end(), 42);
+  print_all_functions(v);
+  print_all_value(v);
 
-  M_NAMESPACE::vector<int> anothervector (2,400);
-  myvector.insert (it+2,anothervector.begin(),anothervector.end());
+  PRINT("insert (end(),0, 666)");
 
-  int myarray [] = { 501,502,503 };
-  myvector.insert (myvector.begin(), myarray, myarray+3);
+  v.insert(v.end(),0,  666);
+  print_all_functions(v);
+  print_all_value(v);
 
-  std::cout << "myvector contains:";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-  	std::cout << ' ' << *it;
-  std::cout << '\n';
-*/
+
+  PRINT("insert (begin(), -42)  twice");
+
+  v.insert(v.begin(), -421);
+  v.insert(v.begin(), -422);
+  v.insert(v.begin(), -423);
+  print_all_functions(v);
+  print_all_value(v);
+
+  PRINT("insert (begin(), iterator first, iterator last) [200 et 300]");
+
+  v.insert(v.begin(), tab + 1, tab + 3);
+  print_all_functions(v);
+  print_all_value(v);
+
+    PRINT("insert (end(), iterator first, iterator last) [500 et 600]");
+
+  v.insert(v.end(), tab + 4, tab + 6);
+  print_all_functions(v);
+  print_all_value(v);
+
+
+   PRINT("insert (end() - 4, 100");
+
+  v.insert(v.end() - 4, *(tab + 0));
+  print_all_functions(v);
+  print_all_value(v);
+
+
+   PRINT("insert (begin() + 1, iterator [700 800 900");
+
+  v.insert(v.begin() + 1 , tab + 6, tab + 8);
+  print_all_functions(v);
+  print_all_value(v);
+
+
   PRINT(SEP_FUNCTIONS);
 }
 

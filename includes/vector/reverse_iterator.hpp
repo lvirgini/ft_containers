@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:17:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 15:26:21 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/27 23:12:57 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ class reverse_iterator
 		typename ft::iterator_traits<Iterator>::pointer,
 		typename ft::iterator_traits<Iterator>::reference >
 {
-	private:
 
+	private:
 		typedef ft::iterator_traits<Iterator>				_traits_type;
 		Iterator	_current;
 
@@ -48,7 +48,7 @@ class reverse_iterator
 	: _current()
 	{}
 
-	explicit	reverse_iterator(Iterator x)
+	explicit	reverse_iterator(iterator_type x)
 	: _current(x)
 	{}
 
@@ -65,7 +65,7 @@ class reverse_iterator
 	~reverse_iterator(void)
 	{}
 
-	Iterator	base(void) const
+	iterator_type	base(void) const
 	{
 		return this->_current;
 	}
@@ -84,10 +84,6 @@ class reverse_iterator
       operator->() const
       { return std::__addressof(operator*()); }
 
-		// pointer	operator->(void) const
-		// {
-		// 	return (&(this->operator*()));
-		// }
 
 	// pointer				operator->() const	////
 	// {
