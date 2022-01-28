@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 23:59:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:46:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sstream>
 # include "vector_iterator.hpp"
 # include "reverse_iterator.hpp"
+# include "usefull.hpp"
 
 /*
 ** ISO : class vector p.508
@@ -91,7 +92,6 @@ class vector
 		explicit vector(size_type n, const value_type & val = value_type(), const Allocator & alloc = Allocator())
 		: _size(n), _capacity(n), _allocator(alloc)
 		{
-
 			this->_first = _m_allocate(n);
 			_m_fill(this->_first, n, val);
 		}
@@ -103,9 +103,9 @@ class vector
 	*/
 
 		vector(const vector & copy)
-		: _size(0), _capacity(0), _first(NULL), _allocator(copy.get_allocator()) 
+		: _size(0), _capacity(0), _first(pointer()), _allocator(Allocator()) 
 		{
-			this->assign(copy.begin(), copy.end());
+			this->insert(this->begin(), copy.begin(), copy.end());
 		}
 
 	/*
@@ -115,12 +115,12 @@ class vector
 	**		in the same order.
 	*/
 
-		template <class InputIterator> // enable if ? a test
+		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const Allocator & alloc = Allocator(), 
 			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
-		: _size(0), _capacity(0), _allocator(alloc)
+		: _size(0), _capacity(0), _first(pointer()), _allocator(alloc)
 		{
-			this->assign(first, last);
+			this->insert(this->begin(), first, last);
 		}
 
 		
@@ -148,10 +148,7 @@ class vector
 		vector	&	operator=(const vector & copy)
 		{
 			if (this != &copy)
-			{
-				this->clear();
 				this->assign(copy.begin(), copy.end());
-			}
 			return (*this);
 		}
 
@@ -170,6 +167,8 @@ class vector
 		void 			assign(InputIterator first, InputIterator last, 
 			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
 		{
+			if (first > last)
+				throw std::bad_alloc();  /// si reverse iterator ???
 			this->clear();
 			this->insert(this->begin(), first, last);
 		}
@@ -181,6 +180,8 @@ class vector
 
 		void 			assign(size_type n, const value_type & val)
 		{
+			if (n != 0)
+				_check_new_size(n);
 			this->clear();
 			this->insert(this->begin(), n, val);
 		}
@@ -337,7 +338,7 @@ class vector
 		{
 			pointer		new_ptr;
 
-			if (_check_reserve(n))
+			if (_check_new_size(n))
 				return ;
 			new_ptr = _m_allocate(n);
 			for (size_type i = 0; i < this->size(); i++)
@@ -437,13 +438,14 @@ class vector
 	/*
 	**	pop_back()
 	**		destroys the last element in the vector.
+	**		normaly not protected in stl
 	*/
 
 		void		pop_back(void)
 		{
 			if (this->_size > 0)
 			{
-				this->erase(this->end() - 1);/// PROTECTED 
+				this->_allocator.destroy(this->_first + this->_size - 1);
 				this->_size--;
 			}
 		}
@@ -471,13 +473,14 @@ class vector
 		void		insert(iterator position, size_type n, const value_type & val)
 		{
 			difference_type pos_index = position - this->begin();
+			size_type		old_size = this->_size;
 			bool			is_in_the_end = (position.base() == this->end().base());
 			
 			if (n == 0)
 				return ;
 			_check_capacity_for_insert(this->_size + n);
 			position = this->begin() + pos_index;
-			if (n == this->_size && is_in_the_end == false)
+			if (old_size > 0 && is_in_the_end == false)
 				_move_elements_to_the_end(this->_first + this->_size - 1, n, this->_first + pos_index);
 				// _move_elements_to_the_end(this->rend(), n, this->rbegin() - pos_index);
 			_m_fill(this->begin() + pos_index, n, val);
@@ -489,6 +492,7 @@ class vector
 		{
 			difference_type pos_index = position - this->begin();
 			difference_type size_insert = last - first;
+			size_type		old_size = this->_size;
 			bool			is_in_the_end = position == this->end();
 
 
@@ -496,7 +500,7 @@ class vector
 				return ;
 			_check_capacity_for_insert(size_insert + this->_size);
 			position = this->begin() + pos_index;
-			if (size_insert == this->_size && is_in_the_end == false)
+			if (old_size > 0 && is_in_the_end == false)
 				_move_elements_to_the_end(this->_first + this->_size - 1, size_insert, this->_first + pos_index + 1);
 				// _move_elements_to_the_end(this->rend(), size_insert, this->rbegin() - pos_index);
 			 for(;first != last; first++, position++)
@@ -518,20 +522,22 @@ class vector
 
 		iterator	erase(iterator first, iterator last)
 		{
-			size_type	size_to_erase = last - first;
-			size_type	index = this->begin() - first;
-			size_type	new_size = this->size() - size_to_erase;
-
-			for (size_type i = index; i < size_to_erase; i++)
-				this->_allocator.destroy(this->_first + i);
-
-			for (size_type i = index; i < new_size; i++)
+			iterator 	position = first;
+			size_type	size_erased = 0;
+	
+			if (first != last)
 			{
-				this->_allocator.construct(this->_first + i, *(this->_first + i + size_to_erase));
-				this->_allocator.destroy(this->_first + i + size_to_erase);
+				for (;first != last; size_erased++, first++)
+					this->_allocator.destroy(first.base());
+				first = position;
+				for (iterator end = this->end(); last != end; last++, first++)
+				{
+					this->_allocator.construct(first.base(), *last);
+					this->_allocator.destroy(last.base());
+				}
+				this->_size -= size_erased;
 			}
-			this->_size = new_size;
-			return (first);
+			return (position);
 		}
 
 		iterator	erase(iterator position)
@@ -539,6 +545,8 @@ class vector
 			if (position + 1 != this->end())
 				return (this->erase(position, position + 1));
 			this->_allocator.destroy(position.base());
+			this->_size--;
+			return this->end();
 		}
 
 
@@ -579,10 +587,10 @@ class vector
 		}
 
 
-		bool	_check_reserve(size_type new_size) const
+		bool	_check_new_size(size_type new_size) const
 		{
 			if (new_size > this->max_size())
-				throw std::length_error("vector::reserve");
+				throw std::length_error("vector::_check_new_size");
 			if (new_size <= this->capacity())
 				return true;
 			return false;
@@ -623,6 +631,8 @@ class vector
 
 		void	_move_elements_to_the_end(pointer end, size_type size_insert, pointer position)
 		{
+			if (size_insert == this->_size)
+				return ;
 			for (size_type i = 0; (end - i) > position; i++)
 			{
 				this->_allocator.construct(end - i, *(end - i - size_insert));
@@ -647,14 +657,16 @@ class vector
 // Fichier : stl_iterator.h
 // std::reverse_iterator<std::vector<int, std::allocator<int>>::iterator>::iterator_type base() const
 
-		void	_move_elements_to_the_end(reverse_iterator end, size_type size_insert, reverse_iterator position)
-		{
-			for (; end != position; end++)
-			{
-				this->_allocator.construct(end.base().base(), *(end.base().base() + size_insert));
-				this->_allocator.destroy(end.base().base() + size_insert);
-			}
-		 }
+		// void	_move_elements_to_the_end(reverse_iterator end, size_type size_insert, reverse_iterator position)
+		// {
+		// 	if (size_insert == this->_size)
+		// 		return ;
+		// 	for (; end != position; end++)
+		// 	{
+		// 		this->_allocator.construct(end.base().base(), *(end.base().base() + size_insert));
+		// 		this->_allocator.destroy(end.base().base() + size_insert);
+		// 	}
+		//  }
 };
 
 /*
@@ -685,12 +697,12 @@ bool operator!=(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs)
 {
 	return !(lhs == rhs);
 }
-/*
+
 template <class T, class Allocator>
 bool operator< (const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs)
 {
-		//lexicographical_compare
-}*/
+	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
 
 template <class T, class Allocator>
 bool operator> (const vector<T,Allocator>& lhs,const vector<T,Allocator>& rhs)

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 23:14:13 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/28 16:35:11 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ class	vector_iterator
 	vector_iterator(const vector_iterator <__Iter, Container> & i)
 	: _current(i.base())
 	{}
-/*
-	template <typename __Iter>
-	vector_iterator(const vector_iterator <__Iter,typename ft::remove_const<Container>::type> & i)
-	: _current(i.base())
-	{}*/
+
+	// template <typename __Iter>
+	// vector_iterator(const vector_iterator <__Iter, typename ft::remove_const<Container>::type> & i)
+	// : _current(i.base())
+	// {}
 
 	~vector_iterator(void)
 	{}

@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/01/27 17:29:14 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/01/28 19:46:18 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ NAMESTD = std_containers
 
 INC_DIR	=	includes includes/map includes/stack includes/vector includes/iterator
 INCLUDE	=	ft_stl.hpp \
+			usefull.hpp \
 			printer.tpp \
 			type_traits.hpp \
 			vector.hpp \
@@ -36,6 +37,9 @@ SRC		= 	main.cpp \
 			test_empty.cpp \
 			test_vector.cpp \
 			test_insert.cpp \
+			test_push_pop.cpp \
+			test_operator.cpp \
+			test_assign.cpp \
 			test_erase.cpp
 			
 OBJ_DIR =	obj/

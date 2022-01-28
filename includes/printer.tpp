@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 11:07:36 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 15:43:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/28 13:17:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,3 +100,9 @@ void	print_all_value(std::vector<T> & STD, ft::vector<T> & FT)
 	std::cout << std::endl;
 }
 
+template <typename T>
+void	print_vector(M_NAMESPACE::vector<T> & v)
+{
+	print_all_functions(v);
+	print_all_value(v);
+}

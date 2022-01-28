@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:42:33 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 20:20:53 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/28 16:06:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,32 @@ void	test_erase(void)
 	for (int i = 0; i < 10; i++)
 		v[i] = i * 11;
 
-	print_all_value(v);
-	print_all_functions(v);
+	print_vector(v);
+
+	// PRINT("erase( end(), begin()");
+	// v.erase(v.end(), v.begin());
+	// print_vector(v);
+
 
 	PRINT("erase( end() - 1");
 	v.erase(v.end() -1);
-	print_all_value(v);
-	print_all_functions(v);
+	print_vector(v);
 
 	PRINT("erase( begin()");
-	v.erase(v.end() -1);
-	print_all_value(v);
-	print_all_functions(v);
+	v.erase(v.begin());
+	print_vector(v);
+
+	PRINT("erase( begin() + 5");
+	v.erase(v.begin() + 5);
+	print_vector(v);
+
+	PRINT("erase( begin() + 5, end()");
+	v.erase(v.begin() + 5, v.end());
+	print_vector(v);
+
+	PRINT("erase( begin(), begin() + 2");
+	v.erase(v.begin(), v.begin() + 2);
+	print_vector(v);
 
 // 	PRINT("TEST VECTOR.ERASE");
 // 	std::vector<int>	std_insert(10, 10);

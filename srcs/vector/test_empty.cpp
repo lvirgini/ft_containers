@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 11:05:53 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 15:25:46 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/28 13:18:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void	test_empty(void)
 		std::cerr << e.what() << std::endl;
 	}
 
-	print_all_value(empty);
-	print_all_functions(empty);
+	print_vector(empty);
 
 	PRINT(SEP_FUNCTIONS);
 }
