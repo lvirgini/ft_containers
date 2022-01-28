@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 19:46:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/29 00:02:21 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -549,8 +549,18 @@ class vector
 			return this->end();
 		}
 
+	/*
+	**	swap()
+	**		exchanges the content of the container by the content of x 
+	**		which is another vector object of the same type. 
+	*/
 
-		// void		swap(vector<T, Allocator> &); // ??
+		void		swap(vector & x)
+		{
+			vector tmp(*this);
+			*this = x;
+			x = *this;
+		}
 
 
 	/*
@@ -671,25 +681,15 @@ class vector
 
 /*
 **	Comparaison : 
-**
 */
 
 template <class T, class Allocator>
 inline bool operator==(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs)
 {
-	typename ft::vector<T, Allocator>::iterator lhs_it;
-	typename ft::vector<T, Allocator>::iterator rhs_it;
-	typename ft::vector<T, Allocator>::iterator lhs_ite;
 	
 	if (lhs.size() != rhs.size())
 		return (false);
- 	lhs_ite = lhs.end();
-	for (lhs_it = lhs.begin(), rhs_it = rhs.begin(); lhs_it != lhs_ite; lhs_it++, lhs_it++)
-	{
-		if (*lhs_it != *rhs_it)
-			return (false);
-	}
-	return (true);
+	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 }
 
 template <class T, class Allocator>
@@ -724,8 +724,10 @@ bool operator<=(const vector<T,Allocator>& lhs,const vector<T,Allocator>& rhs)
 
 // specialized algorithms:
 template <class T, class Allocator>
-void swap(vector<T,Allocator>& lhs, vector<T,Allocator>& rhs);
-
+void swap(vector<T,Allocator>& lhs, vector<T,Allocator>& rhs)
+{
+	lhs.swap(rhs);
+}
 
 } // end of namespace ft
 
