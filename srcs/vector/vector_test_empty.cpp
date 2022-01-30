@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 11:05:53 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 13:18:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:33:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
 
-void	test_empty(void)
+void	vector_test_empty(void)
 {
 	PRINT("TESTING EMPTY VECTOR ");
 

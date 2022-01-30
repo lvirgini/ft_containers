@@ -6,13 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 13:24:56 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 14:08:31 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:33:42 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	test_assign(void)
+void	vector_test_assign(void)
 {
 	PRINT("TESTING ASSIGN()");
 

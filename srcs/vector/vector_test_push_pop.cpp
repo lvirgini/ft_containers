@@ -6,13 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 11:52:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 13:24:17 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:34:25 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	test_push_pop(void)
+void	vector_test_push_pop(void)
 {
 	PRINT("TESTING PUSH POP");
 

@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/01/28 19:46:18 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/01/30 19:29:43 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 NAME 	= ft_containers
 NAMESTD = std_containers
 
-INC_DIR	=	includes includes/map includes/stack includes/vector includes/iterator
+INC_DIR	=	includes includes/map includes/stack includes/vector includes/others
 INCLUDE	=	ft_stl.hpp \
 			usefull.hpp \
 			printer.tpp \
@@ -31,16 +31,17 @@ INCLUDE	=	ft_stl.hpp \
 			
 HEADERS =	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
 
-SRC_DIR	=	srcs srcs/vector
+SRC_DIR	=	srcs srcs/vector srcs/stack
 SRC		= 	main.cpp \
-			test_iterator.cpp \
-			test_empty.cpp \
-			test_vector.cpp \
-			test_insert.cpp \
-			test_push_pop.cpp \
-			test_operator.cpp \
-			test_assign.cpp \
-			test_erase.cpp
+			vector_test_iterator.cpp \
+			vector_test_empty.cpp \
+			vector_test_vector.cpp \
+			vector_test_insert.cpp \
+			vector_test_push_pop.cpp \
+			vector_test_operator.cpp \
+			vector_test_assign.cpp \
+			vector_test_erase.cpp \
+			stack_test.cpp
 			
 OBJ_DIR =	obj/
 OBJ_DIRSTD =	objstd/

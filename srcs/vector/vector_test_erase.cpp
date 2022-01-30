@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_erase.cpp                                     :+:      :+:    :+:   */
+/*   vector_test_erase.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:42:33 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 16:06:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:41:22 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	test_erase(void)
+void	vector_test_erase(void)
 {
 	PRINT("TEST ERASE");
 

@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 16:23:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 16:35:37 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:34:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
 
-void	test_operator(void)
+void	vector_test_operator(void)
 {
 	PRINT("TESTING OPERATOR");
 

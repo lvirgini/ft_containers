@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 10:13:03 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:27:36 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_TRAIT_HPP
-# define ITERATOR_TRAIT_HPP
+#ifndef ITERATOR_TRAITS_HPP
+# define ITERATOR_TRAITS_HPP
 
-
+# include <iterator>
 namespace ft {
 
 /*

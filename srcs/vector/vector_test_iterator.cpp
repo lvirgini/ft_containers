@@ -6,13 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:13:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 23:23:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:34:14 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	test_iterator(void)
+void	vector_test_iterator(void)
 {
 	PRINT("TESTING ITERATOR && CONST ITERATOR");
 
@@ -130,7 +130,7 @@ void	test_iterator(void)
 
 
 
-void	test_reverse_iterator(void)
+void	vector_test_reverse_iterator(void)
 {
 	PRINT("TESTING REVERSE ITERATOR && CONST REVERSE ITERATOR");
 

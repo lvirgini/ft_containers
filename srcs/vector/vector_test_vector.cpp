@@ -6,13 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/25 11:27:18 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:34:30 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	test_vector(void)
+void	vector_test_vector(void)
 {
 	int test[] = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 

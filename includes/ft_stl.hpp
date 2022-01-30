@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 19:56:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:29:52 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 #  define STR_NAMESPACE	"std"
 # endif
 
-#include <vector>
-#include <iostream>
-#include <cstring>
-#include "vector.hpp"
+# include <vector>
+# include <iostream>
+# include <cstring>
+# include "vector.hpp"
+# include "stack.hpp"
 
 # define SEP	" | "
 # define SEP_FUNCTIONS "\n* -------------------------------------------------------------------------- *"
@@ -54,15 +55,18 @@ void	print_vector(M_NAMESPACE::vector<T> & v);
 ** Function TEST
 */
 
-void	test_iterator(void);
-void	test_reverse_iterator(void);
-void	test_empty(void);
-void	test_erase(void);
-void	test_vector(void);
-void	test_insert(void);
-void	test_push_pop(void);
-void	test_assign(void);
-void	test_operator(void);
+void	vector_test_iterator(void);
+void	vector_test_reverse_iterator(void);
+void	vector_test_empty(void);
+void	vector_test_erase(void);
+void	vector_test_vector(void);
+void	vector_test_insert(void);
+void	vector_test_push_pop(void);
+void	vector_test_assign(void);
+void	vector_test_operator(void);
+
+
+void	stack_test(void);
 
 
 

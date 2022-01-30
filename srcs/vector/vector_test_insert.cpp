@@ -6,13 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 22:42:31 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 22:49:19 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:33:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	test_insert(void)
+void	vector_test_insert(void)
 {
 
   PRINT("TEST INSERT()");
