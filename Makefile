@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/01/30 19:29:43 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/03/22 14:56:36 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,34 +17,65 @@
 NAME 	= ft_containers
 NAMESTD = std_containers
 
-INC_DIR	=	includes includes/map includes/stack includes/vector includes/others
-INCLUDE	=	ft_stl.hpp \
-			usefull.hpp \
-			printer.tpp \
-			type_traits.hpp \
-			vector.hpp \
-			vector_iterator.hpp \
-			reverse_iterator.hpp \
-			iterator_traits.hpp \
-			map.hpp	\
-			stack.hpp
-			
-HEADERS =	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
 
-SRC_DIR	=	srcs srcs/vector srcs/stack
-SRC		= 	main.cpp \
-			vector_test_iterator.cpp \
-			vector_test_empty.cpp \
-			vector_test_vector.cpp \
-			vector_test_insert.cpp \
-			vector_test_push_pop.cpp \
-			vector_test_operator.cpp \
-			vector_test_assign.cpp \
-			vector_test_erase.cpp \
-			stack_test.cpp
+# Includes
+# ----------------- #
+INC_DIR	=	includes \
+			includes/map \
+			includes/stack \
+			includes/vector \
+			includes/others \
+			includes/iterator \
+			includes/red_black_tree 
+
+INCLUDE	=	$(INC_MAP) $(INC_VECTOR) $(INC_STACK) $(INC_UTILS)\
+				ft_stl.hpp \
+				printer.tpp \
+
+INC_STACK	=	stack.hpp \
+
+INC_VECTOR	=	vector.hpp \
+
+INC_MAP 	=	map.hpp	\
+
+INC_UTILS 	=	usefull.hpp \
+				type_traits.hpp \
+				iterator_traits.hpp \
+				normal_iterator.hpp \
+				reverse_iterator.hpp \
+				RedBlacktree.hpp \
+				TreeNode.hpp \
+				pair.hpp \
+				
 			
-OBJ_DIR =	obj/
-OBJ_DIRSTD =	objstd/
+HEADERS 	=	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
+
+
+# Sources
+# ----------------- #
+
+SRC_DIR		=	srcs srcs/vector srcs/stack srcs/map
+
+SRC			= 	$(SRC_VECTOR) $(SRC_STACK) $(SRC_MAP) main.cpp \
+
+SRC_VECTOR	=	vector_test_iterator.cpp \
+				vector_test_empty.cpp \
+				vector_test_vector.cpp \
+				vector_test_insert.cpp \
+				vector_test_push_pop.cpp \
+				vector_test_operator.cpp \
+				vector_test_assign.cpp \
+				vector_test_erase.cpp \
+
+SRC_STACK	=	stack_test.cpp \
+
+SRC_MAP 	=	test_map.cpp \
+				test_rbtree.cpp 
+
+# Obj
+# ----------------- #	
+OBJ_DIR		=	obj/
+OBJ_DIRSTD	=	objstd/
 
 OBJ 	=	$(addprefix $(OBJ_DIR),$(SRC:%.cpp=%.o))
 OBJ_STD =	$(addprefix $(OBJ_DIRSTD),$(SRC:%.cpp=%.o))

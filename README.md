@@ -14,9 +14,9 @@ Rules:
 		- les non-membres 
 		- les overloads
 		- les iterators
-			iterators_traits
+			iterators_traits				OK
 			reverse_iterator
-			enable_if
+			enable_if						OK
 			is_integral
 			equal/lexicographical compare
 			std ::pair
@@ -35,11 +35,16 @@ Rules:
 
 	//// iterator with two template		OK
 
-	//// reverse_iterator
+	//// reverse_iterator				OK
 
 	//// ~destroy vector alloc			OK
 
-	//// ALL functions
+	//// ALL functions 
+				swap
+				push_back to check
+				operator <
+				constructor iterator
+
 
 
 Notes: 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_iterator.cpp                                  :+:      :+:    :+:   */
+/*   vector_test_iterator.cpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:13:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 17:34:14 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:17:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	vector_test_iterator(void)
 
 	int		size = 5;
 
-	M_NAMESPACE::vector<int>					v(size);
+	M_NAMESPACE::vector<int> 					v(size);
+	
+
 	M_NAMESPACE::vector<int>::iterator			it = v.begin();
-	M_NAMESPACE::vector<int>::const_iterator	cit = v.begin();
+	M_NAMESPACE::vector<int>::const_iterator	cit = it;
 
 
 /* -------------------------------------------------------------------------- */
@@ -102,7 +104,7 @@ void	vector_test_iterator(void)
 
 	
 	*(it) = 42;
-	//*(cit) = 42; cannot work for const OK
+	// *(cit) = 42; //cannot work for const OK
 	std::cout << "*it = 42 : " << *it << SEP << *cit << std::endl;
 
 	*(it + 1) = 12;

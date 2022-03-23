@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_test_constructor.cpp                         :+:      :+:    :+:   */
+/*   stack_test..cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:35:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 19:29:14 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/31 11:13:41 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stl.hpp"
 
-void	stack_test_constructor(void)
+void	stack_test(void)
 {
 	std::vector<int>		v;
 

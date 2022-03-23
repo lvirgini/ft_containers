@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:17:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/27 23:12:57 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:34:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 
-# include "vector_iterator.hpp"
+# include "normal_iterator.hpp"
 
 namespace ft {
 
@@ -87,7 +87,7 @@ class reverse_iterator
 
 	// pointer				operator->() const	////
 	// {
-	// 	return (_current - 1);
+	// 	return &(operator*());
 	// }
 
 	reference			operator[](difference_type	n) const /////

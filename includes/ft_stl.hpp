@@ -6,12 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 19:29:52 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/18 12:10:04 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_STL_HPP
 # define FT_STL_HPP
+
 
 # ifndef M_NAMESPACE
 #  define M_NAMESPACE	ft
@@ -23,10 +24,14 @@
 # endif
 
 # include <vector>
-# include <iostream>
+# include <stack>
+# include <map>
 # include <cstring>
+# include <iostream>
+
 # include "vector.hpp"
 # include "stack.hpp"
+# include "map.hpp"
 
 # define SEP	" | "
 # define SEP_FUNCTIONS "\n* -------------------------------------------------------------------------- *"
@@ -68,6 +73,8 @@ void	vector_test_operator(void);
 
 void	stack_test(void);
 
+void	test_node();
+void	test_pair();
 
 
 # include "printer.tpp"

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/29 00:02:21 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:30:57 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <memory>
 # include <stdexcept>
 # include <sstream>
-# include "vector_iterator.hpp"
+
+# include "normal_iterator.hpp"
 # include "reverse_iterator.hpp"
 # include "usefull.hpp"
 
@@ -54,9 +55,9 @@ class vector
 		typedef T &										reference;
 		typedef const T &								const_reference;
 
-		typedef ft::vector_iterator<pointer, vector>		iterator;
-		typedef ft::vector_iterator<const_pointer, vector>	const_iterator;
-		typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		typedef ft::normal_iterator<pointer, vector>		iterator;
+		typedef ft::normal_iterator<const_pointer, vector>	const_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 	private:
@@ -145,7 +146,7 @@ class vector
 	**		the allocator is not modified.
 	*/
 
-		vector	&	operator=(const vector & copy)
+		vector	&	operator=( vector & copy)
 		{
 			if (this != &copy)
 				this->assign(copy.begin(), copy.end());

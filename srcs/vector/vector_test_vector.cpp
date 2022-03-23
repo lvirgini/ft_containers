@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_vector.cpp                                    :+:      :+:    :+:   */
+/*   vector_test_vector.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 17:34:30 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:09:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,14 @@ void	vector_test_vector(void)
 //	std_v.resize(5, 3);
 
 
-	ft::vector<int> foo (3,0);
-	ft::vector<int> bar (5,0);
+	// ft::vector<int> foo (3,0);
+	// ft::vector<int> bar (5,0);
 
-	bar = foo;
-	foo = ft::vector<int>();
+	// bar = foo;
+	// foo = ft::vector<int>();
 
-	std::cout << "Size of foo: " << int(foo.size()) << '\n';
-	std::cout << "Size of bar: " << int(bar.size()) << '\n';
+	// std::cout << "Size of foo: " << int(foo.size()) << '\n';
+	// std::cout << "Size of bar: " << int(bar.size()) << '\n';
 	PRINT(SEP_FUNCTIONS);
 
 }

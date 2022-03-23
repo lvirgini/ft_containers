@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:08 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 19:06:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:27:21 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ template<typename _Tp1 , typename _Seq1 > bool operator< (const stack< _Tp1, _Se
 template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _Seq1 > &, const stack< _Tp1, _Seq1 > &)
 */
 {
-	template <typename T, class Container = std::deque<T> >
+	template <typename T, class Container = ft::vector<T> >
 	class stack
 	{
 		public:
