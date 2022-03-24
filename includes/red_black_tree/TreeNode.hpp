@@ -62,7 +62,7 @@ namespace ft
 		Node(const_reference copy)
 		: color(copy.color), parent(copy.parent), left(copy.left), right(copy.right), data(copy.data)
 		{
-			this = copy;
+			// this = copy;
 		}
 
 		reference		operator=(const_reference other)

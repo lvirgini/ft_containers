@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/23 15:04:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:50:26 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ namespace ft
 	// IMPLEMENTATION ITERATORS
 
 
-	template <typename Key, typename Value, typename Compare = ft::less<Key>, typename Node_Alloc = std::allocator< ft::pair<Key, Value> > >
+	template <typename Key, typename Value, typename Compare = ft::less<Key>, typename Node_Alloc = std::allocator < ft::Node < ft::pair<Key, Value> > > >
 	class Rb_tree
 	{
 			public:
@@ -145,37 +145,37 @@ namespace ft
 				}
 
 
-				bool	_insert(node_pointer	to_add)
-				{
-					if (_root == NULL)
-					{
-						_root = to_add;
-						return (true) ;
-					}
-					return (_root._insert_next(to_add));
-					node_pointer current = _root;
-					if (to_add < current)
-					{
-						if (current->left == NULL)
-						{
-							current->set_left(to_add);
-							to_add->set_parent(current);
-							return (true);
-						}
-						return (current->left._insert_next(to_add);
-					}
-					if (to_add == current)
-						return (false);
-					while to_add > current
+				// bool	_insert(node_pointer	to_add)
+				// {
+				// 	if (_root == NULL)
+				// 	{
+				// 		_root = to_add;
+				// 		return (true) ;
+				// 	}
+				// 	return (_root._insert_next(to_add));
+				// 	// node_pointer current = _root;
+				// 	// if (to_add < current)
+				// 	// {
+				// 	// 	if (current->left == NULL)
+				// 	// 	{
+				// 	// 		current->set_left(to_add);
+				// 	// 		to_add->set_parent(current);
+				// 	// 		return (true);
+				// 	// 	}
+				// 	// 	return (current->left._insert_next(to_add);
+				// 	// }
+				// 	// if (to_add == current)
+				// 	// 	return (false);
+				// 	// while to_add > current
 					
 					
-					(current->right == NULL)
-					{
-						current->set_right(to_add);
-						to_add->set_parent(current);
-						return (true);
-					}
-
+				// 	// (current->right == NULL)
+				// 	// {
+				// 	// 	current->set_right(to_add);
+				// 	// 	to_add->set_parent(current);
+				// 	// 	return (true);
+				// 	// }
+				// }
 
 				bool	_insert_next(node_pointer to_add)
 				{
@@ -191,7 +191,7 @@ namespace ft
 							to_add->set_parent(current);
 							return (true);
 						}
-						return (current->left._insert_next(to_add);
+						return (current->left._insert_next(to_add));
 					}
 					else
 					{
@@ -201,10 +201,60 @@ namespace ft
 							to_add->set_parent(current);
 							return (true);
 						}
-						return (current->right.insert_next(to_add))
+						return (current->right.insert_next(to_add));
 					}
 					return false ;
 				}
+
+
+				// INSERT FROM introduction to Algorithms:
+
+				bool	_insert(node_pointer to_add)
+				{
+					node_pointer	current = _root;
+					node_pointer	parent = NULL;
+
+					while (current != NULL)
+					{
+						parent = current;
+						if (to_add < current)
+							current = current->left;
+						else
+							current = current->right;
+					}
+
+					to_add->parent = parent;
+					if (parent == NULL)
+						_root = to_add;
+					else if to_add < parent
+						parent->left = to_add;
+					else
+						parent->right = to_add;
+					to_add->left = NULL;
+					to_add->right = NULL;
+					to_add->color = RED;
+					_insert_fixup(to_add);
+					return (true);
+				}
+
+
+				bool	insert_fixup(node_pointer to_add)
+				{
+
+					node_pointer aunt;
+					node_pointer 
+
+					while (to_add->color == RED)
+					{
+						if (to_add->parent->is_left())
+							aunt = to->add->parent.get_aunt();
+						if aunt->color == RED
+						{
+							to_add
+						}
+					}
+				}
+
 
 
 				bool	insert_left(node_pointer to_add)
@@ -216,7 +266,7 @@ namespace ft
 				}
 
 
-				}
+
 
 
 				void	printer()

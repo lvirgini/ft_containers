@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/18 12:10:04 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/24 09:50:16 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	print_vector(M_NAMESPACE::vector<T> & v);
 ** Function TEST
 */
 
+
+/* Vector */
 void	vector_test_iterator(void);
 void	vector_test_reverse_iterator(void);
 void	vector_test_empty(void);
@@ -70,9 +72,11 @@ void	vector_test_push_pop(void);
 void	vector_test_assign(void);
 void	vector_test_operator(void);
 
-
+/* stack */
 void	stack_test(void);
 
+
+/* map */
 void	test_node();
 void	test_pair();
 
