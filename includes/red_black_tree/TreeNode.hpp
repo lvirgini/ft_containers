@@ -186,13 +186,28 @@ namespace ft
 			return result->parent;
 		}
 
-		pointer		_get_most_left()
+		pointer		get_most_left()
 		{
 			pointer	result = this;
 
 			while (result->left != NULL)
 				result = result->left;
 			return (result);
+		}
+
+		pointer		get_most_right()
+		{
+			pointer result = this;
+
+			while (result->right != NULL)
+				result = result->right;
+			return (result);
+		}
+
+		pointer	get_grand_parent()
+		{
+			if (this->parent != NULL)
+				return (this->parent->parent);
 		}
 
 		void		set_parent(pointer o_parent)

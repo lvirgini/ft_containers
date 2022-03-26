@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/24 16:50:26 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/26 16:14:12 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,74 +145,88 @@ namespace ft
 				}
 
 
-				// bool	_insert(node_pointer	to_add)
-				// {
-				// 	if (_root == NULL)
-				// 	{
-				// 		_root = to_add;
-				// 		return (true) ;
-				// 	}
-				// 	return (_root._insert_next(to_add));
-				// 	// node_pointer current = _root;
-				// 	// if (to_add < current)
-				// 	// {
-				// 	// 	if (current->left == NULL)
-				// 	// 	{
-				// 	// 		current->set_left(to_add);
-				// 	// 		to_add->set_parent(current);
-				// 	// 		return (true);
-				// 	// 	}
-				// 	// 	return (current->left._insert_next(to_add);
-				// 	// }
-				// 	// if (to_add == current)
-				// 	// 	return (false);
-				// 	// while to_add > current
-					
-					
-				// 	// (current->right == NULL)
-				// 	// {
-				// 	// 	current->set_right(to_add);
-				// 	// 	to_add->set_parent(current);
-				// 	// 	return (true);
-				// 	// }
-				// }
-
-				bool	_insert_next(node_pointer to_add)
+				void	_insert(node_pointer	to_add)
 				{
-					node_pointer current = this;
-
-					if (to_add == current)
-						return (false);
-					if (to_add < current)
+					if (_root == NULL)
 					{
-						if (current->left == NULL)
-						{
-							current->set_left(to_add);
-							to_add->set_parent(current);
-							return (true);
-						}
-						return (current->left._insert_next(to_add));
+						_root = to_add;
+						to_add->color = BLACK;
 					}
 					else
-					{
-						if (current->right == NULL)
-						{
-							current->set_right(to_add);
-							to_add->set_parent(current);
-							return (true);
-						}
-						return (current->right.insert_next(to_add));
-					}
-					return false ;
+						_root->_insert_not_empty(to_add);
+					// return (_root._insert_next(to_add));
+					// node_pointer current = _root;
+					// if (to_add < current)
+					// {
+					// 	if (current->left == NULL)
+					// 	{
+					// 		current->set_left(to_add);
+					// 		to_add->set_parent(current);
+					// 		return (true);
+					// 	}
+					// 	return (current->left._insert_next(to_add);
+					// }
+					// if (to_add == current)
+					// 	return (false);
+					// while to_add > current
+					
+					
+					// (current->right == NULL)
+					// {
+					// 	current->set_right(to_add);
+					// 	to_add->set_parent(current);
+					// 	return (true);
+					// }
 				}
+
+				// bool	_insert_next(node_pointer to_add)
+				// {
+				// 	node_pointer current = _root;
+				// 	node_pointer parent;
+
+					
+				// 	// while (current != NULL)
+				// 	// {
+				// 	// 	parent = current;
+				// 	// 	if (to_add < current)
+				// 	// 		current = current->left;
+				// 	// 	else
+				// 	// 		current = current->right;
+				// 	// }
+
+				// 	// if (to_add == current)
+				// 	// 	return (false);
+				// 	if (to_add < current)
+				// 	{
+				// 		if (current->left == NULL)
+				// 		{
+				// 			current->set_left(to_add);
+				// 			to_add->set_parent(current);
+				// 			return (true);
+				// 		}
+				// 		return (current->left._insert_next(to_add));
+				// 	}
+				// 	else
+				// 	{
+				// 		if (current->right == NULL)
+				// 		{
+				// 			current->set_right(to_add);
+				// 			to_add->set_parent(current);
+				// 			return (true);
+				// 		}
+				// 		return (current->right.insert_next(to_add));
+				// 	}
+				// 	return false ;
+				// }
 
 
 				// INSERT FROM introduction to Algorithms:
+				//		go to lef
 
-				bool	_insert(node_pointer to_add)
+				void	_insert_not_empty(node_pointer to_add)
 				{
-					node_pointer	current = _root;
 					node_pointer	parent = NULL;
+					node_pointer	current = _root;
 
 					while (current != NULL)
 					{
@@ -222,39 +236,170 @@ namespace ft
 						else
 							current = current->right;
 					}
-
 					to_add->parent = parent;
-					if (parent == NULL)
-						_root = to_add;
-					else if to_add < parent
+					if (to_add < parent)
 						parent->left = to_add;
 					else
 						parent->right = to_add;
-					to_add->left = NULL;
-					to_add->right = NULL;
-					to_add->color = RED;
 					_insert_fixup(to_add);
-					return (true);
 				}
 
+				// if node and parent are red : 
+				//		if aunt of node is red : push black to grandparent
+				// 		else
+							// if node is left : left_rotate
+							// else right rotate
+	
 
-				bool	insert_fixup(node_pointer to_add)
+				bool	insert_fixup(node_pointer current)
 				{
-
 					node_pointer aunt;
-					node_pointer 
-
-					while (to_add->color == RED)
+					
+					while (current != NULL && current->parent->color == RED)
 					{
-						if (to_add->parent->is_left())
-							aunt = to->add->parent.get_aunt();
-						if aunt->color == RED
+						aunt = current->get_aunt();
+						if (current->parent->is_left())
 						{
-							to_add
+							if (aunt->color == RED)
+							{
+								current->parrent->color = BLACK;
+								aunt->color = BLACK;
+								current = current->get_grand_parent();
+								current->color = RED;
+							}
+							else if (current->is_right())
+							{
+								current = current->parent();
+								current->left_rotate();
+							}
+							else
+							{
+								current->parent->color = BLACK;
+								current = current->get_grand_parent();
+								current->color = RED;
+								current->right_rotate();
+							}
+						}
+						else
+						{
+							if (aunt->color == RED)
+							{
+								current->parrent->color = BLACK;
+								aunt->color = BLACK;
+								current = current->get_grand_parent();
+								current->color = RED;
+							}
+							else if (current->is_left())
+							{
+								current = current->parent();
+								current->right_rotate();
+							}
+							current->parent->color = BLACK;
+							current = current->get_grand_parent();
+							current->color = RED;
+							current->left_rotate();
 						}
 					}
+					_root->color = BLACK;
+					// while ((parent = current->parent) && parent->color == RED)
+					// {
+					// 	aunt = current->get_aunt();
+					// 	grand_parent = current->get_grand_parent();
+						
+
+					// 	if (parent->is_left())
+					// 	{
+					// 		if (aunt->color == RED)
+					// 		{
+					// 			parent->color = BLACK;
+					// 			aunt->color = BLACK;
+					// 			grand_parent->color = RED;
+					// 			current = grand_parent;
+					// 		}
+					// 		else if (current->is_right())
+					// 		{
+					// 			current = parent;
+					// 			current->left_rotate();
+					// 		}
+					// 		parent->color = BLACK;
+					// 		grand_parent->color = BLACK;
+					// 		grand_parent->right_rotate();
+					// 	}
+					// 	else 
+					// 	{
+
+					// 		aunt = parent.get_aunt();
+					// 		if (aunt->color == RED)
+					// 		{
+					// 			parent->color = BLACK;
+					// 			aunt->color = BLACK;
+					// 			grand_parent->color = RED;
+					// 			current = grand_parent;
+					// 		}
+					// 		else if (current->is_left())
+					// 		{
+					// 			current = parent;
+					// 			current->right_rotate();
+					// 		}
+					// 		parent->color = BLACK;
+					// 		grand_parent->color = BLACK;
+					// 		grand->parent->left_rotate();
+					// 	}
+					// }
+					return true;
 				}
 
+
+
+
+// left_rotate:
+// 					x										y
+// 			x.l				y						x				y.r
+// 						y.l		y.r				x.l		y.l	
+
+
+void		left_rotate(node_pointer x)
+{
+	node_pointer y = x->right;
+
+	x->right = y->left;
+	if (y->left != NULL)
+		y->left->parent = x;
+	y->left = x;
+	y->parent = x->parent;
+	if (x->parent == NULL)
+		_root = y;
+	else if (x->is_left())
+		x->parent->left = y;
+	else
+		x->parent->right = y;
+	x->parent = y;
+}
+
+// right_rotate:
+// 					x								y
+// 			y			x.r					y.l				x
+// 	y.l			y.r										y.r		x.r
+
+
+
+void		right_rotate(node_pointer x)
+{
+	node_pointer y = x->left;
+
+	x->left = y->right;
+	if (y->right != NULL)
+		y->right->parent = x;
+	y->right = x;
+	y->parent = x->parent;
+	if (x->parent == NULL)
+		_root = y;
+	else if (x->is_left())
+		x->parent->left = y;
+	else
+		x->parent->right = y;
+	x->parent = y;
+}
 
 
 				bool	insert_left(node_pointer to_add)
@@ -264,9 +409,6 @@ namespace ft
 					// reagence color
 					// rotate or not
 				}
-
-
-
 
 
 				void	printer()
@@ -288,7 +430,7 @@ namespace ft
 				// 	return node_pointer();
 				// }
 
-				node_pointer	_m_allocate_node(const key_type & key, const value_type & value)
+				node_pointer	_m_allocate_node(const key_type & key, const key_value_type & value)
 				{
 					return _m_allocate_node(make_pair(key, value));
 				}
@@ -301,16 +443,6 @@ namespace ft
 					return node;
 				}
 
-
-				
-		
-				// void	insert(const pointer node)
-				// {
-					
-				// }
-
-
-				// void	insert(const )
 
 				node_pointer	minimum()
 				{
