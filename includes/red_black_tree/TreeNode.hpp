@@ -13,9 +13,30 @@
 #ifndef TREE_NODE_HPP
 # define TREE_NODE_HPP
 
-
+#include <functional>
 namespace ft
 {
+
+	//   /// One of the @link comparison_functors comparison functors@endlink.
+//   template<typename _Tp>
+//     struct less : public binary_function<_Tp, _Tp, bool>
+//     {
+//       _GLIBCXX14_CONSTEXPR
+//       bool
+//       operator()(const _Tp& __x, const _Tp& __y) const
+//       { return __x < __y; }
+//     };
+
+	
+	template < typename T>
+	struct less
+	{
+		bool	operator()(const T & x, const T & y) const
+		{
+			return (x < y);
+		}
+	};
+
 	enum rb_tree_color
 	{
 		RED,
@@ -23,12 +44,10 @@ namespace ft
 	};
 
 
-	template <typename Value>
+	template <typename Value >
+	// template <typename Value, typename Compare = ft::less< Value> >
 	struct Node
 	{
-		// typedef ft::Node		pointer;
-		// typedef const ft::Node	const_pointer;
-
 		typedef Node *			pointer;
 		typedef const Node *	const_pointer;
 		typedef Node &			reference;
@@ -40,30 +59,29 @@ namespace ft
 		pointer			left;
 		pointer			right;
 		value_type		data;
+		// Compare			comp;
 	
 		
 	/* -------------------------------------------------------------------------- */
 	/*                     Constructor Destructor                                 */
 	/* -------------------------------------------------------------------------- */
 	
-		Node()
-		: color(BLACK), parent(NULL), left(NULL), right(NULL), data()
-		{};
+		// Node()
+		// : color(BLACK), parent(NULL), left(NULL), right(NULL), data()
+		// {}
 
 		Node(const value_type & o_data, pointer o_parent = NULL, pointer o_left = NULL, pointer o_right = NULL)
 		: color(RED), parent(o_parent), left(o_left), right(o_right), data(o_data)
-		{};
+		{}
 
 
 		~Node()
-		{};
+		{}
 
 		
 		Node(const_reference copy)
 		: color(copy.color), parent(copy.parent), left(copy.left), right(copy.right), data(copy.data)
-		{
-			// this = copy;
-		}
+		{}
 
 		reference		operator=(const_reference other)
 		{
@@ -79,6 +97,12 @@ namespace ft
 		}
 
 
+		// bool			operator<(const_reference other)
+		// {
+		// 	return comp(this->data, other.data);
+		// }
+
+
 		bool		is_left()
 		{
 			if (this->parent != NULL && this->parent->left == this)
@@ -89,15 +113,65 @@ namespace ft
 		bool		is_right()
 		{
 			if (this->parent != NULL && this->parent->right == this)
-				return (true);
-			return (false);
+				return true;
+			return false;
 		}
 
 
 		void	print()
 		{
-			std::cout << data.first << " " << data.second << std::endl;
+			std::cout << "THIS = " << this->data.first << " " << (color ? "black" : "red");
+			if (this->parent == NULL)
+				std::cout << " is root" << std::endl;
+			else if (is_left())
+				std::cout << " is left" << std::endl;
+			else
+				std::cout << " is right" << std::endl;
+
+
+			if (this->parent)
+				std::cout << "parent = " << this->parent->data.first << std::endl;
+			if (this->get_sister() != NULL)
+				std::cout << "sister = " << this->get_sister()->data.first << std::endl;
+			if (left)
+				std::cout << "left = " << this->left->data.first << std::endl;
+			if (right)
+				std::cout << "right = " << this->right->data.first << std::endl;
+			std::cout << std::endl;
 		}
+
+		// void	print(int	generation = 0)
+		// {
+		// 	pointer	sister = get_sister();
+			
+		// 	if (parent != NULL)
+		// 	{
+		// 		parent->print(generation + 1);
+		// 		// if (parent->is_right())
+		// 		// {
+		// 		// 	for (int i = 0; i < (generation + 1) *2; i++)
+		// 		// 		std::cout << "	";
+		// 		// }
+		// 	}	
+		// 	for (int i = 0; i <= generation; i++)
+		// 		std::cout << "	";
+		// 	if (parent == NULL || is_left())
+		// 		std::cout << data.first;
+		// 	else if (sister != NULL)
+		// 		std::cout << sister->data.first;
+		// 	for (int i = 0; i <= generation; i++)
+		// 		std::cout << "	";
+		// 	if (is_right())
+		// 		std::cout << data.first;
+		// 	else if (sister != NULL)
+		// 		std::cout << sister->data.first;
+		// 	std::cout << std::endl;
+		// 	if (is_right() && generation != 0)
+		// 	{
+		// 		for (int i = 0; i <= generation * 2; i++)
+		// 		std::cout << "	";
+		// 	}
+		// }
 
 
 
@@ -175,12 +249,12 @@ namespace ft
 		// }
 
 		
-		pointer		_increment()
+		pointer		increment()
 		{
 			pointer	result = this;
 
 			if (result->right != NULL)
-				return result->right->_get_most_left();
+				return result->right->get_most_left();
 			while (result->is_right())
 				result = result->parent;
 			return result->parent;
@@ -204,48 +278,50 @@ namespace ft
 			return (result);
 		}
 
+
+		pointer		get_sister()
+		{
+			if (this->parent == NULL)
+				return (NULL);
+			if (this->is_left())
+				return (this->parent->right);
+			else
+				return (this->parent->left);	
+		}
+
+
+		pointer		get_aunt()
+		{
+
+			if (this->parent == NULL)
+				return (NULL);
+			return this->parent->get_sister();
+		}
+
+
 		pointer	get_grand_parent()
 		{
 			if (this->parent != NULL)
 				return (this->parent->parent);
+			return (NULL);
 		}
 
-		void		set_parent(pointer o_parent)
-		{
-			this->parent = o_parent;
-		}
+		// void		set_parent(pointer o_parent)
+		// {
+		// 	this->parent = o_parent;
+		// }
 
-		void		set_left(pointer o_left)
-		{
-			this->left = o_left;
-		}
+		// void		set_left(pointer o_left)
+		// {
+		// 	this->left = o_left;
+		// }
 
-		void		set_right(pointer o_right)
-		{	
-			this->right = o_right;
-		}
-
-		
-		// begin = most_left from root
-		// end = most right fromm root
-
-
-
-
-		// decrement
-
-
-
+		// void		set_right(pointer o_right)
+		// {	
+		// 	this->right = o_right;
+		// }
 	};
-
-
-
-
-
 
 } // end namespace ft
 
-
-
 #endif
-
