@@ -127,8 +127,6 @@ namespace ft
 				std::cout << " is left" << std::endl;
 			else
 				std::cout << " is right" << std::endl;
-
-
 			if (this->parent)
 				std::cout << "parent = " << this->parent->data.first << std::endl;
 			if (this->get_sister() != NULL)

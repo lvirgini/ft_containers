@@ -109,15 +109,6 @@ void	test_tree_in_progression()
 	node4.print();
 	node5.print();
 
-	PRINT("left rotate : node 1");
-
-	tree._left_rotate(&node1);
-	node1.print();
-	node2.print();
-	node3.print();
-	node4.print();
-	node5.print();
-
 
 }
 

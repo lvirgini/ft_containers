@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/29 17:26:25 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/29 19:22:21 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ class Rb_tree
 	private:
 
 		node_pointer		_root;
+		// node_pointer		_null_node;
 		node_pointer		_first;
 		node_pointer		_last;
 		size_type			_tree_size;
@@ -164,7 +165,7 @@ class Rb_tree
 				parent->left = to_add;
 			else
 				parent->right = to_add;
-			// _insert_fixup(to_add);
+			_insert_fixup(to_add);
 		}
 
 
@@ -186,17 +187,18 @@ class Rb_tree
 		{
 			node_pointer aunt;
 			
-			while (current != NULL && current->parent->color == RED)
+			while (current != NULL && current->parent != NULL && current->parent->color == RED)
 			{
 				aunt = current->get_aunt();
 				if (current->parent->is_left())
 				{
-					if (aunt->color == RED)
+					if (aunt && aunt->color == RED)
 					{
 						current->parent->color = BLACK;
 						aunt->color = BLACK;
 						current = current->get_grand_parent();
-						current->color = RED;
+						if (current)
+							current->color = RED;
 					}
 					else if (current->is_right())
 					{
@@ -207,28 +209,40 @@ class Rb_tree
 					{
 						current->parent->color = BLACK;
 						current = current->get_grand_parent();
-						current->color = RED;
-						_right_rotate(current);
+						if (current)
+						{
+							current->color = RED;
+							_right_rotate(current);
+						}
 					}
 				}
 				else
 				{
-					if (aunt->color == RED)
+					if (aunt && aunt->color == RED)
 					{
 						current->parent->color = BLACK;
 						aunt->color = BLACK;
 						current = current->get_grand_parent();
-						current->color = RED;
+						if (current)
+							current->color = RED;
 					}
 					else if (current->is_left())
 					{
 						current = current->parent;
-						_right_rotate(current->parent);
+						if (current)
+							_right_rotate(current->parent);
 					}
-					current->parent->color = BLACK;
-					current = current->get_grand_parent();
-					current->color = RED;
-					_left_rotate(current);
+					else
+					{
+
+						current->parent->color = BLACK;
+						current = current->get_grand_parent();
+						if (current)
+						{
+							current->color = RED;
+							_left_rotate(current);
+						}
+					}
 				}
 			}
 			_root->color = BLACK;
