@@ -2,6 +2,40 @@
 
 #include <map>
 
+
+template < typename T>
+typename ft::Rb_tree<T>::reference		create_tree()
+{
+	ft::Rb_tree< ft::pair<int, std::string> >	tree;
+
+	// Init pair of value
+	ft::pair<int, std::string> value5(5, "E");
+	ft::pair<int, std::string> value4(4, "D");
+	ft::pair<int, std::string> value3(3, "C");
+	ft::pair<int, std::string> value2(2, "B");
+	ft::pair<int, std::string> value1(1, "A");
+	ft::pair<int, std::string> value6(6, "A");
+	ft::pair<int, std::string> value8(8, "A");
+	ft::pair<int, std::string> value0(0, "A");
+	ft::pair<int, std::string> value1m(-1, "A");
+
+
+	tree.insert(value1);
+	tree.insert(value2);
+	tree.insert(value3);
+	tree.insert(value4);
+	tree.insert(value5);
+	tree.insert(value6);
+	tree.insert(value0);
+	tree.insert(value8);
+	tree.insert(value1m);
+
+
+return (tree);
+
+
+}
+
 // Testing nodes functions in codage progression
 void	test_node_in_progression()
 {
@@ -100,57 +134,70 @@ void	test_tree_in_progression()
 	ft::pair<int, std::string> value1m(-1, "A");
 
 	// init nodes
-	ft::Node< ft::pair<int, std::string> >	node1(value1);
-	ft::Node< ft::pair<int, std::string> >	node2(value2);
-	ft::Node< ft::pair<int, std::string> >	node3(value3);
-	ft::Node< ft::pair<int, std::string> >	node4(value4);
-	ft::Node< ft::pair<int, std::string> >	node5(value5);
-	ft::Node< ft::pair<int, std::string> >	node6(value0);
-	ft::Node< ft::pair<int, std::string> >	node7(value1m);
-	ft::Node< ft::pair<int, std::string> >	node8(value8);
-	ft::Node< ft::pair<int, std::string> >	node9(value6);
+	// ft::Node< ft::pair<int, std::string> >	node1(value1);
+	// ft::Node< ft::pair<int, std::string> >	node2(value2);
+	// ft::Node< ft::pair<int, std::string> >	node3(value3);
+	// ft::Node< ft::pair<int, std::string> >	node4(value4);
+	// ft::Node< ft::pair<int, std::string> >	node5(value5);
+	// ft::Node< ft::pair<int, std::string> >	node6(value0);
+	// ft::Node< ft::pair<int, std::string> >	node7(value1m);
+	// ft::Node< ft::pair<int, std::string> >	node8(value8);
+	// ft::Node< ft::pair<int, std::string> >	node9(value6);
 
-	tree.insert(&node1);
-	tree.insert(&node2);
-	tree.insert(&node3);
-	tree.insert(&node4);
-	tree.insert(&node5);
-	tree.insert(&node6);
-	tree.insert(&node7);
-	tree.insert(&node8);
-	tree.insert(&node9);
+	// tree.insert(&node1);
+	// tree.insert(&node2);
+	// tree.insert(&node3);
+	// tree.insert(&node4);
+	// tree.insert(&node5);
+	// tree.insert(&node6);
+	// tree.insert(&node7);
+	// tree.insert(&node8);
+	// tree.insert(&node9);
 
-	// tree.insert(ft::pair<int, std::string>(6, "C"));
+	tree.insert(value1);
+	tree.insert(value2);
+	tree.insert(value3);
+	tree.insert(value4);
+	tree.insert(value5);
+	tree.insert(value6);
+	tree.insert(value0);
+	tree.insert(value8);
+	tree.insert(value1m);
 
 	// testing print : 
-	node1.print();
-	node2.print();
-	node3.print();
-	node4.print();
-	node5.print();
-	node6.print();
-	node7.print();
-	node8.print();
-	node9.print();
-
-	return;
+	// node1.print();
+	// node2.print();
+	// node3.print();
+	// node4.print();
+	// node5.print();
+	// node6.print();
+	// node7.print();
+	// node8.print();
+	// node9.print();
 
 	// testing print all
 	PRINT(SEP_FUNCTIONS);
 	std::cout << std::endl;
-	tree.begin()->print();
-	tree.end()->print();
-	tree.begin()->increment()->print();
+	tree.minimum()->print();
+	tree.maximum()->print();
+	tree.minimum()->increment()->print();
 
 
 	PRINT(SEP_FUNCTIONS);
 	PRINT("ALL TREE");
-	ft::Node< ft::pair<int, std::string> > *node_begin = tree.begin();
-	ft::Node< ft::pair<int, std::string> > *node_end = tree.end();
+	ft::Node< ft::pair<int, std::string> > *node_begin = tree.minimum();
+	// ft::Node< ft::pair<int, std::string> > *node_end = tree.maximum();
 
 	for (; node_begin != NULL; node_begin = node_begin->increment())
 		node_begin->print();
+
+
+	tree.display();
+
+
 }
+
+
 
 void	test_node()
 {

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/14 11:30:57 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:10:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,7 +566,7 @@ class vector
 
 	/*
 	**	clear()
-	**		removes all elements wich are destroyed, leaving the ccontainer empty.
+	**		removes all elements wich are destroyed, leaving the container empty.
 	*/
 
 		void		clear(void)

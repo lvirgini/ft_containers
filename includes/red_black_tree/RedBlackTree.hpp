@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/30 11:17:18 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:52:00 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define REDBLACKTREE_HPP
 
 # include <memory>
+# include <cmath>
+
 # include "TreeNode.hpp"
 # include "pair.hpp"
 
@@ -73,7 +75,7 @@ class Rb_tree
 		// typedef	ft::pair< value >	value_type;
 
 		typedef	Value					value_type;
-		typedef ft::Node<value_type >			node_type;
+		typedef ft::Node<value_type>	node_type;
 
 		typedef	node_type *			node_pointer;
 		typedef	const node_type *	const_node_pointer;
@@ -84,16 +86,25 @@ class Rb_tree
 		typedef	ptrdiff_t			difference_type;
 		typedef	Node_Alloc			node_allocator;
 
+		typedef Rb_tree *			pointer;
+		typedef const Rb_tree *		const_pointer;
+		typedef Rb_tree &			reference;
+		typedef const Rb_tree &		const_reference;
+
+		typedef ft::normal_iterator<pointer, Rb_tree>		iterator;
+		typedef ft::normal_iterator<const_pointer, Rb_tree>	const_iterator;
+
 	private:
 
 		node_pointer		_root;
-		// node_pointer		_null_node;
-		node_pointer		_first;
-		node_pointer		_last;
 		size_type			_tree_size;
 		node_allocator		_allocator;
 		Compare				_comp;
 
+		// node_pointer		_null_node;
+		// node_pointer		_first;
+		// node_pointer		_last;
+		
 	/* -------------------------------------------------------------------------- */
 	/*                     Constructor Destructor                                 */
 	/* -------------------------------------------------------------------------- */
@@ -101,24 +112,158 @@ class Rb_tree
 	public:
 
 		Rb_tree(const node_allocator & alloc = node_allocator(), const Compare & comp = Compare())
-		: _root(NULL), _first(NULL), _last(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
+		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
 		{};
 
 		Rb_tree(node_pointer first, const node_allocator & alloc = node_allocator(), const Compare & comp = Compare())
 		: _tree_size(1), _allocator(alloc), _comp(comp)
 		{
 			_root = m_allocate_node(first);
-			_first = _root;
-			_last = _root;
 		}
 
 		// Rb_tree(const Rb_tree & copy) ;
 
-		// operator=
 
 		~Rb_tree()
 		{
-			// destroy and deallocate
+			this->clear();
+		}
+
+/* -------------------------------------------------------------------------- */
+/*                               PRINT                                        */
+/* -------------------------------------------------------------------------- */
+
+		#define STR_BLACK "\033[0m"
+		#define STR_RED "\033[31m"
+
+
+		void	display()
+		{
+			if (_root == NULL)
+				return ;
+
+			int level = 0;
+			bool finished = false;
+
+
+
+			_print_space(level);
+			finished = _print_level(_root, 0, level++);
+			std::cout << std::endl;
+
+			_print_space(level);
+			finished = _print_level(_root, 0, level++);
+			std::cout << std::endl;
+
+			_print_space(level);
+			finished = _print_level(_root, 0, level++);
+			std::cout << std::endl;
+
+			_print_space(level);
+			finished = _print_level(_root, 0, level++);
+			std::cout << std::endl;
+
+			// _print(_root->left, 1);
+			// _print(_root->right, 1);
+
+
+			// finished = _print_level(_root, 0, level);
+
+
+			// while (finished == false)
+			// {
+			// 	finished = _print_level(_root, 0, level);
+			// 	level++;
+				std::cout << std::endl;
+			// }
+
+			// _print(_root, this->_tree_size, 0);
+		}
+
+		bool 	_print_level(node_pointer current, int actual_level, int level_to_print)
+		{
+			bool left = false;
+			bool right = false;
+			if (current == NULL)
+			{
+				_print(NULL, level_to_print);
+				return false;
+			}
+			if (actual_level != level_to_print)
+			{
+				left = _print_level(current->left, actual_level + 1, level_to_print);
+				right = _print_level(current->right, actual_level + 1, level_to_print);
+			}
+			else
+				_print(current, actual_level);
+			if (right == false && left == false)
+				return false;
+			return true;
+
+
+
+			// static int to_print = 0;
+
+			// if (current == _root)
+			// 	to_print = 0;
+			// if (current != NULL && actual_level != to_print)
+			// {
+			// 	if (current->left)
+			// 		_print_level(current->left, actual_level + 1, level_to_print);
+			// 	if (current->right)
+			// 		_print_level(current->right, actual_level + 1, level_to_print);
+			// }
+			// else if (actual_level == level_to_print)
+			// {
+			// 	_print(current->left, actual_level);
+			// 	_print(current->right, actual_level);
+			// }
+			// if (current != NULL)
+			// 	to_print++;
+			// if (to_print > 0)
+			// 	return (false);
+			// return (true);
+		}
+
+		void	_print_space(int level)
+		{
+			if (level == 0)
+			{
+				for (size_t i = 0; i < _tree_size; i++)
+					std::cout << " ";
+			}
+			else
+			{
+				for (size_t i = 0; i < (_tree_size) / std::pow(2, level); i++)
+					std::cout << " ";
+			}
+		}
+
+	
+		void	_print(node_pointer current, int level)
+		{
+
+			_print_space(level);
+			if (current == NULL)
+				std::cout << STR_BLACK << ".";
+			else
+			{
+				std::string color = current->color == RED ? STR_RED: STR_BLACK;
+				std::cout << color << current->data.first;
+			}
+			_print_space(level);
+		}
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                         Assignation / modifiers                            */
+/* -------------------------------------------------------------------------- */
+		// operator=
+
+		void	clear()
+		{
+			_clear_forward(_root);
 		}
 
 
@@ -133,17 +278,135 @@ class Rb_tree
 		void	insert(node_pointer	to_add)
 		{
 			if (_root == NULL)
-			{
 				_root = to_add;
-				to_add->color = BLACK;
-			}
 			else
 				_insert_not_empty(to_add);
+			_root->color = BLACK;
+			_tree_size++;
 		}
 
 
+		node_pointer	minimum()
+		{
+			return _root->get_most_left();
+		}
 
-	//private:
+		node_pointer maximum()
+		{
+			return _root->get_most_right();
+		}
+
+/* -------------------------------------------------------------------------- */
+/*                                Iterator                                    */
+/* -------------------------------------------------------------------------- */
+
+	/*
+	** begin()
+	**		return an iterator pointing to the first element in the tree.
+	*/
+
+		iterator	begin()
+		{
+			return iterator(_root->get_most_left());
+		}
+
+		const_iterator	begin() const 
+		{
+			return const_iterator(_root->get_most_left());
+		}
+
+	/*
+	**	end()
+	**		Return an iterator reffering to the past-the_end element in the tree.
+	**		past-the-end is last element + 1 theorical element.
+	**		that means it shall not be be dereferenced.
+	**		in the tree it meens parent of root -> NULL
+	*/
+
+		iterator	end()
+		{
+			// ou NULL ???
+			return iterator(_root->get_most_right()->increment());
+		}
+
+		const_iterator	end() const
+		{
+			// ou NULL ???
+			return const_iterator(_root->get_most_right()->increment());
+		}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Capacity                                    */
+/* -------------------------------------------------------------------------- */
+
+	/*
+	**	size()
+	**		Return current size : the number of elements in the tree
+	*/
+
+		size_type	size() const
+		{
+			return this->_tree_size;
+		}
+
+	/*
+	**	max_size()
+	**		Returns the maximum number of elements that the vector can hold.
+	*/
+
+		size_type	max_size(void) const
+		{
+			return (this->_allocator.max_size());
+		}
+		
+
+	/*
+	**	empty()
+	**		Returns true if the tree is empty.
+	*/
+
+		bool	empty() const
+		{
+			return (_root == NULL);
+		}
+
+
+		// void	erase(iterator pos);
+		// void	erase(const key_type & x);
+		// void	erase(iterator first, iterator last);
+
+		// void	clear();
+
+		// iterator find(const key_type & x);
+		// const_iterator find(const key_type & x) const ;
+
+
+		// // divers map return rb_tree functions
+		// key_compare	key_comp() const ;
+		// value_compare	value_comp() const ;
+
+
+		// size_type count(const key_type & x) const ;
+
+		// iterator lower_bound(const key_type & x) ;
+		// const_iterator lower_bound(const key_type & x) const ;
+
+		// 	iterator upper_bound(const key_type & x) ;
+		// const_iterator upper_bound(const key_type & x) const ;
+
+		// ft::pair<iterator, iterator> equal_range(const key_type & x);
+		// ft::pair<const_iterator, const_iterator> equal_range(const key_type & x) const ;
+
+
+// predecessor : before
+// successor : next
+// minimum
+// maximum
+// insert
+// delete / erase
+
+	private:
 
 		// INSERT FROM introduction to Algorithms:
 
@@ -166,12 +429,7 @@ class Rb_tree
 			else
 				parent->right = to_add;
 			_insert_fixup(to_add);
-			_root->color = BLACK;
 		}
-
-
-
-
 
 		// if node and parent are red : 
 		//CAS1:		if aunt of node is red : push black to grandparent
@@ -184,7 +442,7 @@ class Rb_tree
 		// Case 3: z ́’s uncle y is black and  ́z is a left child
 
 
-		bool	_insert_fixup(node_pointer current)
+		void	_insert_fixup(node_pointer current)
 		{
 			node_pointer aunt;
 			
@@ -246,8 +504,6 @@ class Rb_tree
 					}
 				}
 			}
-			_root->color = BLACK;
-			return true;
 		}
 
 
@@ -307,24 +563,6 @@ class Rb_tree
 		}
 
 
-		bool	insert_left(node_pointer to_add)
-		{
-			this->set_left(to_add);
-			to_add->set_parent(this);
-			// reagence color
-			// rotate or not
-		}
-
-
-		void	printer()
-		{
-			_first->print();
-		}
-
-		void	print_node(node_reference node)
-		{
-			node.print();
-		}
 		// node_pointer	_m_allocate_node(node_pointer node)
 		// {
 		// 	if (node != NULL)
@@ -347,80 +585,20 @@ class Rb_tree
 			_allocator.construct(node, value);
 			return node;
 		}
-
-
-		node_pointer	minimum()
-		{
-			return _first ;
-		}
-
-		node_pointer maximum()
-		{
-			return _last ;
-		}
-
-		bool	empty() const
-		{
-			return (_root == NULL);
-		}
-
-		size_type	size() const
-		{
-			return this->size;
-		}
-
-		node_pointer	begin() const 
-		{
-			return _root->get_most_left();
-		}
-
-		node_pointer	end() const
-		{
-			return _root->get_most_right();
-		}
-
 		
-		// size_type	max_size() const
-		// {
-		// 	return this->_allocator.
-		// }
-
-		// void	erase(iterator pos);
-		// void	erase(const key_type & x);
-		// void	erase(iterator first, iterator last);
-
-		// void	clear();
-
-		// iterator find(const key_type & x);
-		// const_iterator find(const key_type & x) const ;
-
-
-		// // divers map return rb_tree functions
-		// key_compare	key_comp() const ;
-		// value_compare	value_comp() const ;
-
-
-		// size_type count(const key_type & x) const ;
-
-		// iterator lower_bound(const key_type & x) ;
-		// const_iterator lower_bound(const key_type & x) const ;
-
-		// 	iterator upper_bound(const key_type & x) ;
-		// const_iterator upper_bound(const key_type & x) const ;
-
-		// ft::pair<iterator, iterator> equal_range(const key_type & x);
-		// ft::pair<const_iterator, const_iterator> equal_range(const key_type & x) const ;
-
-
-
-// insert
-// predecessor : before
-// successor : next
-// minimum
-// maximum
-// insert
-// delete / erase
-
+		/*
+		** Clear all element behind current (usefull only for clear all is not a RB tree after ...)
+		*/
+		
+		void	_clear_forward(node_pointer current)
+		{
+			if (current->left != NULL)
+				_clear_forward(current->left);
+			if (current->right != NULL)
+				_clear_forward(current->right);
+			_allocator.destroy(current);
+			_allocator.deallocate(current, 1);
+		}
 
 };
 
