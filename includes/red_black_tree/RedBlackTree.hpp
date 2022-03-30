@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/29 19:22:21 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/03/30 11:17:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ class Rb_tree
 			else
 				parent->right = to_add;
 			_insert_fixup(to_add);
+			_root->color = BLACK;
 		}
 
 
@@ -230,7 +231,7 @@ class Rb_tree
 					{
 						current = current->parent;
 						if (current)
-							_right_rotate(current->parent);
+							_right_rotate(current);
 					}
 					else
 					{
@@ -368,6 +369,17 @@ class Rb_tree
 			return this->size;
 		}
 
+		node_pointer	begin() const 
+		{
+			return _root->get_most_left();
+		}
+
+		node_pointer	end() const
+		{
+			return _root->get_most_right();
+		}
+
+		
 		// size_type	max_size() const
 		// {
 		// 	return this->_allocator.

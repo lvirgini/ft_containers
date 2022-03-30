@@ -6,15 +6,17 @@
 void	test_node_in_progression()
 {
 
-	ft::pair<int, std::string>		test(1, "A");
-	ft::pair<int, std::string>		test2(2, "F");
+	ft::pair<int, std::string>		test(3, "A");
+	ft::pair<int, std::string>		test2(3, "A");
+	ft::pair<int, std::string>		test3(3, "C");
 
 		// test < test2.
 
 	ft::less< ft::pair<int, std::string> > ft_less;
 
-	std::cout << "less =>" << ft_less(test, test2) << std::endl;
-
+	std::cout << "less (3,A)(3,A) =>" << ft_less(test, test2) << std::endl;
+	std::cout << "less (3,A)(3,C) =>" << ft_less(test, test3) << std::endl;
+	PRINT(SEP_FUNCTIONS);
 
 
 	// Init pair of value
@@ -34,6 +36,8 @@ void	test_node_in_progression()
 
 	// test less
 	std::cout << "less(node1, node2) = " << ft_less(node1.data, node2.data) << std::endl;
+	PRINT(SEP_FUNCTIONS);
+
 
 	// making genealogic link
 	node2.left = &node1;
@@ -51,6 +55,8 @@ void	test_node_in_progression()
 
 	// testing print : 
 	node5.print();
+	PRINT(SEP_FUNCTIONS);
+
 	
 	// testing functions node.
 	std::cout << "node2 :" << std::endl;
@@ -77,7 +83,7 @@ void	test_node_in_progression()
 
 void	test_tree_in_progression()
 {
-
+	PRINT(SEP_FUNCTIONS);
 	PRINT("TREE TESTING");
 	
 	ft::Rb_tree< ft::pair<int, std::string> >	tree;
@@ -88,6 +94,10 @@ void	test_tree_in_progression()
 	ft::pair<int, std::string> value3(3, "C");
 	ft::pair<int, std::string> value2(2, "B");
 	ft::pair<int, std::string> value1(1, "A");
+	ft::pair<int, std::string> value6(6, "A");
+	ft::pair<int, std::string> value8(8, "A");
+	ft::pair<int, std::string> value0(0, "A");
+	ft::pair<int, std::string> value1m(-1, "A");
 
 	// init nodes
 	ft::Node< ft::pair<int, std::string> >	node1(value1);
@@ -95,12 +105,22 @@ void	test_tree_in_progression()
 	ft::Node< ft::pair<int, std::string> >	node3(value3);
 	ft::Node< ft::pair<int, std::string> >	node4(value4);
 	ft::Node< ft::pair<int, std::string> >	node5(value5);
+	ft::Node< ft::pair<int, std::string> >	node6(value0);
+	ft::Node< ft::pair<int, std::string> >	node7(value1m);
+	ft::Node< ft::pair<int, std::string> >	node8(value8);
+	ft::Node< ft::pair<int, std::string> >	node9(value6);
 
 	tree.insert(&node1);
 	tree.insert(&node2);
 	tree.insert(&node3);
 	tree.insert(&node4);
 	tree.insert(&node5);
+	tree.insert(&node6);
+	tree.insert(&node7);
+	tree.insert(&node8);
+	tree.insert(&node9);
+
+	// tree.insert(ft::pair<int, std::string>(6, "C"));
 
 	// testing print : 
 	node1.print();
@@ -108,8 +128,28 @@ void	test_tree_in_progression()
 	node3.print();
 	node4.print();
 	node5.print();
+	node6.print();
+	node7.print();
+	node8.print();
+	node9.print();
+
+	return;
+
+	// testing print all
+	PRINT(SEP_FUNCTIONS);
+	std::cout << std::endl;
+	tree.begin()->print();
+	tree.end()->print();
+	tree.begin()->increment()->print();
 
 
+	PRINT(SEP_FUNCTIONS);
+	PRINT("ALL TREE");
+	ft::Node< ft::pair<int, std::string> > *node_begin = tree.begin();
+	ft::Node< ft::pair<int, std::string> > *node_end = tree.end();
+
+	for (; node_begin != NULL; node_begin = node_begin->increment())
+		node_begin->print();
 }
 
 void	test_node()
@@ -118,7 +158,7 @@ void	test_node()
 	test_node_in_progression();
 	test_tree_in_progression();
 
-	ft::Rb_tree<ft::pair<int, std::string> >	tree;
+	// ft::Rb_tree<ft::pair<int, std::string> >	tree;
 
 
 	// std::_Rb_tree<int,
