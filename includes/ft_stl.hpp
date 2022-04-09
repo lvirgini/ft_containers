@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/24 09:50:16 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/09 13:39:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "vector.hpp"
 # include "stack.hpp"
 # include "map.hpp"
+# include "RedBlackTree.hpp"
 
 # define SEP	" | "
 # define SEP_FUNCTIONS "\n* -------------------------------------------------------------------------- *"

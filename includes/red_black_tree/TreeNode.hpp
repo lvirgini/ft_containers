@@ -13,7 +13,7 @@
 #ifndef TREE_NODE_HPP
 # define TREE_NODE_HPP
 
-#include <functional>
+
 namespace ft
 {
 
@@ -54,12 +54,11 @@ namespace ft
 		typedef const Node &	const_reference;
 		typedef Value			value_type;
 
-		rb_tree_color	color;
+		bool			color;
 		pointer			parent;
 		pointer			left;
 		pointer			right;
 		value_type		data;
-		// Compare			comp;
 	
 		
 	/* -------------------------------------------------------------------------- */

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/09 13:43:42 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/09 11:40:54 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ class Rb_tree
 		// operator=
 		// operator++
 		// operator--
+		void	clear();
 
 		void	clear()
 		{
