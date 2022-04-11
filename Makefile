@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/03/22 14:56:36 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/04/11 14:28:32 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ OBJ_STD =	$(addprefix $(OBJ_DIRSTD),$(SRC:%.cpp=%.o))
 #	 COMPILATION	#
 # ----------------- #
 
-CC 		=	clang++
+CC 		=	c++
 
 CFLAG 	= 	-Wall -Wextra -std=c++98 -pedantic -g
 STDFLAG = -D M_NAMESPACE=std

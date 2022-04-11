@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/10 13:35:05 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:27:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ class map
 
 		typedef Rb_tree<value_type, Compare>		tree_type;
 
-		typedef typename Allocator					allocator_type;
+		typedef Allocator					allocator_type;
 		typedef typename Allocator::reference		reference;
 		typedef typename Allocator::const_reference	const_reference;
 		typedef typename Allocator::pointer			pointer;
@@ -203,7 +203,7 @@ class map
 		return _tree.rend();
 	}
 
-	const_reverse_iterator	rend() const ;
+	const_reverse_iterator	rend() const
 	{
 		return _tree.rend();
 	}
