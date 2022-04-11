@@ -45,7 +45,6 @@ namespace ft
 
 
 	template <typename Value >
-	// template <typename Value, typename Compare = ft::less< Value> >
 	struct Node
 	{
 		typedef Node *			pointer;
@@ -137,115 +136,6 @@ namespace ft
 			std::cout << std::endl;
 		}
 
-		// void	print(int	generation = 0)
-		// {
-		// 	pointer	sister = get_sister();
-			
-		// 	if (parent != NULL)
-		// 	{
-		// 		parent->print(generation + 1);
-		// 		// if (parent->is_right())
-		// 		// {
-		// 		// 	for (int i = 0; i < (generation + 1) *2; i++)
-		// 		// 		std::cout << "	";
-		// 		// }
-		// 	}	
-		// 	for (int i = 0; i <= generation; i++)
-		// 		std::cout << "	";
-		// 	if (parent == NULL || is_left())
-		// 		std::cout << data.first;
-		// 	else if (sister != NULL)
-		// 		std::cout << sister->data.first;
-		// 	for (int i = 0; i <= generation; i++)
-		// 		std::cout << "	";
-		// 	if (is_right())
-		// 		std::cout << data.first;
-		// 	else if (sister != NULL)
-		// 		std::cout << sister->data.first;
-		// 	std::cout << std::endl;
-		// 	if (is_right() && generation != 0)
-		// 	{
-		// 		for (int i = 0; i <= generation * 2; i++)
-		// 		std::cout << "	";
-		// 	}
-		// }
-
-
-
-		// reference	get_aunt()
-		// {
-		// 	if (this->parent != NULL && this->parent->parent != NULL)
-		// 	{
-		// 		if this->parent.is
-		// 	}
-		// }
-
-
-		// is left
-		// is right
-		// has aunt
-		// get aunt
-		// get sister
-
-		// increment
-		// {
-			
-		// 	if (this.right != NULL)
-		// 	{
-		// 		this = get_most_left();
-		// 		return this;
-		// 	}
-		// 	if this._is_left()
-		// 	{
-		// 		this = this.parent;
-		// 		return this;
-		// 	}
-		// 	if (this.right == NULL)
-		// 	{
-		// 		if this has_parent() && this is_right()
-		// 			this = this.parent.
-		// 		return (this.increment())
-		// 	}
-
-		// }
-
-		// pointer		_increment()
-		// {
-		// 	if (this->right != NULL)
-		// 	{
-		// 		this = _get_most_left();
-		// 		return (this);
-		// 	}
-		// 	if (this.parent != NULL && this._is_left())
-		// 	{
-		// 		this = this->parent;
-		// 		return (this);
-		// 	}
-		// 	while (this._is_right())
-		// 		this = this->parent;
-		// 	return (this);
-
-		// }
-
-
-		// pointer		_increment()
-		// {
-		// 	if (this->right != NULL)
-		// 	{
-		// 		while (this->left != NULL)
-		// 			this = this->left;
-		// 	}
-		// 		// this = this->right->_get_most_left();
-		// 	else
-		// 	{
-		// 		while (this->is_right())
-		// 			this = this->parent;
-		// 		this = this->parent;
-		// 	}
-		// 	return (this);
-		// }
-
-		
 		pointer		increment()
 		{
 			pointer	result = this;
@@ -303,20 +193,6 @@ namespace ft
 			return (NULL);
 		}
 
-		// void		set_parent(pointer o_parent)
-		// {
-		// 	this->parent = o_parent;
-		// }
-
-		// void		set_left(pointer o_left)
-		// {
-		// 	this->left = o_left;
-		// }
-
-		// void		set_right(pointer o_right)
-		// {	
-		// 	this->right = o_right;
-		// }
 	};
 
 } // end namespace ft

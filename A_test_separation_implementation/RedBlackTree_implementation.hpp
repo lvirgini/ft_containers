@@ -6,15 +6,12 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/09 13:35:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/10 12:13:16 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDBLACKTREE_IMPLEMENTATION_HPP
 # define REDBLACKTREE_IMPLEMENTATION_HPP
-
-# include <memory>
-# include <cmath>
 
 // # include "TreeNode.hpp"
 // # include "RedBlackTree_class.hpp"

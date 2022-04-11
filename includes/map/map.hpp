@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/09 13:43:35 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/10 13:35:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,210 @@ where there is additional semantic information.
 namespace ft
 {
 
-// template < typename Key, typename T, typename Compare = std::less<Key>, class Allocator = std::allocator< ft::pair<const Key, T> > >
-// class map
-// {
+template < typename Key, typename T, typename Compare = ft::less<Key>, class Allocator = std::allocator< ft::pair<const Key, T> > >
+class map
+{
+/* -------------------------------------------------------------------------- */
+	/*
+	** TYPE
+	*/
 
-// 	/*
-// 	** TYPE
-// 	*/
+	public:
+		typedef Key						key_type;
+		typedef T						mapped_type;
+		typedef Compare					key_compare;
+		typedef ft::pair<const Key, T>	value_type;
 
-// 	public:
-// 		typedef Key						key_type;
-// 		typedef T						mapped_type;
-// 		typedef Compare					key_compare;
-// 		typedef ft::pair<const Key, T>	value_type;
-// 		typedef typename Allocator					allocator_type;
-// 		typedef typename Allocator::reference		reference;
-// 		typedef typename Allocator::const_reference	const_reference;
-// 		typedef typename Allocator::pointer			pointer;
-// 		typedef typename Allocator::const_pointer	const_pointer;
+		typedef Rb_tree<value_type, Compare>		tree_type;
+
+		typedef typename Allocator					allocator_type;
+		typedef typename Allocator::reference		reference;
+		typedef typename Allocator::const_reference	const_reference;
+		typedef typename Allocator::pointer			pointer;
+		typedef typename Allocator::const_pointer	const_pointer;
+
+		typedef ft::normal_iterator<pointer, map>		iterator;
+		typedef ft::normal_iterator<const_pointer, map>	const_iterator;
+		typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+
+	/* -------------------------------------------------------------------------- */
+
+	private:
+		Compare		_comp;
+		tree_type	_tree;
+		
+	/* -------------------------------------------------------------------------- */
+	/*                     Constructor Destructor                                  */
+	/* -------------------------------------------------------------------------- */
+
+	public:
+
+	/*
+	** Default constructor create an empty map.
+	*/
+
+		map()
+		: _tree()
+		{}
+
+
+	/*
+	** Create an empty map with comparaison and allocator.
+	*/
+		explicit map (const Compare & comp, const allocator_type & alloc = allocator_type())
+		: _tree(alloc, comp)
+		{};
+
+
+	/*
+	** Copy constructor : create a complete copy of tree.
+	*/
+
+		map(const map & copy)
+		: _tree(copy._tree)
+		{}
+
+
+	/*
+	** Create map from elements first to last.
+	*/
+
+		template <typename InputIterator>
+		map(InputIterator first, InputIterator last)
+		: _tree(first, last)
+		{}
+
+
+	/*
+	** Create map from elements first to last with comparaison and/or allocator_type
+	*/
+
+		template <typename InputIterator>
+		map(InputIterator first, InputIterator last, const Compare & comp, const allocator_type & alloc = allocator_type())
+		: _tree(alloc, comp)
+		{
+			_tree.insert(first, last);
+		}
+
+
+	/*
+	** Destructor:
+	*/
+
+		~map()
+		{}
+
+/* -------------------------------------------------------------------------- */
+/*                         Assignation / modifiers                            */
+/* -------------------------------------------------------------------------- */
+
+	map	&	operator=(const map & other)
+	{
+		if (this != *other)
+			_tree = other._tree;
+		return *this;
+	}
 
 
 
-// };
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Iterator / getter                            */
+/* -------------------------------------------------------------------------- */
+
+
+	/*
+	** return a copy of the memory allocator
+	*/
+
+		allocator_type	get_allocator() const 
+		{
+			return allocator_type(_tree.get_allocator());
+		}
+
+	/*
+	** begin()
+	**		return an iterator pointing to the first element in the tree.
+	*/
+
+		iterator		begin()
+		{
+			return _tree.begin();
+		}
+
+		const_iterator	begin() const
+		{
+			return _tree.begin();
+		}
+
+	/*
+	**	end()
+	**		Return an iterator reffering to the past-the_end element in the tree.
+	**		past-the-end is last element + 1 theorical element.
+	**		that means it shall not be be dereferenced.
+	**		in the tree it meens parent of root -> NULL
+	*/
+
+		iterator		end()
+		{
+			return _tree.end();
+		}
+
+		const_iterator	end() const
+		{
+			return _tree.end();
+		}
+
+	reverse_iterator	rbegin()
+	{
+		return _tree.rbegin();
+	}
+
+	const_reverse_iterator rbegin() const
+	{
+		return _tree.rbegin();
+	}
+
+	reverse_iterator	rend()
+	{
+		return _tree.rend();
+	}
+
+	const_reverse_iterator	rend() const ;
+	{
+		return _tree.rend();
+	}
+
+/* -------------------------------------------------------------------------- */
+/*                                Capacity                                    */
+/* -------------------------------------------------------------------------- */
+
+	/*
+	** Return true if the map is empty.
+	*/
+
+	bool	empty() const 
+	{
+		return _tree.empty();
+	}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Display                                     */
+/* -------------------------------------------------------------------------- */
+
+
+void	display()
+{
+	_tree.display();
+}
+
+};
 
 /*
-namespace std {
-template <class Key, class T, class Compare = less<Key>,
-class Allocator = allocator<pair<const Key, T> > >
-class map {
-public:
-// types:
 
 typedef implementation defined iterator; // See 23.1
 typedef implementation defined const_iterator; // See 23.1

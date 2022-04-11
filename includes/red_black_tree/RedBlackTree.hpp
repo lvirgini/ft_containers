@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/09 13:43:42 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/10 13:32:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,47 @@
 **
 */
 
+/*	**	** 	RED BLACK TREE definitions	**
+* 
+**	Constructor:
+* 			Rb_tree(const node_allocator, const Compare);
+* 			Rb_tree(node_pointer first, const node_allocator, const Compare);
+* 			Rb_tree(const Rb_tree & copy) ;
+* 			~Rb_tree();
+* 
+** 	Assignation / modifiers
+* 		// operator=
+* 		node_pointer	find(value_type value) const ;
+* 		void			insert(const value_type & value);
+* 		void			insert(node_pointer	to_add);
+* 		void			clear();
+* 		void			erase(const value_type & value) ;
+* 
+**	Iterator
+* 		iterator		begin();
+* 		const_iterator	begin() const ;
+* 		iterator		end();
+* 		const_iterator	end() const;
+* 		node_pointer	minimum() const ;
+* 		node_pointer	maximum() const ;
+* 
+**	Capacity
+* 		size_type		size() const ;
+* 		size_type		max_size() const ;
+* 		bool			empty() const ;
+* 
+* 
+**	Usefull
+* 		bool		_compare(const node_pointer x, const node_pointer y) const ;
+* 
+* 
+**	Display
+* 		void		display() ;
+* 		void 		debug_print_btree_structure();
+* 		void		debug_print_btree_structure_(node_pointer current, int space);
+* 		void 		debug_print_btree_structure_2(node_pointer current, int space);
+* 
+*/
 
 namespace ft 
 {
@@ -95,15 +136,19 @@ class Rb_tree
 		node_allocator		_allocator;
 		Compare				_comp;
 
-
-
-		
-		
 	/* -------------------------------------------------------------------------- */
-	/*                     Constructor Destructor                                 */
+	/*                     Constructor Destructor                                  */
 	/* -------------------------------------------------------------------------- */
 
 	public:
+
+		/*
+		** Default Constructor: construct an empty tree
+		*/
+
+		// Rb_tree()
+		// : _root(NULL), _tree_size(0), _allocator(node_allocator(), _comp(Compare()))
+		// {}
 
 		Rb_tree(const node_allocator & alloc = node_allocator(), const Compare & comp = Compare())
 		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
@@ -113,6 +158,13 @@ class Rb_tree
 		: _tree_size(1), _allocator(alloc), _comp(comp)
 		{
 			_root = m_allocate_node(first);
+		}
+
+		template < typename InputIterator >
+		Rb_tree(InputIterator first, InputIterator last)
+		: _root(NULL), _tree_size(0), _allocator(node_allocator(), _comp(Compare()))
+		{
+			insert(first, last);
 		}
 
 		// Rb_tree(const Rb_tree & copy) ;
@@ -154,6 +206,16 @@ class Rb_tree
 			_tree_size++;
 		}
 
+		template < typename InputIterator >
+		void insert(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				insert(*first);
+				first++;
+			}
+		}
+
 
 		node_pointer	find(value_type value) const
 		{
@@ -161,7 +223,7 @@ class Rb_tree
 			
 			while (current != NULL)
 			{
-				std::cout << current->data.first << std::endl;
+				// std::cout << current->data.first << std::endl;
 				if (current->data == value)
 					return current;
 				current = _comp(current->data, value) ? current->right : current->left;
@@ -218,6 +280,13 @@ class Rb_tree
 			return const_iterator(_root->get_most_right()->increment());
 		}
 
+	/*
+	** return a copy of the memory allocator
+	*/
+		node_allocator	get_allocator() const
+		{
+			return node_allocator(_allocator);
+		}
 
 /* -------------------------------------------------------------------------- */
 /*                                Capacity                                    */
