@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/11 17:37:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:44:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -674,6 +674,7 @@ void	_delete_fixup(node_pointer current)
 		{
 			node_pointer	node = _node_allocator.allocate(1);
 
+			
 			_node_allocator.construct(node, value);
 			return node;
 		}
