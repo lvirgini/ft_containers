@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/09 13:39:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:39:03 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	stack_test(void);
 /* map */
 void	test_node();
 void	test_pair();
+void	map_test_creation();
 
 
 # include "printer.tpp"

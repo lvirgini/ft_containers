@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/10 13:32:10 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:37:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,16 @@ namespace ft
 	// IMPLEMENTATION ITERATORS
 
 
-template <typename Value, typename Compare = ft::less<Value>, typename Node_Alloc = std::allocator < ft::Node < Value > > >
+template <typename Value, typename Compare = ft::less<Value>, typename Alloc = std::allocator < Value > >
 class Rb_tree
 {
 	public:
 
 		typedef	Value					value_type;
 		typedef ft::Node<value_type>	node_type;
+
+		typedef	Alloc				allocator_type;
+		typedef typename allocator_type::template rebind<node_type>::other node_allocator_type;
 
 		typedef	node_type *			node_pointer;
 		typedef	const node_type *	const_node_pointer;
@@ -119,7 +122,6 @@ class Rb_tree
 
 		typedef	size_t				size_type;
 		typedef	ptrdiff_t			difference_type;
-		typedef	Node_Alloc			node_allocator;
 
 		typedef Rb_tree *			pointer;
 		typedef const Rb_tree *		const_pointer;
@@ -131,9 +133,11 @@ class Rb_tree
 
 	private:
 
-		node_pointer		_root;
-		size_type			_tree_size;
-		node_allocator		_allocator;
+		node_pointer			_root;
+		size_type				_tree_size;
+		allocator_type			_allocator;
+		node_allocator_type		_node_allocator;
+
 		Compare				_comp;
 
 	/* -------------------------------------------------------------------------- */
@@ -150,19 +154,19 @@ class Rb_tree
 		// : _root(NULL), _tree_size(0), _allocator(node_allocator(), _comp(Compare()))
 		// {}
 
-		Rb_tree(const node_allocator & alloc = node_allocator(), const Compare & comp = Compare())
-		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
+		Rb_tree(const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
+		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp), _node_allocator()
 		{};
 
-		Rb_tree(node_pointer first, const node_allocator & alloc = node_allocator(), const Compare & comp = Compare())
-		: _tree_size(1), _allocator(alloc), _comp(comp)
+		Rb_tree(node_pointer first, const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
+		: _tree_size(1), _allocator(alloc), _comp(comp), _node_allocator()
 		{
 			_root = m_allocate_node(first);
 		}
 
 		template < typename InputIterator >
 		Rb_tree(InputIterator first, InputIterator last)
-		: _root(NULL), _tree_size(0), _allocator(node_allocator(), _comp(Compare()))
+		: _root(NULL), _tree_size(0), _allocator(allocator_type(), _comp(Compare(), _node_allocator(node_allocator_type())))
 		{
 			insert(first, last);
 		}
@@ -283,9 +287,9 @@ class Rb_tree
 	/*
 	** return a copy of the memory allocator
 	*/
-		node_allocator	get_allocator() const
+		allocator_type	get_allocator() const
 		{
-			return node_allocator(_allocator);
+			return allocator_type(_allocator);
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -309,7 +313,7 @@ class Rb_tree
 
 		size_type	max_size(void) const
 		{
-			return (this->_allocator.max_size());
+			return (this->node_allocator.max_size());
 		}
 		
 
@@ -668,9 +672,9 @@ void	_delete_fixup(node_pointer current)
 
 		node_pointer	_m_allocate_node(const node_type & value)
 		{
-			node_pointer	node = _allocator.allocate(1);
+			node_pointer	node = _node_allocator.allocate(1);
 
-			_allocator.construct(node, value);
+			_node_allocator.construct(node, value);
 			return node;
 		}
 		
@@ -680,12 +684,15 @@ void	_delete_fixup(node_pointer current)
 		
 		void	_clear_forward(node_pointer current)
 		{
-			if (current->left != NULL)
-				_clear_forward(current->left);
-			if (current->right != NULL)
-				_clear_forward(current->right);
-			_allocator.destroy(current);
-			_allocator.deallocate(current, 1);
+			if (current != NULL)
+			{
+				if (current->left != NULL)
+					_clear_forward(current->left);
+				if (current->right != NULL)
+					_clear_forward(current->right);
+				_allocator.destroy(current);
+				_allocator.deallocate(current, 1);
+			}
 		}
 
 /* -------------------------------------------------------------------------- */

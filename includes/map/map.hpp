@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/11 14:27:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:12:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ class map
 		typedef Compare					key_compare;
 		typedef ft::pair<const Key, T>	value_type;
 
-		typedef Rb_tree<value_type, Compare>		tree_type;
+		typedef Allocator				allocator_type;
+		typedef typename allocator_type:: template rebind <value_type>::other	pair_alloc_type;
+		typedef Rb_tree<value_type, Compare, pair_alloc_type>		tree_type;
 
-		typedef Allocator					allocator_type;
 		typedef typename Allocator::reference		reference;
 		typedef typename Allocator::const_reference	const_reference;
 		typedef typename Allocator::pointer			pointer;
