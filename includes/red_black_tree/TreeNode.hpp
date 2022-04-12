@@ -65,6 +65,7 @@ namespace ft
 	/*                     Constructor Destructor                                 */
 	/* -------------------------------------------------------------------------- */
 	
+
 		// Node()
 		// : color(BLACK), parent(NULL), left(NULL), right(NULL), data()
 		// {}
@@ -199,6 +200,10 @@ namespace ft
 			return &(this->data);
 		}
 
+		value_type		operator*() const
+		{
+			return data;
+		}
 	};
 
 } // end namespace ft

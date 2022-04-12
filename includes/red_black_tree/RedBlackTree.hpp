@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/12 12:24:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:03:15 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,79 @@ namespace ft
 
 	// IMPLEMENTATION ITERATORS
 
+template <typename Value>
+class Rb_tree_iterator
+{
+	private:
+		typedef ft::iterator_traits<Value>	__trait_type;
+
+	public:
+		typedef typename __trait_type::value_type			value_type;
+		typedef typename __trait_type::pointer				pointer;
+		typedef typename __trait_type::reference			reference;
+		typedef typename __trait_type::difference_type		difference_type;
+		typedef typename __trait_type::iterator_category	iterator_category;
+
+		typedef Rb_tree_iterator<Value>		self;
+		typedef Node<Value>::pointer		node_pointer;
+		
+	private:
+		node_pointer						_node;
+
+
+	public:
+
+		Rb_tree_iterator()
+		: _node();
+
+		explicit	Rb_tree_iterator(node_pointer ptr)
+		: _node(ptr);
+
+		Rb_tree_iterator(Rb_tree_iterator<Value> other)
+		{
+			this = other;
+		}
+
+		reference		operator=(Rb_tree_iterator<Value> other)
+		{
+			if (this != &other)
+				_node = other._node;
+			return *this;
+		}
+
+		reference	operator*() const
+		{
+			return *_node;
+		}
+
+		pointer		operator->()
+		{
+			return _node;
+		}
+
+		// self & operator[](difference_type n)
+		// {
+
+		// }
+
+
+		reference	operator++()
+		{
+			_node.increment;
+			return *this;
+		}
+
+		reference	operator++(int)
+		{
+			self	tmp = *this;
+			_node = 
+		}
+
+
+
+};
+
+
 
 template <typename Value, typename Compare = ft::less<Value>, typename Alloc = std::allocator < Value > >
 class Rb_tree
@@ -128,8 +201,8 @@ class Rb_tree
 		typedef Rb_tree &			reference;
 		typedef const Rb_tree &		const_reference;
 
-		typedef ft::normal_iterator<pointer, Rb_tree>		iterator;
-		typedef ft::normal_iterator<const_pointer, Rb_tree>	const_iterator;
+		typedef ft::normal_iterator<node_pointer, Rb_tree>		iterator;
+		typedef ft::normal_iterator<const_node_pointer, Rb_tree>	const_iterator;
 
 	private:
 
@@ -137,6 +210,7 @@ class Rb_tree
 		size_type				_tree_size;
 		allocator_type			_allocator;
 		node_allocator_type		_node_allocator;
+		node_pointer			_super_root;
 
 		Compare				_comp;
 
@@ -161,7 +235,7 @@ class Rb_tree
 		Rb_tree(node_pointer first, const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
 		: _tree_size(1), _allocator(alloc), _node_allocator(node_allocator_type(), _comp(comp))
 		{
-			_root = m_allocate_node(first);
+			_root = _allocate_node(first);
 		}
 
 		template < typename InputIterator >
@@ -194,7 +268,7 @@ class Rb_tree
 
 		void	insert(const value_type & value)
 		{
-			node_pointer	to_insert = _m_allocate_node(value);
+			node_pointer	to_insert = _allocate_node(value);
 
 			insert(to_insert);
 		}
@@ -654,27 +728,11 @@ void	_delete_fixup(node_pointer current)
 }
 
 
-
-		// node_pointer	_m_allocate_node(node_pointer node)
-		// {
-		// 	if (node != NULL)
-		// 	{
-		// 		this->_allocator.allocate(1);
-		// 		this->allocator.construct();
-		// 	}
-		// 	return node_pointer();
-		// }
-
-		// node_pointer	_m_allocate_node(const key_type & key, const key_value_type & value)
-		// {
-		// 	return _m_allocate_node(make_pair(key, value));
-		// }
-
-		node_pointer	_m_allocate_node(const value_type & value)
+		node_pointer	_allocate_node(const value_type & value)
 		{
 			node_pointer	node = _node_allocator.allocate(1);
 			
-			_allocator.construct(&(node->data), value);
+			_allocator.construct(node->get_value_pointer(), value);
 			_node_allocator.construct(node, node->data);
 			return node;
 		}
@@ -697,7 +755,7 @@ void	_delete_fixup(node_pointer current)
 
 		void	_deallocate_node(node_pointer current)
 		{
-			_allocator.destroy(&(current->data));
+			_allocator.destroy(current->get_value_pointer());
 			_node_allocator.destroy(current);
 			_node_allocator.deallocate(current, 1);
 		}

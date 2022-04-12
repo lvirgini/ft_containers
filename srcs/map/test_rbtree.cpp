@@ -3,10 +3,9 @@
 #include <map>
 
 
-template < typename T>
-typename ft::Rb_tree<T>::reference		create_tree()
+
+void		create_tree(ft::Rb_tree< ft::pair<int, std::string> >::reference tree)
 {
-	ft::Rb_tree< ft::pair<int, std::string> >	tree;
 
 	// Init pair of value
 	ft::pair<int, std::string> value5(5, "E");
@@ -29,11 +28,6 @@ typename ft::Rb_tree<T>::reference		create_tree()
 	tree.insert(value0);
 	tree.insert(value8);
 	tree.insert(value1m);
-
-
-return (tree);
-
-
 }
 
 // Testing nodes functions in codage progression
@@ -213,12 +207,42 @@ void	test_tree_in_progression()
 }
 
 
+void	test_rbtree_iterator()
+{
+	PRINT(SEP_FUNCTIONS);
+	PRINT("ITERATOR");
+
+
+	ft::Rb_tree<ft::pair <int, std::string> >	tree;
+	
+	create_tree(tree);
+
+
+	ft::Rb_tree<ft::pair <int, std::string> >::iterator it = tree.begin();
+	ft::Rb_tree<ft::pair <int, std::string> >::iterator ite = tree.end();
+	
+	std::_Rb_tree<ft::pair < int, std::string> > std_tree;
+
+	std_tree.insert()
+	std::_Rb_tree<ft::pair < int, std::string> >::iterator std_it = 
+	ft::pair <int, std::string>	pair;
+
+	for (; it != ite; it++)
+	{
+
+		std::cout << it-><< " ";
+		// std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+
+}
 
 void	test_node()
 {
 
 	test_node_in_progression();
 	test_tree_in_progression();
+	test_rbtree_iterator();
 
 	// ft::Rb_tree<ft::pair<int, std::string> >	tree;
 
