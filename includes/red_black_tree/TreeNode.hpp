@@ -52,6 +52,7 @@ namespace ft
 		typedef Node &			reference;
 		typedef const Node &	const_reference;
 		typedef Value			value_type;
+		typedef value_type *		value_pointer;
 
 		bool			color;
 		pointer			parent;
@@ -191,6 +192,11 @@ namespace ft
 			if (this->parent != NULL)
 				return (this->parent->parent);
 			return (NULL);
+		}
+
+		value_pointer	get_value_pointer()
+		{
+			return &(this->data);
 		}
 
 	};

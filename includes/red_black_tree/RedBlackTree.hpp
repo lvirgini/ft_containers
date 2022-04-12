@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/11 17:44:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/12 12:24:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,18 +155,18 @@ class Rb_tree
 		// {}
 
 		Rb_tree(const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
-		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp), _node_allocator()
+		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()), _comp(comp)
 		{};
 
 		Rb_tree(node_pointer first, const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
-		: _tree_size(1), _allocator(alloc), _comp(comp), _node_allocator()
+		: _tree_size(1), _allocator(alloc), _node_allocator(node_allocator_type(), _comp(comp))
 		{
 			_root = m_allocate_node(first);
 		}
 
 		template < typename InputIterator >
 		Rb_tree(InputIterator first, InputIterator last)
-		: _root(NULL), _tree_size(0), _allocator(allocator_type(), _comp(Compare(), _node_allocator(node_allocator_type())))
+		: _root(NULL), _tree_size(0), _allocator(allocator_type()), _node_allocator(node_allocator_type(), _comp(Compare()))
 		{
 			insert(first, last);
 		}
@@ -670,12 +670,12 @@ void	_delete_fixup(node_pointer current)
 		// 	return _m_allocate_node(make_pair(key, value));
 		// }
 
-		node_pointer	_m_allocate_node(const node_type & value)
+		node_pointer	_m_allocate_node(const value_type & value)
 		{
 			node_pointer	node = _node_allocator.allocate(1);
-
 			
-			_node_allocator.construct(node, value);
+			_allocator.construct(&(node->data), value);
+			_node_allocator.construct(node, node->data);
 			return node;
 		}
 		
@@ -691,9 +691,15 @@ void	_delete_fixup(node_pointer current)
 					_clear_forward(current->left);
 				if (current->right != NULL)
 					_clear_forward(current->right);
-				_allocator.destroy(current);
-				_allocator.deallocate(current, 1);
+				_deallocate_node(current);
 			}
+		}
+
+		void	_deallocate_node(node_pointer current)
+		{
+			_allocator.destroy(&(current->data));
+			_node_allocator.destroy(current);
+			_node_allocator.deallocate(current, 1);
 		}
 
 /* -------------------------------------------------------------------------- */
