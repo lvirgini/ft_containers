@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/13 16:31:46 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:42:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ class Rb_tree_iterator
 			return *this;
 		}
 
-		reference	operator*() const
+		reference	operator*()
 		{
 			return _node->operator*();
 		}
@@ -79,18 +79,18 @@ class Rb_tree_iterator
 		// }
 
 
-		reference	operator++()
+		self &	operator++()
 		{
-			_node->increment();
+			_node = _node->increment();
 			return *this;
 		}
 
-		reference	operator++(int)
+		self	operator++(int)
 		{
 			self	tmp = *this;
 			
-			_node->increment();
-			return *tmp;
+			_node = _node->increment();
+			return tmp;
 		}
 
 

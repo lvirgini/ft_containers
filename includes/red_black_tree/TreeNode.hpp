@@ -150,12 +150,23 @@ namespace ft
 		{
 			pointer	result = this;
 
-			if (this->is_sentinel())
-				return NULL;
 			if (result->right != NULL)
 				return result->right->get_most_left();
 			while (result->is_right())
 				result = result->parent;
+			return result->parent;
+		}
+
+		pointer		decrement()
+		{
+			pointer	result = this;
+
+			if (result->left != NULL)
+				return result->left->get_most_right();
+			while (result->is_left())
+				result = result->parent;
+			if (result->is_sentinel())
+				return result;
 			return result->parent;
 		}
 
@@ -210,7 +221,7 @@ namespace ft
 			return &data;
 		}
 
-		value_type		operator*() const
+		value_reference		operator*()
 		{
 			return data;
 		}

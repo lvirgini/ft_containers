@@ -116,6 +116,8 @@ void	test_tree_in_progression()
 	
 	ft::Rb_tree< ft::pair<int, std::string> >	tree;
 
+
+	std::cout << "created tree" << std::endl;
 	// Init pair of value
 	ft::pair<int, std::string> value5(5, "E");
 	ft::pair<int, std::string> value4(4, "D");
@@ -179,12 +181,12 @@ void	test_tree_in_progression()
 
 	PRINT(SEP_FUNCTIONS);
 	PRINT("ALL TREE");
-	ft::Node< ft::pair<int, std::string> > *node_begin = tree.minimum();
+	// ft::Node< ft::pair<int, std::string> > *node_begin = tree.minimum();
 
 	// ft::Node< ft::pair<int, std::string> > *node_end = tree.maximum();
 
-	for (; node_begin != NULL; node_begin = node_begin->increment())
-		node_begin->print();
+	// for (; node_begin != NULL; node_begin = node_begin->increment())
+	// 	node_begin->print();
 
 
 	tree.display();
@@ -216,7 +218,7 @@ void	test_rbtree_iterator()
 	ft::Rb_tree<ft::pair <int, std::string> >	tree;
 	
 	create_tree(tree);
-
+	tree.debug_print_btree_structure();
 
 	ft::Rb_tree<ft::pair <int, std::string> >::iterator it = tree.begin();
 	ft::Rb_tree<ft::pair <int, std::string> >::iterator ite = tree.end();
@@ -227,11 +229,17 @@ void	test_rbtree_iterator()
 	// std::_Rb_tree<ft::pair < int, std::string> >::iterator std_it = 
 	// ft::pair <int, std::string>	pair;
 
+
+	// std::cout << it->first << " " << it->second << std::endl;
+	// it++;
+	// std::cout << it->first << " " << it->second << std::endl;
+
+	std::cout << &(*ite) << std::endl;
 	for (; it != ite; it++)
 	{
 
-		std::cout << it->first << " " << it->second;
-		// std::cout << *it << " ";
+		std::cout << &(*it) << std::endl;
+		std::cout << it->first << " " << it->second <<  std::endl;
 	}
 	std::cout << std::endl;
 
