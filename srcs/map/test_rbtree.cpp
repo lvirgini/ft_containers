@@ -221,16 +221,16 @@ void	test_rbtree_iterator()
 	ft::Rb_tree<ft::pair <int, std::string> >::iterator it = tree.begin();
 	ft::Rb_tree<ft::pair <int, std::string> >::iterator ite = tree.end();
 	
-	std::_Rb_tree<ft::pair < int, std::string> > std_tree;
+	// std::_Rb_tree<ft::pair < int, std::string> > std_tree;
 
-	std_tree.insert()
-	std::_Rb_tree<ft::pair < int, std::string> >::iterator std_it = 
-	ft::pair <int, std::string>	pair;
+	// std_tree.insert()
+	// std::_Rb_tree<ft::pair < int, std::string> >::iterator std_it = 
+	// ft::pair <int, std::string>	pair;
 
 	for (; it != ite; it++)
 	{
 
-		std::cout << it-><< " ";
+		std::cout << it->first << " ";
 		// std::cout << *it << " ";
 	}
 	std::cout << std::endl;

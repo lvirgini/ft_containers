@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/14 11:29:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/13 13:21:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ namespace ft
 {
 
 // defined for double_inclusion
-template <typename, class>
-class	vector;
+// template <typename, class>
+// class	vector;
 
 template <typename Iterator, typename Container>
 class	normal_iterator

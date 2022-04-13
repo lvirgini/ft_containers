@@ -118,6 +118,13 @@ namespace ft
 		}
 
 
+		bool		is_sentinel()
+		{
+			if (this->parent == NULL)
+				return true;
+			return false;
+		}
+
 		void	print()
 		{
 			std::cout << "THIS = " << this->data.first << " " << (color ? "black" : "red");
@@ -142,6 +149,8 @@ namespace ft
 		{
 			pointer	result = this;
 
+			if (this->is_sentinel())
+				return NULL;
 			if (result->right != NULL)
 				return result->right->get_most_left();
 			while (result->is_right())
@@ -203,6 +212,24 @@ namespace ft
 		value_type		operator*() const
 		{
 			return data;
+		}
+
+		reference		operator++()
+		{
+			reference tmp = *this;
+			this->increment();
+			return *tmp;
+		}
+
+		reference		operator++(int)
+		{
+			this->increment();
+			return *this;
+		}
+
+		reference		operator->()
+		{
+			return &data;
 		}
 	};
 
