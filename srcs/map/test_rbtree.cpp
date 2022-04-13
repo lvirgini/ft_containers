@@ -230,7 +230,7 @@ void	test_rbtree_iterator()
 	for (; it != ite; it++)
 	{
 
-		std::cout << it->first << " ";
+		std::cout << it->first << " " << it->second;
 		// std::cout << *it << " ";
 	}
 	std::cout << std::endl;

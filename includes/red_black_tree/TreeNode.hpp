@@ -52,7 +52,8 @@ namespace ft
 		typedef Node &			reference;
 		typedef const Node &	const_reference;
 		typedef Value			value_type;
-		typedef value_type *		value_pointer;
+		typedef Value &			value_reference;
+		typedef value_type *	value_pointer;
 
 		bool			color;
 		pointer			parent;
@@ -204,14 +205,19 @@ namespace ft
 			return (NULL);
 		}
 
-		value_pointer	get_value_pointer()
+		value_pointer	get_value_pointer() ////
 		{
-			return &(this->data);
+			return &data;
 		}
 
 		value_type		operator*() const
 		{
 			return data;
+		}
+
+		value_pointer		operator->()
+		{
+			return &data;
 		}
 
 		reference		operator++()
@@ -227,10 +233,7 @@ namespace ft
 			return *this;
 		}
 
-		reference		operator->()
-		{
-			return &data;
-		}
+
 	};
 
 } // end namespace ft

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/13 13:52:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:31:46 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,25 @@ namespace ft
 
 	// IMPLEMENTATION ITERATORS
 
-template <typename Value>
+template <typename Value, typename Node >
 class Rb_tree_iterator
 {
-	private:
-		typedef ft::iterator_traits<Value>	__trait_type;
-
 	public:
-		typedef typename __trait_type::value_type			value_type;
-		typedef typename __trait_type::pointer				pointer;
-		typedef typename __trait_type::const_pointer		const_pointer;
-		typedef typename __trait_type::reference			reference;
-		typedef typename __trait_type::const_reference		const_reference;
-		typedef typename __trait_type::difference_type		difference_type;
-		typedef typename __trait_type::iterator_category	iterator_category;
+		typedef Value			value_type;
+		typedef Value &			reference;
+		typedef Value *			pointer;
+		typedef ptrdiff_t		difference_type;
 
-		typedef typename Node<Value>::pointer		node_pointer;
-		typedef Rb_tree_iterator<Value>				self;
+		typedef Rb_tree_iterator<Value, Node>			self;
+		typedef std::bidirectional_iterator_tag	iterator_category;
+		
+		typedef  Node *		node_pointer;
+		typedef  Node &		node_reference;
+		typedef  const Node &	node_const_reference;
+
 		
 	private:
-		node_pointer						_node;
+		node_pointer	_node;
 
 
 	public:
@@ -52,12 +51,12 @@ class Rb_tree_iterator
 		: _node(ptr)
 		{}
 
-		Rb_tree_iterator(const_reference other)
+		Rb_tree_iterator(const self & other)
 		{
-			this = other;
+			*this = other;
 		}
 
-		reference		operator=(const_reference other)
+		self &		operator=(const self & other)
 		{
 			if (this != &other)
 				_node = other._node;
@@ -66,12 +65,12 @@ class Rb_tree_iterator
 
 		reference	operator*() const
 		{
-			return *_node;
+			return _node->operator*();
 		}
 
 		pointer		operator->()
 		{
-			return _node;
+			return _node->operator->();
 		}
 
 		// self & operator[](difference_type n)
@@ -82,16 +81,28 @@ class Rb_tree_iterator
 
 		reference	operator++()
 		{
-			_node.increment;
+			_node->increment();
 			return *this;
 		}
 
-		// reference	operator++(int)
-		// {
-		// 	self	tmp = *this;
-		// 	_node = 
-		// }
+		reference	operator++(int)
+		{
+			self	tmp = *this;
+			
+			_node->increment();
+			return *tmp;
+		}
 
+
+		bool	operator==( const self & other) const
+		{
+			return (_node == other._node);
+		}
+
+		bool	operator !=(const self & other) const
+		{
+			return (_node != other._node);
+		}
 
 
 };

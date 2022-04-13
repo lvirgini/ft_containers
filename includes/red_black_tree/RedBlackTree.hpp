@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/13 13:50:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:24:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,13 @@ class Rb_tree
 		// typedef ft::normal_iterator<node_pointer, Rb_tree>		iterator;
 		// typedef ft::normal_iterator<const_node_pointer, Rb_tree>	const_iterator;
 
-		typedef ft::Rb_tree_iterator<value_type>	iterator;
-		typedef ft::Rb_tree_iterator<value_type>	const_iterator; ////
-		// typedef ft::Rb_tree_iterator<value_type, node_pointer>	iterator;
+		// typedef ft::Rb_tree_iterator<value_type>	iterator;
+		// typedef ft::Rb_tree_iterator<value_type>	const_iterator; ////
+		// typedef ft::Rb_tree_iterator<value_type, node_inter>			iterator;
+		// typedef ft::Rb_tree_iterator<value_type, const_node_pointer>	const_iterator;
+
+		typedef ft::Rb_tree_iterator<value_type, node_type>			iterator;
+		typedef ft::Rb_tree_iterator<value_type, const node_type>	const_iterator;
 
 		typedef ft::reverse_iterator<iterator>		reverse_iterator;
 
@@ -155,20 +159,22 @@ class Rb_tree
 		*/
 
 		// Rb_tree()
-		// : _root(NULL), _tree_size(0), _allocator(node_allocator(), _comp(Compare()))
-		// {}
+		// : _root(NULL), _tree_size(0), _allocator(allocator_type(), _node_allocator(node_allocator_type()), _comp(Compare()))
+		// {
+		// 	_create_sentinel();
+		// }
 
 		Rb_tree(const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
 		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()), _comp(comp)
 		{
-			_sentinel = _create_sentinel();
+			_create_sentinel();
 		};
 
 		Rb_tree(node_pointer first, const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
 		: _tree_size(1), _allocator(alloc), _node_allocator(node_allocator_type(), _comp(comp))
 		{
 			_root = _allocate_node(first);
-			_sentinel = _create_sentinel();
+			_create_sentinel();
 		}
 
 		template < typename InputIterator >
@@ -176,7 +182,7 @@ class Rb_tree
 		: _root(NULL), _tree_size(0), _allocator(allocator_type()), _node_allocator(node_allocator_type(), _comp(Compare()))
 		{
 			insert(first, last);
-			_sentinel = _create_sentinel();
+			_create_sentinel();
 		}
 
 		// void	_update_sentinel()
@@ -185,9 +191,10 @@ class Rb_tree
 		// }
 		// Rb_tree(const Rb_tree & copy) ;
 
-		node_pointer	_create_sentinel()
+		void	_create_sentinel()
 		{
-			_sentinel = _allocate_node();
+			_sentinel = _node_allocator.allocate(1);
+			_sentinel->data = value_type();
 			_sentinel->parent = NULL;
 			_sentinel->color = BLACK;
 			_update_sentinel();
