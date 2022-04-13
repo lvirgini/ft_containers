@@ -234,12 +234,32 @@ void	test_rbtree_iterator()
 	// it++;
 	// std::cout << it->first << " " << it->second << std::endl;
 
-	std::cout << &(*ite) << std::endl;
+
+	// std::cout << &(*ite) << std::endl;
+
+	PRINT("TEST ITERATOR");
 	for (; it != ite; it++)
 	{
-
-		std::cout << &(*it) << std::endl;
+		// std::cout << &(*it) << std::endl;
 		std::cout << it->first << " " << it->second <<  std::endl;
+	}
+
+	ft::Rb_tree<ft::pair <int, std::string> >::const_iterator cit = tree.begin();
+	return ;
+	ft::Rb_tree<ft::pair <int, std::string> >::const_iterator cite = tree.end();
+	PRINT("TEST CONST ITERATOR");
+	
+	std::cout << &(*ite) << std::endl;
+
+	std::cout << cit->first << " " << cit->second << std::endl;
+	cit++;
+	std::cout << cit->first << " " << cit->second << std::endl;
+
+	for (; cit != cite; cit++)
+	{
+
+		// std::cout << &(*cit) << std::endl;
+		std::cout << cit->first << " " << cit->second <<  std::endl;
 	}
 	std::cout << std::endl;
 

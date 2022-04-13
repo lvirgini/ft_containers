@@ -179,6 +179,15 @@ namespace ft
 			return (result);
 		}
 
+		const_pointer		get_most_left() const //
+		{
+			const_pointer	result = this;
+
+			while (result->left != NULL)
+				result = result->left;
+			return (result);
+		}
+
 		pointer		get_most_right()
 		{
 			pointer result = this;

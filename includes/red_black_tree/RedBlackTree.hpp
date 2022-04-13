@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/13 19:21:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/14 00:18:12 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ class Rb_tree
 		// typedef ft::Rb_tree_iterator<value_type, const_node_pointer>	const_iterator;
 
 		typedef ft::Rb_tree_iterator<value_type, node_type>			iterator;
-		typedef ft::Rb_tree_iterator<value_type, const node_type>	const_iterator;
+		typedef ft::Rb_tree_const_iterator<value_type, node_type>	const_iterator;
 
 		typedef ft::reverse_iterator<iterator>		reverse_iterator;
 
@@ -227,27 +227,36 @@ class Rb_tree
 		}
 
 
-		void	insert(const value_type & value)
+
+
+		ft::pair<iterator, bool>	insert(const value_type & value)
 		{
 			node_pointer	to_insert = _allocate_node(value);
 
-			insert(to_insert);
+			return (insert(to_insert));
 		}
 
 
-		void	insert(node_pointer	to_add)
+		ft::pair<iterator, bool>	insert(node_pointer	to_add)
 		{
+			ft::pair<iterator, bool> result;
+
 			if (_root == NULL)
+			{
 				_root = to_add;
+				result.first = iterator(to_add);
+				result.second = true;
+			}
 			else
 			{
 				_root->parent = NULL;
-				_insert_not_empty(to_add);
+				result = _insert_not_empty(to_add);
 				_root->parent = _sentinel;
 			}
 			_root->color = BLACK;
 			_tree_size++;
 			_update_sentinel();
+			return result;
 		}
 
 		template < typename InputIterator >
@@ -419,13 +428,15 @@ class Rb_tree
 
 		// INSERT FROM introduction to Algorithms:
 
-		void	_insert_not_empty(node_pointer to_add)
+		ft::pair<iterator, bool>	_insert_not_empty(node_pointer to_add)
 		{
 			node_pointer	parent = NULL;
 			node_pointer	current = _root;
 
 			while (current != NULL)
 			{
+				if (current == to_add)
+					return ft::make_pair<iterator, bool>(iterator(current), false);
 				parent = current;
 				current = _compare(to_add, current) == true ? current->left : current->right;
 			}
@@ -435,6 +446,7 @@ class Rb_tree
 			else
 				parent->right = to_add;
 			_insert_fixup(to_add);
+			return ft::make_pair<iterator, bool>(iterator(to_add), true);
 		}
 
 		// if node and parent are red : 

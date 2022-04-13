@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/11 17:12:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/13 23:37:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,41 @@ class map
 		typedef T						mapped_type;
 		typedef Compare					key_compare;
 		typedef ft::pair<const Key, T>	value_type;
-
 		typedef Allocator				allocator_type;
-		typedef typename allocator_type:: template rebind <value_type>::other	pair_alloc_type;
-		typedef Rb_tree<value_type, Compare, pair_alloc_type>		tree_type;
-
-		typedef typename Allocator::reference		reference;
-		typedef typename Allocator::const_reference	const_reference;
-		typedef typename Allocator::pointer			pointer;
-		typedef typename Allocator::const_pointer	const_pointer;
-
-		typedef ft::normal_iterator<pointer, map>		iterator;
-		typedef ft::normal_iterator<const_pointer, map>	const_iterator;
-		typedef ft::reverse_iterator<iterator>			reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-
-	/* -------------------------------------------------------------------------- */
 
 	private:
+		typedef typename allocator_type:: template rebind <value_type>::other	_pair_alloc_type;
+		typedef Rb_tree<value_type, Compare, _pair_alloc_type>		_tree_type;
+
+	public:
+		typedef typename _pair_alloc_type::reference		reference;
+		typedef typename _pair_alloc_type::const_reference	const_reference;
+		typedef typename _pair_alloc_type::pointer			pointer;
+		typedef typename _pair_alloc_type::const_pointer	const_pointer;
+
+		typedef typename _tree_type::size_type				size_type;
+		typedef typename _tree_type::difference_type		difference_type;
+		typedef typename _tree_type::iterator				iterator;
+		typedef typename _tree_type::const_iterator			const_iterator;
+		// typedef typename _tree_type::reverse_iterator		reverse_iterator;
+		// typedef typename _tree_type::const_reverse_iterator	const_reverse_iterator;
+
+	/* -------------------------------------------------------------------------- */
+	// 	class value_compare
+	// : public binary_function<value_type,value_type,bool> {
+	// friend class map;
+	// protected:
+	// Compare comp;
+	// value_compare(Compare c) : comp(c) {}
+	// public:
+	// bool operator()(const value_type& x, const value_type& y) const {
+	// return comp(x.first, y.first);
+	// }
+	// };
+	
+	private:
 		Compare		_comp;
-		tree_type	_tree;
+		_tree_type	_tree;
 		
 	/* -------------------------------------------------------------------------- */
 	/*                     Constructor Destructor                                  */
@@ -92,7 +107,7 @@ class map
 	** Copy constructor : create a complete copy of tree.
 	*/
 
-		map(const map & copy)
+		map(const map<Key, T, Compare, Allocator> & copy)
 		: _tree(copy._tree)
 		{}
 
@@ -130,15 +145,74 @@ class map
 /*                         Assignation / modifiers                            */
 /* -------------------------------------------------------------------------- */
 
-	map	&	operator=(const map & other)
+	map	&	operator=(const map<Key, T, Compare, Allocator> & other)
 	{
 		if (this != *other)
 			_tree = other._tree;
 		return *this;
 	}
 
+	// mapped_type & operator[](const key_type & key)
+	// {
+	// 	return _tree.operator[](key);
+	// }
 
 
+	// pair<iterator, bool>	insert(const value_type & x)
+	// {
+	// 	return _tree.insert(x);
+	// }
+
+
+	// iterator insert(iterator position, const value_type & x)
+	// {
+	// 	return tree.insert(position, x);
+	// }
+
+	// template <typename InputIterator>
+	// void	insert(InputIterator first, InputIterator last)
+	// {
+	// 		_tree.insert(first, last);
+	// }
+
+
+	// void	erase(iterator position)
+	// {
+	// 		_tree.erase(position);
+	// }
+
+	// size_type	erase(const key_type & x)
+	// {
+	// 	return _tree.erase(x);
+	// }
+
+	// void erase(iterator first, iterator last)
+	// {
+	// 	_tree.erase(first, last);
+	// }
+
+	// void swap (map<key, T, Compare, Allocator> & other)
+	// {
+	// _tree.swap(other._tree)
+	// }
+
+	void	clear()
+	{
+		_tree.clear();
+	}
+/* -------------------------------------------------------------------------- */
+/*                                observer                                    */
+/* -------------------------------------------------------------------------- */
+
+	// key_compare key_comp() const
+	// {
+	// 	return _tree.key_comp();
+	// }
+
+	// value_compare	value_comp() const
+	// {
+	// 	return value_compare(_tree.comp());
+	// }
 
 
 
@@ -189,25 +263,25 @@ class map
 			return _tree.end();
 		}
 
-	reverse_iterator	rbegin()
-	{
-		return _tree.rbegin();
-	}
+	// reverse_iterator	rbegin()
+	// {
+	// 	return _tree.rbegin();
+	// }
 
-	const_reverse_iterator rbegin() const
-	{
-		return _tree.rbegin();
-	}
+	// const_reverse_iterator rbegin() const
+	// {
+	// 	return _tree.rbegin();
+	// }
 
-	reverse_iterator	rend()
-	{
-		return _tree.rend();
-	}
+	// reverse_iterator	rend()
+	// {
+	// 	return _tree.rend();
+	// }
 
-	const_reverse_iterator	rend() const
-	{
-		return _tree.rend();
-	}
+	// const_reverse_iterator	rend() const
+	// {
+	// 	return _tree.rend();
+	// }
 
 /* -------------------------------------------------------------------------- */
 /*                                Capacity                                    */
@@ -222,84 +296,92 @@ class map
 		return _tree.empty();
 	}
 
+	size_type size() const
+	{
+		return _tree.size();
+	}
 
+	size_type	max_size() const
+	{
+		return _tree.max_size();
+	}
+	
+	/*  This function only makes sense for multimaps; for map the result will
+    *  either be 0 (not present) or 1 (present).
+    */
+
+	// size_type	count(const key_type & x) const
+	// {
+	// 	return (_tree.find(x) == _tree.end() ? 0 : 1)
+	// }
+
+/* -------------------------------------------------------------------------- */
+/*                                operation                                   */
+/* -------------------------------------------------------------------------- */
+
+	// iterator	find(const key_type & key)
+	// {
+	// 	return _tree.find(key);
+	// }
+
+	// const_iterator	find(const key_type & key) const
+	// {
+	// 	return _tree.find(key);
+	// }
+
+	// iterator	lower_bound(const key_type & key)
+	// {
+	// 	return _tree.lower_bound(key);
+	// }
+
+	// const_iterator	lower_bound(const key_type & key) const
+	// {
+	// 	return _tree.lower_bound(key);
+	// }
+
+	// iterator	upper_bound(const key_type & key)
+	// {
+	// 	return _tree.upper_bound(key);
+	// }
+
+	// const_iterator	upper_bound(const key_type & key) const
+	// {
+	// 	return _tree.upper_bound(key);
+	// }
+	/*	
+       *  @brief Finds a subsequence matching given key.
+       *  This function is equivalent to
+       *  @code
+       *    std::make_pair(c.lower_bound(val),
+       *                   c.upper_bound(val))
+       *  @endcode
+       *  (but is faster than making the calls separately).
+       *
+       *  This function probably only makes sense for multimaps.
+       */
+	std::pair<iterator, iterator> equal_range(const key_type & key)
+	{
+		return _tree.equal_range(key);
+	}
+
+		std::pair<const_iterator, const_iterator> equal_range(const key_type & key) const
+	{
+		return _tree.equal_range(key);
+	}
 /* -------------------------------------------------------------------------- */
 /*                                Display                                     */
 /* -------------------------------------------------------------------------- */
 
 
-void	display()
-{
-	_tree.display();
-}
+	void	display()
+	{
+		_tree.display();
+	}
 
 };
 
 /*
 
-typedef implementation defined iterator; // See 23.1
-typedef implementation defined const_iterator; // See 23.1
-typedef implementation defined size_type; // See 23.1
-typedef implementation defined difference_type;// See 23.1
-
-typedef std::reverse_iterator<iterator> reverse_iterator;
-typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-
-class value_compare
-: public binary_function<value_type,value_type,bool> {
-friend class map;
-protected:
-Compare comp;
-value_compare(Compare c) : comp(c) {}
-public:
-bool operator()(const value_type& x, const value_type& y) const {
-return comp(x.first, y.first);
-}
-};
-
-// 23.3.1.1 construct/copy/destroy:
-explicit map(const Compare& comp = Compare(),
-const Allocator& = Allocator());
-template <class InputIterator>
-map(InputIterator first, InputIterator last,
-const Compare& comp = Compare(), const Allocator& = Allocator());
-map(const map<Key,T,Compare,Allocator>& x);
-~map();
-map<Key,T,Compare,Allocator>&
-operator=(const map<Key,T,Compare,Allocator>& x);
-
-// iterators:
-iterator begin();
-const_iterator begin() const;
-iterator end();
-const_iterator end() const;
-reverse_iterator rbegin();
-const_reverse_iterator rbegin() const;
-reverse_iterator rend();
-const_reverse_iterator rend() const;
-
-// capacity:
-bool empty() const;
-size_type size() const;
-size_type max_size() const;
-
-// 23.3.1.2 element access:
-T& operator[](const key_type& x);
-
-// modifiers:
-pair<iterator, bool> insert(const value_type& x);
-iterator insert(iterator position, const value_type& x);
-template <class InputIterator>
-void insert(InputIterator first, InputIterator last);
-void erase(iterator position);
-size_type erase(const key_type& x);
-void erase(iterator first, iterator last);
-void swap(map<Key,T,Compare,Allocator>&);
-void clear();
-
-// observers:
-key_compare key_comp() const;
-value_compare value_comp() const;
 
 
 // 23.3.1.3 map operations:
