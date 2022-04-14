@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/13 23:37:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:31:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,33 +147,37 @@ class map
 
 	map	&	operator=(const map<Key, T, Compare, Allocator> & other)
 	{
-		if (this != *other)
+		if (this != &other)
 			_tree = other._tree;
 		return *this;
 	}
 
-	// mapped_type & operator[](const key_type & key)
-	// {
-	// 	return _tree.operator[](key);
-	// }
+	/*
+	** if key exist: return a reference to the corresponding mapped_type.
+	** else insert a new element with that key and default mapped_value;
+	*/
+
+	mapped_type & operator[](const key_type & key)
+	{
+	 	return (*((this->insert(make_pair(key,ft::mapped_type()))).first)).second;
+	}
 
 
-	// pair<iterator, bool>	insert(const value_type & x)
-	// {
-	// 	return _tree.insert(x);
-	// }
-
+	ft::pair<iterator, bool>	insert(const value_type & x)
+	{
+		return _tree.insert(x);
+	}
 
 	// iterator insert(iterator position, const value_type & x)
 	// {
 	// 	return tree.insert(position, x);
 	// }
 
-	// template <typename InputIterator>
-	// void	insert(InputIterator first, InputIterator last)
-	// {
-	// 		_tree.insert(first, last);
-	// }
+	template <typename InputIterator>
+	void	insert(InputIterator first, InputIterator last)
+	{
+			_tree.insert(first, last);
+	}
 
 
 	// void	erase(iterator position)
