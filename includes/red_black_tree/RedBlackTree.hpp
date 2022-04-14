@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/14 14:37:08 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/14 23:31:23 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,13 +161,18 @@ class Rb_tree
 	/*
 	** Default Constructor: construct an empty tree with no elements
 	*/
+		// Rb_tree()
+		// : _root(NULL), _tree_size(0)
+		// {
+		// 	_sentinel = _create_sentinel();
+		// }
 
-		Rb_tree(const allocator_type & alloc = allocator_type(), const Compare & comp = Compare())
-		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()), _comp(comp)
+		
+		Rb_tree(const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
+		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
 		{
 			_sentinel = _create_sentinel();
-			
-		};
+		}
 
 	/*
 	** Range constructor: construct a tree with as many element as the range [first, last]
@@ -176,7 +181,7 @@ class Rb_tree
 
 		template < typename InputIterator >
 		Rb_tree(InputIterator first, InputIterator last, const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
-		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type(), _comp(comp))
+		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type() ,_comp(comp))
 		{
 			insert(first, last);
 			_sentinel = _create_sentinel();
@@ -187,9 +192,9 @@ class Rb_tree
 	*/
 
 		Rb_tree(const self & copy)
-		: _comp(copy._comp), _allocator(copy._allocator), _node_allocator(copy._node_allocator)
+		: _allocator(copy._allocator), _node_allocator(copy._node_allocator), _comp(copy._comp)
 		{
-			this = other;
+			*this = copy;
 		}
 
 	/*
@@ -397,7 +402,7 @@ class Rb_tree
 		}
 
 
-	void	swap()
+	// void	swap()
 
 
 		node_pointer	find(value_type value) const
@@ -795,7 +800,7 @@ void	_delete_fixup(node_pointer current)
 		void	_destroy_node(node_pointer current)
 		{
 			_allocator.destroy(current->get_value_pointer());
-			_deallocate(current);
+			_deallocate_node(current);
 		}
 
 	/*

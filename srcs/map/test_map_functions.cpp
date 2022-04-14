@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 14:37:20 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/14 12:31:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/14 23:41:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ void	map_test_creation()
 	named_map									map3;
 	named_pair									result;
 
+	
 
 	// insert 1 to 10 pair of "coucou"
-		ft_pair	pair_to_insert;
+		named_pair	pair_to_insert;
 	for (int i = 0; i < 10; i++)
 	{
 		pair_to_insert = M_NAMESPACE::make_pair<int, std::string>(i, "coucou");

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/14 14:31:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/14 23:39:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,35 @@ template < typename Key, typename T, typename Compare = ft::less<Key>, class All
 class map
 {
 /* -------------------------------------------------------------------------- */
-	/*
-	** TYPE
-	*/
-
+	/* Member type	*/
 	public:
 		typedef Key						key_type;
 		typedef T						mapped_type;
 		typedef Compare					key_compare;
 		typedef ft::pair<const Key, T>	value_type;
 		typedef Allocator				allocator_type;
-
+		
+		
+		class value_compare : public std::binary_function <value_type,value_type,bool>
+		{
+			friend class map;
+			
+			protected:
+				Compare comp;
+			
+			explicit value_compare(Compare c) 
+			: comp(c) {}
+	
+		public:
+			bool operator()(const value_type& x, const value_type& y) const 
+			{
+				return comp(x.first, y.first);
+			}
+		};
+		
 	private:
 		typedef typename allocator_type:: template rebind <value_type>::other	_pair_alloc_type;
-		typedef Rb_tree<value_type, Compare, _pair_alloc_type>		_tree_type;
+		typedef Rb_tree<value_type, value_compare, _pair_alloc_type>		_tree_type;
 
 	public:
 		typedef typename _pair_alloc_type::reference		reference;
@@ -64,21 +79,13 @@ class map
 		// typedef typename _tree_type::const_reverse_iterator	const_reverse_iterator;
 
 	/* -------------------------------------------------------------------------- */
-	// 	class value_compare
-	// : public binary_function<value_type,value_type,bool> {
-	// friend class map;
-	// protected:
-	// Compare comp;
-	// value_compare(Compare c) : comp(c) {}
-	// public:
-	// bool operator()(const value_type& x, const value_type& y) const {
-	// return comp(x.first, y.first);
-	// }
-	// };
+
 	
 	private:
-		Compare		_comp;
-		_tree_type	_tree;
+		allocator_type	_alloc;
+		value_compare	_value_comp;
+		key_compare		_key_comp;
+		_tree_type		_tree;
 		
 	/* -------------------------------------------------------------------------- */
 	/*                     Constructor Destructor                                  */
@@ -90,49 +97,33 @@ class map
 	** Default constructor create an empty map.
 	*/
 
-		map()
-		: _tree()
-		{}
-
+	// 	map()
+	// 	:  _tree()
+	// 	{}
 
 	/*
 	** Create an empty map with comparaison and allocator.
 	*/
-		explicit map (const Compare & comp, const allocator_type & alloc = allocator_type())
-		: _tree(alloc, comp)
-		{};
-
+		explicit map (const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type())
+		: _alloc(alloc), _value_comp(value_compare(comp)), _key_comp(comp), _tree(value_compare(comp), _pair_alloc_type(alloc))
+		{}
 
 	/*
-	** Copy constructor : create a complete copy of tree.
+	** Copy constructor : create a complete copy of each element in copy.tree.
 	*/
 
 		map(const map<Key, T, Compare, Allocator> & copy)
-		: _tree(copy._tree)
+		: _alloc(copy._alloc), _value_comp(copy._value_comp), _key_comp(copy._key_comp), _tree(copy._tree)
 		{}
-
-
-	/*
-	** Create map from elements first to last.
-	*/
-
-		template <typename InputIterator>
-		map(InputIterator first, InputIterator last)
-		: _tree(first, last)
-		{}
-
 
 	/*
 	** Create map from elements first to last with comparaison and/or allocator_type
 	*/
 
 		template <typename InputIterator>
-		map(InputIterator first, InputIterator last, const Compare & comp, const allocator_type & alloc = allocator_type())
-		: _tree(alloc, comp)
-		{
-			_tree.insert(first, last);
-		}
-
+		map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type())
+		: _alloc(alloc), _value_comp(value_compare(comp)), _key_comp(comp), _tree(first, last, value_compare(comp), _pair_alloc_type(alloc))
+		{}
 
 	/*
 	** Destructor:
@@ -144,6 +135,10 @@ class map
 /* -------------------------------------------------------------------------- */
 /*                         Assignation / modifiers                            */
 /* -------------------------------------------------------------------------- */
+
+	/*
+	** call operator= of tree: clear tree and copie all the element from other into this tree.
+	*/
 
 	map	&	operator=(const map<Key, T, Compare, Allocator> & other)
 	{
@@ -159,8 +154,69 @@ class map
 
 	mapped_type & operator[](const key_type & key)
 	{
-	 	return (*((this->insert(make_pair(key,ft::mapped_type()))).first)).second;
+	 	return (*((this->insert(ft::make_pair(key,mapped_type()))).first)).second;
 	}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Iterator                                     */
+/* -------------------------------------------------------------------------- */
+
+	/*
+	** begin()
+	**		return an iterator pointing to the first element in the tree.
+	*/
+
+		iterator		begin()
+		{
+			return _tree.begin();
+		}
+
+		const_iterator	begin() const
+		{
+			return _tree.begin();
+		}
+
+	/*
+	**	end()
+	**		Return an iterator reffering to the past-the_end element in the tree.
+	**		past-the-end is last element + 1 theorical element.
+	**		that means it shall not be be dereferenced.
+	**		in the tree it meens parent of root -> NULL
+	*/
+
+		iterator		end()
+		{
+			return _tree.end();
+		}
+
+		const_iterator	end() const
+		{
+			return _tree.end();
+		}
+
+	// reverse_iterator	rbegin()
+	// {
+	// 	return _tree.rbegin();
+	// }
+
+	// const_reverse_iterator rbegin() const
+	// {
+	// 	return _tree.rbegin();
+	// }
+
+	// reverse_iterator	rend()
+	// {
+	// 	return _tree.rend();
+	// }
+
+	// const_reverse_iterator	rend() const
+	// {
+	// 	return _tree.rend();
+	// }
+
+
+
 
 
 	ft::pair<iterator, bool>	insert(const value_type & x)
@@ -220,72 +276,6 @@ class map
 
 
 
-/* -------------------------------------------------------------------------- */
-/*                                Iterator / getter                            */
-/* -------------------------------------------------------------------------- */
-
-
-	/*
-	** return a copy of the memory allocator
-	*/
-
-		allocator_type	get_allocator() const 
-		{
-			return allocator_type(_tree.get_allocator());
-		}
-
-	/*
-	** begin()
-	**		return an iterator pointing to the first element in the tree.
-	*/
-
-		iterator		begin()
-		{
-			return _tree.begin();
-		}
-
-		const_iterator	begin() const
-		{
-			return _tree.begin();
-		}
-
-	/*
-	**	end()
-	**		Return an iterator reffering to the past-the_end element in the tree.
-	**		past-the-end is last element + 1 theorical element.
-	**		that means it shall not be be dereferenced.
-	**		in the tree it meens parent of root -> NULL
-	*/
-
-		iterator		end()
-		{
-			return _tree.end();
-		}
-
-		const_iterator	end() const
-		{
-			return _tree.end();
-		}
-
-	// reverse_iterator	rbegin()
-	// {
-	// 	return _tree.rbegin();
-	// }
-
-	// const_reverse_iterator rbegin() const
-	// {
-	// 	return _tree.rbegin();
-	// }
-
-	// reverse_iterator	rend()
-	// {
-	// 	return _tree.rend();
-	// }
-
-	// const_reverse_iterator	rend() const
-	// {
-	// 	return _tree.rend();
-	// }
 
 /* -------------------------------------------------------------------------- */
 /*                                Capacity                                    */
@@ -372,6 +362,17 @@ class map
 	{
 		return _tree.equal_range(key);
 	}
+/* -------------------------------------------------------------------------- */
+/*                                Allocator                                   */
+/* -------------------------------------------------------------------------- */
+	/*
+	** return a copy of the memory allocator
+	*/
+
+		allocator_type	get_allocator() const 
+		{
+			return allocator_type(_tree.get_allocator());
+		}
 /* -------------------------------------------------------------------------- */
 /*                                Display                                     */
 /* -------------------------------------------------------------------------- */

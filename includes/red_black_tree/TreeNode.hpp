@@ -29,7 +29,7 @@ namespace ft
 
 	
 	template < typename T>
-	struct less
+	struct less : public std::binary_function<T, T, bool>
 	{
 		bool	operator()(const T & x, const T & y) const
 		{
