@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/14 23:31:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/15 15:13:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,10 @@ class Rb_tree
 
 		template < typename InputIterator >
 		Rb_tree(InputIterator first, InputIterator last, const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
-		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type() ,_comp(comp))
+		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()) ,_comp(comp)
 		{
-			insert(first, last);
 			_sentinel = _create_sentinel();
+			insert(first, last);
 		}
 
 	/*
@@ -192,9 +192,10 @@ class Rb_tree
 	*/
 
 		Rb_tree(const self & copy)
-		: _allocator(copy._allocator), _node_allocator(copy._node_allocator), _comp(copy._comp)
+		: _root(NULL), _tree_size(0), _allocator(copy._allocator), _node_allocator(copy._node_allocator), _comp(copy._comp)
 		{
-			*this = copy;
+			_sentinel = _create_sentinel();
+			insert(copy.begin(), copy.end());
 		}
 
 	/*
@@ -234,12 +235,12 @@ class Rb_tree
 
 		iterator		begin()
 		{
-			return iterator(_root->get_most_left());
+			return iterator(_sentinel->get_most_left());
 		}
 
 		const_iterator	begin() const 
 		{
-			return const_iterator(_root->get_most_left());
+			return const_iterator(_sentinel->get_most_left());
 		}
 
 	/*
@@ -328,7 +329,9 @@ class Rb_tree
 		void	clear()
 		{
 			_clear_forward(_root);
+			_root = NULL;
 			_tree_size = 0;
+			_update_sentinel();
 		}
 
 	/*
@@ -758,7 +761,8 @@ void	_delete_fixup(node_pointer current)
 		void		_update_sentinel()
 		{
 			_sentinel->left = _root;
-			_root->parent = _sentinel;
+			if (_root != NULL)
+				_root->parent = _sentinel;
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -790,6 +794,7 @@ void	_delete_fixup(node_pointer current)
 				if (current->right != NULL)
 					_clear_forward(current->right);
 				_destroy_node(current);
+				current = NULL;
 			}
 		}
 		

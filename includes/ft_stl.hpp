@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/11 14:39:03 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/15 15:37:55 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@
 # define SEP	" | "
 # define SEP_FUNCTIONS "\n* -------------------------------------------------------------------------- *"
 # define PRINT(x)	std::cout << x << std::endl
+
+
+// typedef for simplify 
+typedef M_NAMESPACE::map<int, std::string, M_NAMESPACE::less<int> >  named_map;
+typedef std::map<int, std::string, std::less<int> >  std_map;
+typedef ft::map<int, std::string, ft::less<int> >  ft_map;
+
+typedef M_NAMESPACE::pair<int, std::string>	named_pair;
+typedef ft::pair<int, std::string>			ft_pair;
+typedef std::pair<int, std::string>			std_pair;
 
 /*
 ** Function PRINT vector

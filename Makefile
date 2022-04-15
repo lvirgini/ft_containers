@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/04/14 23:07:45 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/04/15 15:42:09 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,9 @@ SRC_STACK	=	stack_test.cpp \
 
 SRC_MAP 	=	test_pair.cpp \
 				test_rbtree.cpp \
-				test_map_functions.cpp
+				map_test_constructor.cpp \
+				map_test_insert.cpp \
+				map_test_erase.cpp
 
 # Obj
 # ----------------- #	
