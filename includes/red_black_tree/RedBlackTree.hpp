@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/15 15:13:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/15 21:04:11 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,13 +253,11 @@ class Rb_tree
 
 		iterator		end()
 		{
-			// ou NULL ???
 			return iterator(_sentinel);
 		}
 
 		const_iterator	end() const
 		{
-			// ou NULL ???
 			return const_iterator(_sentinel);
 		}
 
@@ -290,6 +288,16 @@ class Rb_tree
 /* -------------------------------------------------------------------------- */
 
 	/*
+	**	empty()
+	**		Returns true if the tree is empty.
+	*/
+
+		bool	empty() const
+		{
+			return (_root == NULL);
+		}
+
+	/*
 	**	size()
 	**		Return current size : the number of elements in the tree
 	*/
@@ -306,17 +314,7 @@ class Rb_tree
 
 		size_type	max_size(void) const
 		{
-			return (this->node_allocator.max_size());
-		}
-		
-	/*
-	**	empty()
-	**		Returns true if the tree is empty.
-	*/
-
-		bool	empty() const
-		{
-			return (_root == NULL);
+			return (this->_node_allocator.max_size());
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -341,34 +339,70 @@ class Rb_tree
 		{
 			node_pointer	to_insert = _allocate_node(value);
 
-			return (insert(to_insert));
+			return (insert(_root, to_insert));
 		}
 
 	/*
 	**
 	*/
+		iterator	insert(iterator position, const value & value)
+		{
+			node_pointer	to_add = _allocate_node(value);
+
+			if (_compare(*position, to_add) == true && *(++position).is_sentinel == false && _compare(*position, to_add) = false)
+				return (insert(--position, to_insert).first);
+			return (insert(_root, to_insert).first);
+		}
+
 
 		ft::pair<iterator, bool>	insert(node_pointer	to_add)
 		{
-			ft::pair<iterator, bool> result;
+			return (_insert(_root, to_add))
+
+			// ft::pair<iterator, bool> result;
+
+			// if (_root == NULL)
+			// {
+			// 	_root = to_add;
+			// 	result.first = iterator(to_add);
+			// 	result.second = true;
+			// }
+			// else
+			// {
+			// 	_root->parent = NULL;
+			// 	result = _insert_not_empty(_root, to_add);
+			// }
+			// _root->color = BLACK;
+			// if (result.second == true)
+			// 	_tree_size++;
+			// _update_sentinel();
+			// return result;
+		}
+
+		ft::pair<iterator, bool>	insert(node_pointer current, node_pointer to_add)
+		{
+			ft::pair<iterator, bool>	result;
 
 			if (_root == NULL)
 			{
 				_root = to_add;
-				result.first = iterator(to_add);
-				result.second = true;
+				result = ft::make_pair<iterator, bool>(iterator(to_add), true);
 			}
 			else
 			{
 				_root->parent = NULL;
-				result = _insert_not_empty(to_add);
-				_root->parent = _sentinel;
+				result = _insert_not_empty(current, to_add);
 			}
+			return (_insert_update(result));
+		}
+
+		ft_pair<iterator, bool>		_insert_update(ft::pair<iterator, bool>result)
+		{
 			_root->color = BLACK;
+			_update_sentinel();
 			if (result.second == true)
 				_tree_size++;
-			_update_sentinel();
-			return result;
+			return (result);
 		}
 
 		template < typename InputIterator >
@@ -382,25 +416,23 @@ class Rb_tree
 		}
 
 
-	void	erase(iterator position)
-	{
-		_delete(*position);
-	}
+		void erase(iterator first, iterator last)
+		{
+			while (first != last)
+				_delete(first++);
+		}
 
+		void	erase(iterator position)
+		{
+			if (position != _end())
+				erase(*position);
+		}
 
-	void erase(iterator first, iterator last)
-	{
-		while (first != last)
-			_delete(first++);
-	}
-		// void	erase(iterator pos);
-		// void	erase(const key_type & x);
-		// void	erase(iterator first, iterator last);
 		void	erase(const value_type & value)
 		{
 			node_pointer	to_delete = find(value);
 			
-			if (to_delete != NULL)
+			if (to_delete != NULL && to_delete->is_sentinel() == false)
 				_delete(to_delete);
 		}
 
@@ -449,11 +481,9 @@ class Rb_tree
 
 		// INSERT FROM introduction to Algorithms:
 
-		ft::pair<iterator, bool>	_insert_not_empty(node_pointer to_add)
+		ft::pair<iterator, bool>	_insert_not_empty(node_pointer current, node_pointer to_add)
 		{
 			node_pointer	parent = NULL;
-			node_pointer	current = _root;
-
 
 			while (current != NULL)
 			{
@@ -467,15 +497,6 @@ class Rb_tree
 					current = current->right;
 				}
 			}
-
-
-			// while (current != NULL)
-			// {
-			// 	if (current == to_add)
-			// 		return ft::make_pair<iterator, bool>(iterator(current), false);
-			// 	parent = current;
-			// 	current = _compare(to_add, current) == true ? current->left : current->right;
-			// }
 			to_add->parent = parent;
 			if (_compare(to_add, parent) == true)
 				parent->left = to_add;

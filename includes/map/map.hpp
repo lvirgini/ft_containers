@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/14 23:39:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/15 19:52:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ class map
 		{}
 
 /* -------------------------------------------------------------------------- */
-/*                         Assignation / modifiers                            */
+/*                         Assignation / Element access                        */
 /* -------------------------------------------------------------------------- */
 
 	/*
@@ -216,18 +216,58 @@ class map
 	// }
 
 
+/* -------------------------------------------------------------------------- */
+/*                                Capacity                                    */
+/* -------------------------------------------------------------------------- */
 
+	/*
+	** empty()
+	**		Return true if the map is empty.
+	*/
 
+	bool	empty() const 
+	{
+		return _tree.empty();
+	}
+
+	/*
+	**	size()
+	**		Return current size : the number of elements in the tree
+	*/
+
+	size_type size() const
+	{
+		return _tree.size();
+	}
+
+	/*
+	**	max_size()
+	**		Returns the maximum number of elements that the vector can hold.
+	*/
+
+	size_type	max_size() const
+	{
+		return _tree.max_size();
+	}
+	
+/* -------------------------------------------------------------------------- */
+/*                            Modifiers                                       */
+/* -------------------------------------------------------------------------- */
+
+/*
+** insert single element
+*/
 
 	ft::pair<iterator, bool>	insert(const value_type & x)
 	{
 		return _tree.insert(x);
 	}
 
-	// iterator insert(iterator position, const value_type & x)
-	// {
-	// 	return tree.insert(position, x);
-	// }
+	iterator insert(iterator position, const value_type & x)
+	{
+		(void) position;
+		return (_tree.insert(x)).first;
+	}
 
 	template <typename InputIterator>
 	void	insert(InputIterator first, InputIterator last)
@@ -277,29 +317,6 @@ class map
 
 
 
-/* -------------------------------------------------------------------------- */
-/*                                Capacity                                    */
-/* -------------------------------------------------------------------------- */
-
-	/*
-	** Return true if the map is empty.
-	*/
-
-	bool	empty() const 
-	{
-		return _tree.empty();
-	}
-
-	size_type size() const
-	{
-		return _tree.size();
-	}
-
-	size_type	max_size() const
-	{
-		return _tree.max_size();
-	}
-	
 	/*  This function only makes sense for multimaps; for map the result will
     *  either be 0 (not present) or 1 (present).
     */
