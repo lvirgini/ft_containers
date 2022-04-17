@@ -192,16 +192,16 @@ void	test_tree_in_progression()
 	tree.display();
 	tree.debug_print_btree_structure();
 
-	ft::Node < ft::pair<int, std::string> > *node_search = tree.find(value1);
+	// ft::Node < ft::pair<int, std::string> > *node_search = tree.find(value1);
 
-	std::cout << "search result is ";
-	if (node_search == NULL)
-		std::cout << "NULL";
-	else
-		std::cout << node_search->data.first;
-	std::cout << std::endl;
+	// std::cout << "search result is ";
+	// if (node_search == NULL)
+	// 	std::cout << "NULL";
+	// else
+	// 	std::cout << node_search->data.first;
+	// std::cout << std::endl;
 		
-	tree.erase(value1);
+	// tree.erase(value1);
 
 	// std::cout << tree.find(value0)->data.first << std::endl;
 

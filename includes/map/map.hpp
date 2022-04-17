@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/15 19:52:13 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/17 14:44:33 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,11 +263,19 @@ class map
 		return _tree.insert(x);
 	}
 
+/*
+** insert single element with position for max efficiency if value position
+**	is just before insert value. 
+*/
 	iterator insert(iterator position, const value_type & x)
 	{
 		(void) position;
 		return (_tree.insert(x)).first;
 	}
+
+/*
+** insert a range of elements between [first to last]
+*/
 
 	template <typename InputIterator>
 	void	insert(InputIterator first, InputIterator last)
@@ -275,21 +283,32 @@ class map
 			_tree.insert(first, last);
 	}
 
+/*
+** removes from the tree a single element at position
+*/
 
-	// void	erase(iterator position)
-	// {
-	// 		_tree.erase(position);
-	// }
+	void	erase(iterator position)
+	{
+			_tree.erase(position);
+	}
 
-	// size_type	erase(const key_type & x)
-	// {
-	// 	return _tree.erase(x);
-	// }
+/*
+** removes from the tree a single element with key (key)
+**	return the number of element erased.
+*/
 
-	// void erase(iterator first, iterator last)
-	// {
-	// 	_tree.erase(first, last);
-	// }
+	size_type	erase(const key_type & key)
+	{
+		return _tree.erase(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
+
+/*
+** erase all element between [first to last].
+*/
+	void erase(iterator first, iterator last)
+	{
+		_tree.erase(first, last);
+	}
 
 	// void swap (map<key, T, Compare, Allocator> & other)
 	// {
@@ -330,15 +349,19 @@ class map
 /*                                operation                                   */
 /* -------------------------------------------------------------------------- */
 
-	// iterator	find(const key_type & key)
-	// {
-	// 	return _tree.find(key);
-	// }
+/*
+** searches element with a key and return an iterator if found, otherwize it returns an iterator
+**	to map::end();
+*/
+	iterator	find(const key_type & key)
+	{
+		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
 
-	// const_iterator	find(const key_type & key) const
-	// {
-	// 	return _tree.find(key);
-	// }
+	const_iterator	find(const key_type & key) const
+	{
+		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
 
 	// iterator	lower_bound(const key_type & key)
 	// {

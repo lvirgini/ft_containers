@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/15 21:04:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/17 15:32:24 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,6 +321,92 @@ class Rb_tree
 /*                            Modifiers                                       */
 /* -------------------------------------------------------------------------- */
 
+
+	/*
+	** insert single element
+	*/
+
+		ft::pair<iterator, bool>	insert(const value_type & value)
+		{
+			node_pointer	to_insert = _allocate_node(value);
+
+			return _insert(_root, to_insert);
+		}
+
+	/*
+	** insert single element with position for max efficiency if value position
+	**	is just before insert value. 
+	*/
+
+		iterator	insert(iterator position, const value_type & value)
+		{
+			node_pointer	to_add = _allocate_node(value);
+			iterator		next = position;
+
+			next++;
+			if (*position.is_sentinel() == false
+				&& _compare(*position, to_add) == true
+				&& (next->is_sentinel() == true || _compare(*next, to_add) == false))
+				return (insert(position, to_add).first);
+			return (_insert(_root, to_add).first);
+		}
+
+	/*
+	** insert a range of elements between [first to last]
+	*/
+
+		template < typename InputIterator >
+		void insert(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				_insert(_root, _allocate_node(*first));
+				first++;
+			}
+		}
+
+
+	/*
+	** removes from the tree a single element at position
+	*/
+
+		void	erase(iterator position)
+		{
+			if (position != end())
+				_delete(position._node);
+		}
+
+	/*
+	** removes from the tree a single element with key (key)
+	**	return the number of element erased.
+	*/
+
+
+		size_type	erase(const value_type & value)
+		{
+			iterator	to_delete = find(value);
+			
+			if (to_delete != end())
+			{
+				_delete(to_delete._node);
+				return (1);
+			}
+			return (0);
+		}
+
+	/*
+	** erase all element between [first to last].
+	*/
+
+		void erase(iterator first, iterator last)
+		{
+			while (first != last)
+				erase(first++);
+		}
+
+
+	// void	swap()
+
 	/*
 	**
 	*/
@@ -332,125 +418,57 @@ class Rb_tree
 			_update_sentinel();
 		}
 
+/* -------------------------------------------------------------------------- */
+/*                                observer                                    */
+/* -------------------------------------------------------------------------- */
+	
 	/*
-	**
+	** searches element with a key and return an iterator if found, otherwize it returns an iterator
+	**	to tree::end();
 	*/
-		ft::pair<iterator, bool>	insert(const value_type & value)
+
+		iterator	find(const value_type & value)
 		{
-			node_pointer	to_insert = _allocate_node(value);
+			return iterator(_find(_root, value));
 
-			return (insert(_root, to_insert));
-		}
-
-	/*
-	**
-	*/
-		iterator	insert(iterator position, const value & value)
-		{
-			node_pointer	to_add = _allocate_node(value);
-
-			if (_compare(*position, to_add) == true && *(++position).is_sentinel == false && _compare(*position, to_add) = false)
-				return (insert(--position, to_insert).first);
-			return (insert(_root, to_insert).first);
-		}
-
-
-		ft::pair<iterator, bool>	insert(node_pointer	to_add)
-		{
-			return (_insert(_root, to_add))
-
-			// ft::pair<iterator, bool> result;
-
-			// if (_root == NULL)
-			// {
-			// 	_root = to_add;
-			// 	result.first = iterator(to_add);
-			// 	result.second = true;
-			// }
-			// else
-			// {
-			// 	_root->parent = NULL;
-			// 	result = _insert_not_empty(_root, to_add);
-			// }
-			// _root->color = BLACK;
-			// if (result.second == true)
-			// 	_tree_size++;
-			// _update_sentinel();
-			// return result;
-		}
-
-		ft::pair<iterator, bool>	insert(node_pointer current, node_pointer to_add)
-		{
-			ft::pair<iterator, bool>	result;
-
-			if (_root == NULL)
-			{
-				_root = to_add;
-				result = ft::make_pair<iterator, bool>(iterator(to_add), true);
-			}
-			else
-			{
-				_root->parent = NULL;
-				result = _insert_not_empty(current, to_add);
-			}
-			return (_insert_update(result));
-		}
-
-		ft_pair<iterator, bool>		_insert_update(ft::pair<iterator, bool>result)
-		{
-			_root->color = BLACK;
-			_update_sentinel();
-			if (result.second == true)
-				_tree_size++;
-			return (result);
-		}
-
-		template < typename InputIterator >
-		void insert(InputIterator first, InputIterator last)
-		{
-			while (first != last)
-			{
-				insert(*first);
-				first++;
-			}
-		}
-
-
-		void erase(iterator first, iterator last)
-		{
-			while (first != last)
-				_delete(first++);
-		}
-
-		void	erase(iterator position)
-		{
-			if (position != _end())
-				erase(*position);
-		}
-
-		void	erase(const value_type & value)
-		{
-			node_pointer	to_delete = find(value);
+			// node_pointer current = _root;
 			
-			if (to_delete != NULL && to_delete->is_sentinel() == false)
-				_delete(to_delete);
+			// while (current != NULL)
+			// {
+			// 	if (_compare(current->data, value))
+			// 		current = current->right;
+			// 		return current;
+			// 	current = _comp(current->data, value) ? current->right : current->left;
+			// }
+			// return current;
 		}
 
-
-	// void	swap()
-
-
-		node_pointer	find(value_type value) const
+		const_iterator	find(const value_type & value) const
 		{
-			node_pointer current = _root;
+			return const_iterator(_find(_root, value));
+
+			// node_pointer current = _root;
 			
-			while (current != NULL)
+			// while (current != NULL)
+			// {
+			// 	if (current->data == value)
+			// 		return current;
+			// 	current = _comp(current->data, value) ? current->right : current->left;
+			// }
+			// return current;
+		}
+
+		node_pointer _find(node_pointer current, const value_type & key)
+		{
+			if (current != NULL)
 			{
-				if (current->data == value)
-					return current;
-				current = _comp(current->data, value) ? current->right : current->left;
+				if (_comp(current->data, key))
+					return _find(current->right, key);
+				if (_comp(key, current->data))
+					return _find(current->left, key);
+				return (current);
 			}
-			return current;
+			return (_sentinel);
 		}
 
 		node_pointer	minimum() const
@@ -479,6 +497,30 @@ class Rb_tree
 
 	private:
 
+		ft::pair<iterator, bool>	_insert(node_pointer current, node_pointer to_add)
+		{
+			ft::pair<iterator, bool>	result;
+
+			if (_root == NULL)
+			{
+				_root = to_add;
+				result = ft::make_pair<iterator, bool>(iterator(to_add), true);
+			}
+			else
+			{
+				_root->parent = NULL;
+				result = _insert_not_empty(current, to_add);
+			}
+			if (result.second == false)
+				_deallocate_node(to_add);
+			else
+				_tree_size++;
+			_root->color = BLACK;
+			_update_sentinel();
+			return result;
+		}
+
+
 		// INSERT FROM introduction to Algorithms:
 
 		ft::pair<iterator, bool>	_insert_not_empty(node_pointer current, node_pointer to_add)
@@ -503,7 +545,7 @@ class Rb_tree
 			else
 				parent->right = to_add;
 			_insert_fixup(to_add);
-			return ft::make_pair<iterator, bool>(iterator(to_add), true);
+			return (ft::make_pair<iterator, bool>(iterator(to_add), true));
 		}
 
 		// if node and parent are red : 
@@ -582,6 +624,7 @@ class Rb_tree
 		{
 			return _comp(x->data, y->data);
 		}
+
 
 
 // left_rotate:
