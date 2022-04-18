@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/17 14:44:33 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:31:21 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,6 @@ class map
 
 	/*
 	** Default constructor create an empty map.
-	*/
-
-	// 	map()
-	// 	:  _tree()
-	// 	{}
-
-	/*
 	** Create an empty map with comparaison and allocator.
 	*/
 		explicit map (const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type())
