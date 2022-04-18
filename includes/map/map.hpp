@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/18 14:31:21 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:10:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,13 @@ class map
 
 	size_type	erase(const key_type & key)
 	{
-		return _tree.erase(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		iterator	it = find(key);
+		if (it != end())
+		{
+			_tree.erase(it);
+			return (1);
+		}	
+		return (0);
 	}
 
 /*

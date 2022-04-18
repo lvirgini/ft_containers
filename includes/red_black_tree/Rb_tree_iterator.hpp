@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/18 10:56:57 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:18:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,6 @@ class Rb_tree_iterator
 		{
 			return _node->operator->();
 		}
-
-		// self & operator[](difference_type n)
-		// {
-
-		// }
-
 
 		self &	operator++()
 		{

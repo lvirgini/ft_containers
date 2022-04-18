@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/17 15:32:24 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:46:31 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -681,7 +681,7 @@ class Rb_tree
 
 void	_transplant(node_pointer deleted, node_pointer replaced)
 {
-	if (deleted->parent == NULL)
+	if (deleted->parent->is_sentinel())
 		_root = replaced;
 	else if (deleted->is_left())
 		deleted->parent->left = replaced;
@@ -701,6 +701,7 @@ void	_delete(node_pointer to_dell)
 	node_pointer replaced;
 	node_pointer y = to_dell;
 
+	debug_print_btree_structure();
 	bool original_color = to_dell->color;
 
 	if (to_dell->left == NULL)
@@ -744,6 +745,8 @@ void	_delete_fixup(node_pointer current)
 
 	while (current != _root && current->color == BLACK)
 	{
+	debug_print_btree_structure();
+
 		if (current->is_left())
 		{
 			sister = current->get_sister();
