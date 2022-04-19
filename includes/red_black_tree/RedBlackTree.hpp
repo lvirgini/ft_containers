@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/19 16:25:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:10:06 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -758,6 +758,11 @@ void	_delete(node_pointer to_dell)
 		y->left->parent = y;
 		y->color = to_dell->color;
 	}
+	// if (replaced == NULL)
+	// {
+	// 	replace = _null_node;
+	// 	_update_null_node()
+	// }
 	if (replaced != NULL)
 		parent = replaced->parent;
 	if (original_color == BLACK)
@@ -835,26 +840,25 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			}
 			else
 			{
-				if (sister != NULL)
+				if (sister != NULL && (sister->left == NULL || sister->left->color == BLACK))
 				{
-					if (sister->left == NULL || sister->left->color == BLACK)
-					{
-						if (sister->right != NULL)
-							sister->right->color = BLACK;
-						sister->color = RED;
-						_left_rotate(sister);
-						sister = parent->left;
-					}
-					sister->color = parent->color;
-				if (sister->left != NULL)
-					sister->left->color = BLACK;
+					if (sister->right != NULL)
+						sister->right->color = BLACK;
+					sister->color = RED;
+					_left_rotate(sister);
+					sister = parent->left;
 				}
+				if (sister != NULL)
+					sister->color = parent->color;
 				parent->color = BLACK;
+				if (sister && sister->left != NULL)
+					sister->left->color = BLACK;
 				_right_rotate(parent);
 				current = _root;
 				parent = _sentinel;
 			}
 		}
+	}
 		current->color = BLACK;
 		// {
 		// 	sister = current->get_sister();
@@ -886,8 +890,6 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 		// 		current = _root;
 		// 	}
 		// }
-	}
-
 }
 
 
