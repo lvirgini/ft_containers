@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 14:24:53 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/18 15:25:43 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/19 15:48:32 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	map_test_erase()
 
   for (it = mymap.begin(); it != mymap.end(); it++)
   std::cout << it->first << " " << it->second <<  std::endl;
+PRINT(SEP_FUNCTIONS);
+PRINT("delete b");
 
   it=mymap.find('b');
   std::cout << it->first << std::endl;
@@ -38,11 +40,18 @@ void	map_test_erase()
   for (it = mymap.begin(); it != mymap.end(); it++)
   std::cout << it->first << " " << it->second <<  std::endl;
 
+PRINT(SEP_FUNCTIONS);
+PRINT("delete c");
   mymap.erase ('c');                  // erasing by key
 
+
+PRINT(SEP_FUNCTIONS);
+PRINT("delete e to end");
   it=mymap.find ('e');
   mymap.erase ( it, mymap.end() );    // erasing by range
 
+// if (STR_NAMESPACE[0] == 'f')
+//   mymap.display();
   // show content:
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';

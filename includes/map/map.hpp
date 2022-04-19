@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/18 15:10:19 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/19 15:41:37 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,10 @@ class map
 /*                         Assignation / Element access                        */
 /* -------------------------------------------------------------------------- */
 
+	void	display()
+	{
+		_tree.debug_print_btree_structure();
+	}
 	/*
 	** call operator= of tree: clear tree and copie all the element from other into this tree.
 	*/
@@ -417,10 +421,10 @@ class map
 /* -------------------------------------------------------------------------- */
 
 
-	void	display()
-	{
-		_tree.display();
-	}
+	// void	display()
+	// {
+	// 	_tree.display();
+	// }
 
 };
 
