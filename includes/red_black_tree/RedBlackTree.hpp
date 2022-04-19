@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/19 18:10:06 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:22:33 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,10 +381,10 @@ class Rb_tree
 
 		void	erase(iterator position)
 		{
-			debug_print_btree_structure();
+			// debug_print_btree_structure();
 			if (position != end())
 				_delete(position._node);
-			debug_print_btree_structure();
+			// debug_print_btree_structure();
 		}
 
 	/*
@@ -396,15 +396,15 @@ class Rb_tree
 		size_type	erase(const value_type & value)
 		{
 			iterator	to_delete = find(value);
-			debug_print_btree_structure();
+			// debug_print_btree_structure();
 			
 			if (to_delete != end())
 			{
 				_delete(to_delete._node);
-				debug_print_btree_structure();
+				// debug_print_btree_structure();
 				return (1);
 			}
-			debug_print_btree_structure();
+			// debug_print_btree_structure();
 			return (0);
 		}
 
@@ -414,10 +414,10 @@ class Rb_tree
 
 		void erase(iterator first, iterator last)
 		{
-			debug_print_btree_structure();
+			// debug_print_btree_structure();
 			while (first != last)
 				erase(first++);
-			debug_print_btree_structure();
+			// debug_print_btree_structure();
 		}
 
 
@@ -758,16 +758,13 @@ void	_delete(node_pointer to_dell)
 		y->left->parent = y;
 		y->color = to_dell->color;
 	}
-	// if (replaced == NULL)
-	// {
-	// 	replace = _null_node;
-	// 	_update_null_node()
-	// }
 	if (replaced != NULL)
 		parent = replaced->parent;
 	if (original_color == BLACK)
 		_delete_fixup(replaced, parent, child_is_left);
 	_root->color = BLACK;
+	_deallocate_node(to_dell);
+	_tree_size--;
 }
 
 void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
@@ -789,36 +786,33 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 				_left_rotate(parent);
 				sister = parent->right;
 			}
-			// if (sister != NULL)
-			// {
-				if (sister != NULL 
-				&& (sister->left == NULL || sister->left->color == BLACK) 
-				&& (sister->right == NULL || sister->right->color == BLACK))
+			if (sister != NULL 
+			&& (sister->left == NULL || sister->left->color == BLACK) 
+			&& (sister->right == NULL || sister->right->color == BLACK))
+			{
+				sister->color = RED;
+				current = parent;
+				parent = parent->parent;
+			}
+			else
+			{
+				if (sister != NULL && (sister->right == NULL || sister->right->color == BLACK))
 				{
+					if (sister->left != NULL)
+						sister->left->color = BLACK;
 					sister->color = RED;
-					current = parent;
-					parent = parent->parent;
+					_right_rotate(sister);
+					sister = parent->right;
 				}
-				else
-				{
-					if (sister != NULL && (sister->right == NULL || sister->right->color == BLACK))
-					{
-						if (sister->left != NULL)
-							sister->left->color = BLACK;
-						sister->color = RED;
-						_right_rotate(sister);
-						sister = parent->right;
-					}
-					if (sister != NULL)
-						sister->color = parent->color;
-					parent->color = BLACK;
-					if (sister && sister->right != NULL)
-						sister->right->color = BLACK;
-					_left_rotate(parent);
-					current = _root;
-					parent = _sentinel;
-				}
-			// }
+				if (sister != NULL)
+					sister->color = parent->color;
+				parent->color = BLACK;
+				if (sister && sister->right != NULL)
+					sister->right->color = BLACK;
+				_left_rotate(parent);
+				current = _root;
+				parent = _sentinel;
+			}
 		}
 		else
 		{
@@ -859,37 +853,7 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			}
 		}
 	}
-		current->color = BLACK;
-		// {
-		// 	sister = current->get_sister();
-		// 	if (sister->color == RED)
-		// 	{
-		// 		sister->color = BLACK;
-		// 		current->parent->color = RED;
-		// 		_right_rotate(current->parent);
-		// 		sister = current->parent->left;
-		// 	}
-		// 	if (sister->left->color == BLACK && sister->right->color == BLACK)
-		// 	{
-		// 		sister->color = RED;
-		// 		current = current->parent;
-		// 	}
-		// 	else
-		// 	{
-		// 		if (sister->left->color == BLACK)
-		// 		{
-		// 			sister->right->color = BLACK;
-		// 			sister->color = RED;
-		// 			_left_rotate(sister);
-		// 			sister = current->parent->left;
-		// 		}
-		// 		sister->color = current->parent->color;
-		// 		current->parent->color = BLACK;
-		// 		sister->right->color = BLACK;
-		// 		_left_rotate(current->parent);
-		// 		current = _root;
-		// 	}
-		// }
+	current->color = BLACK;
 }
 
 
