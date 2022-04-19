@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/04/18 15:08:06 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/04/18 22:32:57 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ OBJ_STD =	$(addprefix $(OBJ_DIRSTD),$(SRC:%.cpp=%.o))
 
 CC 		=	clang++
 
-CFLAG 	= 	-Wall -Wextra -std=c++98 -pedantic
+CFLAG 	= 	-Wall -Wextra -std=c++98 -pedantic -g
 STDFLAG = -D M_NAMESPACE=std
 IFLAG 	=	$(foreach dir, $(INC_DIR), -I $(dir)/ )
 
