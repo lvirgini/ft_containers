@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 11:55:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:01:26 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ class Rb_tree
 		allocator_type			_allocator;
 		node_allocator_type		_node_allocator;
 		node_pointer			_sentinel;
-		node_pointer			_null_node;
 
 		Compare					_comp;
 
@@ -162,18 +161,10 @@ class Rb_tree
 	/*
 	** Default Constructor: construct an empty tree with no elements
 	*/
-		// Rb_tree()
-		// : _root(NULL), _tree_size(0)
-		// {
-		// 	_sentinel = _create_sentinel();
-		// }
-
 		
 		Rb_tree(const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
 		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
 		{
-			// _null_node = _allocate_null_node();
-			// _update_null_node(NULL, true);
 			_sentinel = _create_sentinel();
 		}
 
@@ -186,8 +177,6 @@ class Rb_tree
 		Rb_tree(InputIterator first, InputIterator last, const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
 		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()) ,_comp(comp)
 		{
-			// _null_node = _allocate_null_node();
-			// _update_null_node(NULL, true);
 			_sentinel = _create_sentinel();
 			insert(first, last);
 		}
@@ -199,8 +188,6 @@ class Rb_tree
 		Rb_tree(const self & copy)
 		: _root(NULL), _tree_size(0), _allocator(copy._allocator), _node_allocator(copy._node_allocator), _comp(copy._comp)
 		{			
-			// _null_node = _allocate_null_node();
-			// _update_null_node(NULL, true);
 			_sentinel = _create_sentinel();
 			insert(copy.begin(), copy.end());
 		}
@@ -229,8 +216,6 @@ class Rb_tree
 			this->clear();
 			_node_allocator.destroy(_sentinel);
 			_node_allocator.deallocate(_sentinel, 1);
-			// _node_allocator.destroy(_null_node);
-			// _node_allocator.deallocate(_null_node, 1);
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -397,14 +382,11 @@ class Rb_tree
 		{
 			iterator	to_delete = find(value);
 			
-			debug_print_btree_structure();
 			if (to_delete != end())
 			{
 				_delete(to_delete._node);
-				debug_print_btree_structure();
 				return (1);
 			}
-			debug_print_btree_structure();
 			return (0);
 		}
 
@@ -415,11 +397,7 @@ class Rb_tree
 		void erase(iterator first, iterator last)
 		{
 			while (first != last)
-			{
-				debug_print_btree_structure();
 				erase(first++);
-				debug_print_btree_structure();
-			}
 		}
 
 
@@ -448,32 +426,11 @@ class Rb_tree
 		iterator	find(const value_type & value)
 		{
 			return iterator(_find(_root, value));
-
-			// node_pointer current = _root;
-			
-			// while (current != NULL)
-			// {
-			// 	if (_compare(current->data, value))
-			// 		current = current->right;
-			// 		return current;
-			// 	current = _comp(current->data, value) ? current->right : current->left;
-			// }
-			// return current;
 		}
 
 		const_iterator	find(const value_type & value) const
 		{
 			return const_iterator(_find(_root, value));
-
-			// node_pointer current = _root;
-			
-			// while (current != NULL)
-			// {
-			// 	if (current->data == value)
-			// 		return current;
-			// 	current = _comp(current->data, value) ? current->right : current->left;
-			// }
-			// return current;
 		}
 
 		node_pointer _find(node_pointer current, const value_type & key)
@@ -512,7 +469,9 @@ class Rb_tree
 			return _allocator;
 		}
 
-
+/* -------------------------------------------------------------------------- */
+/*                                Usefull private                             */
+/* -------------------------------------------------------------------------- */
 	private:
 
 		ft::pair<iterator, bool>	_insert(node_pointer current, node_pointer to_add)
@@ -718,32 +677,22 @@ void	_delete(node_pointer to_dell)
 {
 	node_pointer child;
 	node_pointer successor = to_dell;
-	node_pointer parent = NULL;
+	node_pointer parent = to_dell->parent;
 
 	bool original_color = to_dell->color;
-	bool child_is_left = true;
+	bool child_is_left = to_dell->is_left();
 	
-	// debug_print_btree_structure();
-
-	to_dell->print();
-	std::cout << "size" <<_tree_size << std::endl;
-	std::cout << "is left = " << child_is_left << std::endl;
-
 	// if is not only one
 	if (_tree_size > 1)
 	{
 	// check if no child or onlsuccessor one
 		if (to_dell->left == NULL)
 		{
-			child_is_left = to_dell->is_left();
-			parent = to_dell->parent;
 			child = to_dell->right;
 			_transplant(to_dell, to_dell->right);
 		}
 		else if (to_dell->right == NULL)
 		{
-			child_is_left = to_dell->is_left();
-			parent = to_dell->parent;
 			child = to_dell->left;
 			_transplant(to_dell, to_dell->left);
 		}
@@ -753,10 +702,7 @@ void	_delete(node_pointer to_dell)
 			original_color = successor->color;
 			child = successor->right;
 			if (successor->parent == to_dell) // direct child
-			{
 				parent = successor;
-				child_is_left = to_dell->is_left();
-			}	
 			else
 			{
 				_transplant(successor, successor->right);
@@ -788,22 +734,13 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 	// while (parent->is_sentinel() == false && (current == NULL || (current != _root && current->color == BLACK )))
 	while (current == NULL || (current != _root && current->color == BLACK ))
 	{
-		if (current)
-			std::cout << "current = " << current->data.first << std::endl;
-		else
-			std::cout << "current = NULL" << std::endl;
-
-		std::cout << "parent = " << parent->data.first << std::endl;
-
 		if (current != NULL)
 			is_left = current->is_left();
-		std::cout << "is left = " << is_left << std::endl;
 		if (is_left == true)
 		{
 			sister = parent->right;
 			if (sister != NULL && sister->color == RED)
 			{
-				std::cout << "sister = " << sister->data.first << std::endl;
 				sister->color = BLACK;
 				parent->color = RED;
 				_left_rotate(parent);
@@ -821,7 +758,6 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			{
 				if (sister != NULL && (sister->right == NULL || sister->right->color == BLACK))
 				{
-					std::cout << "sister = " << sister->data.first << std::endl;
 					if (sister->left != NULL)
 						sister->left->color = BLACK;
 					sister->color = RED;
@@ -833,11 +769,7 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 				parent->color = BLACK;
 				if (sister && sister->right != NULL)
 					sister->right->color = BLACK;
-				debug_print_btree_structure();
-				parent->print();
-				parent->right->print();
 				_left_rotate(parent);
-				debug_print_btree_structure();
 				current = _root;
 				parent = _sentinel;
 			}
@@ -847,7 +779,6 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			sister = parent->left;
 			if (sister != NULL && sister->color == RED)
 			{
-				std::cout << "sister = " << sister->data.first << std::endl;
 				sister->color = BLACK;
 				parent->color = RED;
 				_right_rotate(parent);
@@ -887,165 +818,6 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 }
 
 
-void	_delete_fixup2(node_pointer current)
-{
-	node_pointer sister;
-debug_print_btree_structure();
-	while (current != _root && current->color == BLACK)
-	{
-	debug_print_btree_structure();
-
-		if (current->is_left())
-		{
-			sister = current->get_sister();
-			if (sister->color == RED)
-			{
-				sister->color = BLACK;
-				current->parent->color = RED;
-				_left_rotate(current->parent);
-				sister = current->parent->right;
-			}
-			if (sister->left->color == BLACK && sister->right->color == BLACK)
-			{
-				sister->color = RED;
-				current = current->parent;
-			}
-			else
-			{
-				if (sister->right->color == BLACK)
-				{
-					sister->left->color = BLACK;
-					sister->color = RED;
-					_right_rotate(sister);
-					sister = current->parent->right;
-				}
-				sister->color = current->parent->color;
-				current->parent->color = BLACK;
-				sister->right->color = BLACK;
-				_left_rotate(current->parent);
-				current = _root;
-			}
-		}
-		else
-		{
-			sister = current->get_sister();
-			if (sister->color == RED)
-			{
-				sister->color = BLACK;
-				current->parent->color = RED;
-				_right_rotate(current->parent);
-				sister = current->parent->left;
-			}
-			if (sister->left->color == BLACK && sister->right->color == BLACK)
-			{
-				sister->color = RED;
-				current = current->parent;
-			}
-			else
-			{
-				if (sister->left->color == BLACK)
-				{
-					sister->right->color = BLACK;
-					sister->color = RED;
-					_left_rotate(sister);
-					sister = current->parent->left;
-				}
-				sister->color = current->parent->color;
-				current->parent->color = BLACK;
-				sister->right->color = BLACK;
-				_left_rotate(current->parent);
-				current = _root;
-			}
-		}
-	}
-}
-
-// void	_delete_fixup(node_pointer current, node_pointer parent)
-// {
-// 	node_pointer sister;
-// 	bool	is_left;
-// 	debug_print_btree_structure();
-
-// 	while ((current == NULL && parent != _root) 
-// 	|| (current != _root && current->color == BLACK))
-// 	{
-// 		debug_print_btree_structure();
-// 		if (current != NULL)
-// 			is_left = current->is_left();
-// 		else if (parent->left == NULL)
-// 			is_left = true;
-// 		else
-// 			is_left = false;
-// 		if (is_left == true)
-// 		{
-// 			std::cout <<"is left" << std::endl;
-// 			sister = parent->right;
-// 			if (sister->color == RED)
-// 			{
-// 				sister->color = BLACK;
-// 				parent->color = RED;
-// 				_left_rotate(parent);
-// 				sister = parent->right;
-// 			}
-// 			if ((sister->left == NULL || sister->left->color == BLACK) 
-// 			&& (sister->right == NULL || sister->right->color == BLACK))
-// 			{
-// 				sister->color = RED;
-// 				current = parent;
-// 				parent = parent->parent;
-// 			}
-// 			else
-// 			{
-// 				if (sister->right->color == BLACK)
-// 				{
-// 					sister->left->color = BLACK;
-// 					sister->color = RED;
-// 					_right_rotate(sister);
-// 					sister = current->parent->right;
-// 				}
-// 				sister->color = current->parent->color;
-// 				current->parent->color = BLACK;
-// 				sister->right->color = BLACK;
-// 				_left_rotate(current->parent);
-// 				current = _root;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			sister = current->get_sister();
-// 			if (sister->color == RED)
-// 			{
-// 				sister->color = BLACK;
-// 				current->parent->color = RED;
-// 				_right_rotate(current->parent);
-// 				sister = current->parent->left;
-// 			}
-// 			if (sister->left->color == BLACK && sister->right->color == BLACK)
-// 			{
-// 				sister->color = RED;
-// 				current = current->parent;
-// 			}
-// 			else
-// 			{
-// 				if (sister->left->color == BLACK)
-// 				{
-// 					sister->right->color = BLACK;
-// 					sister->color = RED;
-// 					_left_rotate(sister);
-// 					sister = current->parent->left;
-// 				}
-// 				sister->color = current->parent->color;
-// 				current->parent->color = BLACK;
-// 				sister->right->color = BLACK;
-// 				_left_rotate(current->parent);
-// 				current = _root;
-// 			}
-// 		}
-// 	}
-// }
-
-
-
 /* -------------------------------------------------------------------------- */
 /*                     Node allocate and destroy                              */
 /* -------------------------------------------------------------------------- */
@@ -1073,27 +845,27 @@ debug_print_btree_structure();
 	** allocate null node for help in erased
 	*/
 
-	node_pointer	_allocate_null_node()
-	{
-		node_pointer	node = _allocate_node(value_type());
+	// node_pointer	_allocate_null_node()
+	// {
+	// 	node_pointer	node = _allocate_node(value_type());
 
-		return node;
-	}
+	// 	return node;
+	// }
 
-	void	_update_null_node(node_pointer parent, bool is_left)
-	{
-		_null_node->parent = parent;
-		if (parent != NULL)
-		{
-			if (is_left)
-				parent->left = _null_node;
-			else
-				parent->right = _null_node;
-		}
-		_null_node->left = NULL;
-		_null_node->right = NULL;
-		_null_node->color = BLACK;
-	}
+	// void	_update_null_node(node_pointer parent, bool is_left)
+	// {
+	// 	_null_node->parent = parent;
+	// 	if (parent != NULL)
+	// 	{
+	// 		if (is_left)
+	// 			parent->left = _null_node;
+	// 		else
+	// 			parent->right = _null_node;
+	// 	}
+	// 	_null_node->left = NULL;
+	// 	_null_node->right = NULL;
+	// 	_null_node->color = BLACK;
+	// }
 
 	/*
 	** allocate and create node
