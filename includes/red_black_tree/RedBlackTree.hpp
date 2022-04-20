@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 16:01:26 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:52:32 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,6 @@ class Rb_tree
 		typedef const Rb_tree *		const_pointer;
 		typedef Rb_tree &			reference;
 		typedef const Rb_tree &		const_reference;
-
-		// typedef ft::normal_iterator<node_pointer, Rb_tree>		iterator;
-		// typedef ft::normal_iterator<const_node_pointer, Rb_tree>	const_iterator;
-
-		// typedef ft::Rb_tree_iterator<value_type>	iterator;
-		// typedef ft::Rb_tree_iterator<value_type>	const_iterator; ////
-		// typedef ft::Rb_tree_iterator<value_type, node_inter>			iterator;
-		// typedef ft::Rb_tree_iterator<value_type, const_node_pointer>	const_iterator;
 
 		typedef ft::Rb_tree_iterator<value_type, node_type>			iterator;
 		typedef ft::Rb_tree_const_iterator<value_type, node_type>	const_iterator;
@@ -366,10 +358,8 @@ class Rb_tree
 
 		void	erase(iterator position)
 		{
-			debug_print_btree_structure();
 			if (position != end())
 				_delete(position._node);
-			debug_print_btree_structure();
 		}
 
 	/*
@@ -404,7 +394,8 @@ class Rb_tree
 	// void	swap()
 
 	/*
-	**
+	** Removes all ele;ent from the map which is destroyed, leaving the container 
+	**	with the size of 0;
 	*/
 		void	clear()
 		{
