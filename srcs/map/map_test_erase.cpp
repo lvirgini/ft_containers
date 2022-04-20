@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 14:24:53 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 10:30:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:51:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ PRINT("delete begin to end");
   // show content:
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';
+
+  std::cout << "size at end = " << mymap.size() << mymap.begin()->first << std::endl;
 
 }
