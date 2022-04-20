@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 16:52:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:32:17 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,7 @@ class Rb_tree
 
 		void	erase(iterator position)
 		{
+			std::cout<< "iterator position " << std::endl;
 			if (position != end())
 				_delete(position._node);
 		}
@@ -370,6 +371,8 @@ class Rb_tree
 
 		size_type	erase(const value_type & value)
 		{
+			std::cout<< "value type " << std::endl;
+
 			iterator	to_delete = find(value);
 			
 			if (to_delete != end())
@@ -391,10 +394,23 @@ class Rb_tree
 		}
 
 
-	// void	swap()
+	void	swap(self & other)
+	{
+		node_pointer	root = other._root;
+		node_pointer	sentinel = other._sentinel;
+		size_type		tree_size = other._tree_size;
+
+		other._root = this->_root;
+		other._tree_size = this->_tree_size;
+		other._sentinel = this->_sentinel;
+
+		this->_root = root;
+		this->_tree_size = tree_size;
+		this->_sentinel = sentinel;
+	}
 
 	/*
-	** Removes all ele;ent from the map which is destroyed, leaving the container 
+	** Removes all ele;ent from the tree which are destroyed, leaving the tree 
 	**	with the size of 0;
 	*/
 		void	clear()
@@ -692,6 +708,7 @@ void	_delete(node_pointer to_dell)
 			successor = to_dell->right->get_most_left();
 			original_color = successor->color;
 			child = successor->right;
+			child_is_left = successor->is_left();
 			if (successor->parent == to_dell) // direct child
 				parent = successor;
 			else
@@ -1095,6 +1112,7 @@ private:
 			debug_print_btree_structure_2(current->left, space);
     	}
 	}
+
 
 };
 

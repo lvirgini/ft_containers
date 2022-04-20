@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 14:24:53 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 11:56:33 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:29:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,21 @@ PRINT("delete begin to end");
     std::cout << it->first << " => " << it->second << '\n';
 
   std::cout << "size at end = " << mymap.size() << mymap.begin()->first << std::endl;
+
+
+
+ft_map  map;
+
+int insert[] = {42, 24, 70, 35, 89, 101, 8, 9, 10};
+
+for(int i = 0; i < 9; i++)
+{
+  map.insert(ft::make_pair<int, std::string>(insert[i], "ok"));
+}
+
+  map.display();
+
+  map.erase(map.find(24));
+  map.display();
 
 }
