@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/19 19:29:16 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:33:01 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,8 +396,8 @@ class Rb_tree
 		size_type	erase(const value_type & value)
 		{
 			iterator	to_delete = find(value);
-			debug_print_btree_structure();
 			
+			debug_print_btree_structure();
 			if (to_delete != end())
 			{
 				_delete(to_delete._node);
@@ -414,11 +414,11 @@ class Rb_tree
 
 		void erase(iterator first, iterator last)
 		{
-			debug_print_btree_structure();
 			while (first != last)
 			{
+				debug_print_btree_structure();
 				erase(first++);
-			debug_print_btree_structure();
+				debug_print_btree_structure();
 			}
 		}
 
@@ -659,7 +659,7 @@ class Rb_tree
 				y->left->parent = x;
 			y->left = x;
 			y->parent = x->parent;
-			if (x->parent == NULL)
+			if (x == _root)
 				_root = y;
 			else if (x->is_left())
 				x->parent->left = y;
@@ -683,7 +683,7 @@ class Rb_tree
 				y->right->parent = x;
 			y->right = x;
 			y->parent = x->parent;
-			if (x->parent == NULL)
+			if (x == _root)
 				_root = y;
 			else if (x->is_left())
 				x->parent->left = y;
@@ -716,64 +716,69 @@ void	_transplant(node_pointer deleted, node_pointer replaced)
 
 void	_delete(node_pointer to_dell)
 {
-	node_pointer replaced;
-	node_pointer y = to_dell;
+	node_pointer child;
+	node_pointer successor = to_dell;
 	node_pointer parent = NULL;
-	bool original_color = to_dell->color;
-	bool child_is_left = to_dell->is_left();
 
+	bool original_color = to_dell->color;
+	bool child_is_left = true;
+	
 	// debug_print_btree_structure();
 
 	to_dell->print();
 	std::cout << "size" <<_tree_size << std::endl;
-	if (to_dell != _root || _tree_size != 1)
+	std::cout << "is left = " << child_is_left << std::endl;
+
+	// if is not only one
+	if (_tree_size > 1)
 	{
-	// check if no child or only one
+	// check if no child or onlsuccessor one
 		if (to_dell->left == NULL)
 		{
-			// child_is_left = false;
+			child_is_left = to_dell->is_left();
 			parent = to_dell->parent;
-			replaced = to_dell->right;
+			child = to_dell->right;
 			_transplant(to_dell, to_dell->right);
-			std::cout << "is left" << child_is_left << std::endl;
 		}
 		else if (to_dell->right == NULL)
 		{
+			child_is_left = to_dell->is_left();
 			parent = to_dell->parent;
-			replaced = to_dell->left;
+			child = to_dell->left;
 			_transplant(to_dell, to_dell->left);
 		}
 		else // two childs
 		{
-			y = to_dell->right->get_most_left();
-			original_color = y->color;
-			replaced = y->right;
-			if (y->parent == to_dell) // direct child
+			successor = to_dell->right->get_most_left();
+			original_color = successor->color;
+			child = successor->right;
+			if (successor->parent == to_dell) // direct child
 			{
-				parent = y;
-				child_is_left = false;
+				parent = successor;
+				child_is_left = to_dell->is_left();
 			}	
 			else
 			{
-				_transplant(y, y->right);
-				y->right = to_dell->right;
-				y->right->parent = y;
-				parent = y->parent;
+				_transplant(successor, successor->right);
+				successor->right = to_dell->right;
+				successor->right->parent = successor;
+				parent = successor->parent;
 			}	
-			_transplant(to_dell, y);
-			y->left = to_dell->left;
-			y->left->parent = y;
-			y->color = to_dell->color;
+			_transplant(to_dell, successor);
+			successor->left = to_dell->left;
+			successor->left->parent = successor;
+			successor->color = to_dell->color;
 		}
-		if (replaced != NULL)
-			parent = replaced->parent;
-		if (original_color == BLACK)
-			_delete_fixup(replaced, parent, child_is_left);
+		if (child != NULL)
+			parent = child->parent;
+		if (original_color == BLACK && _tree_size > 2)
+			_delete_fixup(child, parent, child_is_left);
 	}
 	_deallocate_node(to_dell);
 	_tree_size--;
-	// if (_root)
-	// 	_root->color = BLACK;
+	_update_sentinel();
+	if (_root)
+		_root->color = BLACK;
 }
 
 void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
@@ -783,17 +788,22 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 	// while (parent->is_sentinel() == false && (current == NULL || (current != _root && current->color == BLACK )))
 	while (current == NULL || (current != _root && current->color == BLACK ))
 	{
-		std::cout << current << std::endl;
+		if (current)
+			std::cout << "current = " << current->data.first << std::endl;
+		else
+			std::cout << "current = NULL" << std::endl;
+
+		std::cout << "parent = " << parent->data.first << std::endl;
 
 		if (current != NULL)
 			is_left = current->is_left();
-		std::cout << "is left" << is_left << std::endl;
+		std::cout << "is left = " << is_left << std::endl;
 		if (is_left == true)
 		{
-		std::cout << sister << std::endl;
 			sister = parent->right;
 			if (sister != NULL && sister->color == RED)
 			{
+				std::cout << "sister = " << sister->data.first << std::endl;
 				sister->color = BLACK;
 				parent->color = RED;
 				_left_rotate(parent);
@@ -811,6 +821,7 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			{
 				if (sister != NULL && (sister->right == NULL || sister->right->color == BLACK))
 				{
+					std::cout << "sister = " << sister->data.first << std::endl;
 					if (sister->left != NULL)
 						sister->left->color = BLACK;
 					sister->color = RED;
@@ -822,7 +833,11 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 				parent->color = BLACK;
 				if (sister && sister->right != NULL)
 					sister->right->color = BLACK;
+				debug_print_btree_structure();
+				parent->print();
+				parent->right->print();
 				_left_rotate(parent);
+				debug_print_btree_structure();
 				current = _root;
 				parent = _sentinel;
 			}
@@ -832,6 +847,7 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			sister = parent->left;
 			if (sister != NULL && sister->color == RED)
 			{
+				std::cout << "sister = " << sister->data.first << std::endl;
 				sister->color = BLACK;
 				parent->color = RED;
 				_right_rotate(parent);
