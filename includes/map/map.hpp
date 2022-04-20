@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/19 15:41:37 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:43:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,11 @@ class map
 	// {
 	// _tree.swap(other._tree)
 	// }
+
+	/*
+	** Removes all ele;ent from the map which is destroyed, leaving the container 
+	**	with the size of 0;
+	*/
 
 	void	clear()
 	{
