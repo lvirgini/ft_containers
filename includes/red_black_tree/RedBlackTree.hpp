@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 10:33:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:55:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,8 @@ class Rb_tree
 		Rb_tree(const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
 		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
 		{
-			_null_node = _allocate_null_node();
-			_update_null_node(NULL, true);
+			// _null_node = _allocate_null_node();
+			// _update_null_node(NULL, true);
 			_sentinel = _create_sentinel();
 		}
 
@@ -186,8 +186,8 @@ class Rb_tree
 		Rb_tree(InputIterator first, InputIterator last, const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
 		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()) ,_comp(comp)
 		{
-			_null_node = _allocate_null_node();
-			_update_null_node(NULL, true);
+			// _null_node = _allocate_null_node();
+			// _update_null_node(NULL, true);
 			_sentinel = _create_sentinel();
 			insert(first, last);
 		}
@@ -199,8 +199,8 @@ class Rb_tree
 		Rb_tree(const self & copy)
 		: _root(NULL), _tree_size(0), _allocator(copy._allocator), _node_allocator(copy._node_allocator), _comp(copy._comp)
 		{			
-			_null_node = _allocate_null_node();
-			_update_null_node(NULL, true);
+			// _null_node = _allocate_null_node();
+			// _update_null_node(NULL, true);
 			_sentinel = _create_sentinel();
 			insert(copy.begin(), copy.end());
 		}
@@ -229,8 +229,8 @@ class Rb_tree
 			this->clear();
 			_node_allocator.destroy(_sentinel);
 			_node_allocator.deallocate(_sentinel, 1);
-			_node_allocator.destroy(_null_node);
-			_node_allocator.deallocate(_null_node, 1);
+			// _node_allocator.destroy(_null_node);
+			// _node_allocator.deallocate(_null_node, 1);
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -1139,6 +1139,8 @@ debug_print_btree_structure();
 	*/
 		void	_deallocate_node(node_pointer current)
 		{
+			if (current == _root)
+				_root = NULL;
 			_node_allocator.destroy(current);
 			_node_allocator.deallocate(current, 1);
 			current = NULL;
