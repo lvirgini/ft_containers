@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:17:56 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 15:21:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:43:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,39 @@ void	map_test_value_comp()
 
 
 
+
+void	map_test_lower_bound()
+{
+
+	PRINT(SEP_FUNCTIONS);
+	PRINT("map test lower_bound()");
+
+	M_NAMESPACE::map<char,int> mymap;
+	M_NAMESPACE::map<char,int>::iterator itlow,itup;
+
+	mymap['a']=20;
+	mymap['b']=40;
+	mymap['c']=60;
+	mymap['d']=80;
+	mymap['e']=100;
+
+	itlow=mymap.lower_bound ('b');  // itlow points to b
+
+	//   itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+	
+	itup= mymap.end();
+	mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+	// print content:
+	for (M_NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+}
+
+
 void	map_test_others_functions()
 {
 	map_test_value_comp();
 	map_test_key_comp();
+	map_test_lower_bound();
 }

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 14:54:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:49:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,7 +420,7 @@ class Rb_tree
 		}
 
 /* -------------------------------------------------------------------------- */
-/*                                observer                                    */
+/*                                Operations                                    */
 /* -------------------------------------------------------------------------- */
 	
 	/*
@@ -461,6 +461,66 @@ class Rb_tree
 			return _root->get_most_right();
 		}
 
+
+/*
+** return iterator to lower bound : pointing to the first element in the container
+**	 whose key is not considered to go before;
+
+_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::
+    _M_lower_bound(_Link_type __x, _Base_ptr __y,
+		   const _Key& __k)
+    {
+      while (__x != 0)
+	if (!_M_impl._M_key_compare(_S_key(__x), __k))
+	  __y = __x, __x = _S_left(__x);
+	else
+	  __x = _S_right(__x);
+      return iterator(__y);
+    }
+
+*/
+
+	iterator	lower_bound(const value_type & value)
+	{
+
+		return iterator(M_lower_bound(value));
+	}
+
+	const_iterator	lower_bound(const value_type & value) const
+	{
+		return const_iterator(M_lower_bound(value));
+	}
+
+/*
+** return iterator to upper bound : first element whose key is considered to go after
+**	key
+*/
+
+iterator	upper_bound(const_value_type & value)
+	{
+		return iterator(M_upper_bound());
+	}
+
+	const_iterator	upper_bound(const value_type & value) const
+	{
+		return const_iterator(M_upper_bound(value));
+	}
+private:
+
+	node_pointer	M_lower_bound(const value_type & value)
+	{
+		node_pointer current = _root;
+		node_pointer result = _sentinel;;
+
+		while (current != NULL)
+		{
+			if (_comp(current->data, value) == false)
+				result = current, current = current->left;
+			else
+				current = current->right;
+		}
+		return result;
+	}
 
 /* -------------------------------------------------------------------------- */
 /*                                Allocator                                   */

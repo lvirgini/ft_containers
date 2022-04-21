@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 14:39:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:47:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ class map
 	/*
 	** Create map from elements first to last with comparaison and/or allocator_type
 	*/
+		// map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),  typename ft::enable_if< !ft::is_integer<InputIterator>::value, InputIterator >::type * = NULL)
 
 		template <typename InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type())
@@ -204,20 +205,20 @@ class map
 			return _tree.rbegin();
 		}
 
-	// const_reverse_iterator rbegin() const
-	// {
-	// 	return _tree.rbegin();
-	// }
+		const_reverse_iterator rbegin() const
+		{
+			return _tree.rbegin();
+		}
 
 		reverse_iterator	rend()
 		{
 			return _tree.rend();
 		}
 
-	// const_reverse_iterator	rend() const
-	// {
-	// 	return _tree.rend();
-	// }
+		const_reverse_iterator	rend() const
+		{
+			return _tree.rend();
+		}
 
 
 /* -------------------------------------------------------------------------- */
@@ -385,25 +386,35 @@ class map
 		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
 	}
 
-	// iterator	lower_bound(const key_type & key)
-	// {
-	// 	return _tree.lower_bound(key);
-	// }
+/*
+** return iterator to lower bound : pointing to the first element in the container
+**	 whose key is not considered to go before;
+*/
 
-	// const_iterator	lower_bound(const key_type & key) const
-	// {
-	// 	return _tree.lower_bound(key);
-	// }
+	iterator	lower_bound(const key_type & key)
+	{
+		return _tree.lower_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
 
-	// iterator	upper_bound(const key_type & key)
-	// {
-	// 	return _tree.upper_bound(key);
-	// }
+	const_iterator	lower_bound(const key_type & key) const
+	{
+		return _tree.lower_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
 
-	// const_iterator	upper_bound(const key_type & key) const
-	// {
-	// 	return _tree.upper_bound(key);
-	// }
+/*
+** return iterator to upper bound : first element whose key is considered to go after
+**	key
+*/
+
+	iterator	upper_bound(const key_type & key)
+	{
+		return _tree.upper_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
+
+	const_iterator	upper_bound(const key_type & key) const
+	{
+		return _tree.upper_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+	}
 	/*	
        *  @brief Finds a subsequence matching given key.
        *  This function is equivalent to

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 15:28:31 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:40:57 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	test_map(void)
 	map_test_capacity();
 	map_test_insert();
 	map_test_erase();
-	map_test_others_functions();
 	map_test_iterator();
+	map_test_others_functions();
 }
 
 int main(void)

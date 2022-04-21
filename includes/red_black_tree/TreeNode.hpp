@@ -97,13 +97,6 @@ namespace ft
 			return *this ;
 		}
 
-
-		// bool			operator<(const_reference other)
-		// {
-		// 	return comp(this->data, other.data);
-		// }
-
-
 		bool		is_left()
 		{
 			if (this->parent != NULL && this->parent->left == this)
@@ -237,7 +230,7 @@ namespace ft
 
 		value_pointer		operator->()
 		{
-			return &data;
+			return & data;
 		}
 
 		reference		operator++()

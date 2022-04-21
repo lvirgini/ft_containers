@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 17:27:36 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:16:54 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,14 @@ struct iterator
 ** Iterator_traits : nested typedef of iterator
 ** usefull for correct semantics for pointer and const_pointer
 */
-
-template <typename _Iterator>
+template <typename Iterator>
 struct iterator_traits
 {
-	typedef typename _Iterator::iterator_category iterator_category;
-	typedef typename _Iterator::value_type        value_type;
-	typedef typename _Iterator::difference_type   difference_type;
-	typedef typename _Iterator::pointer           pointer;
-	typedef typename _Iterator::reference         reference;
+	typedef typename Iterator::iterator_category iterator_category;
+	typedef typename Iterator::value_type        value_type;
+	typedef typename Iterator::difference_type   difference_type;
+	typedef typename Iterator::pointer           pointer;
+	typedef typename Iterator::reference         reference;
 };
 
 /*
