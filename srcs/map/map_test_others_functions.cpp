@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:17:56 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 19:43:19 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:46:51 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,8 @@ void	map_test_lower_bound()
 
 	itlow=mymap.lower_bound ('b');  // itlow points to b
 
-	//   itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+	  itup=mymap.upper_bound ('d');   // itup points to e (not d!)
 	
-	itup= mymap.end();
 	mymap.erase(itlow,itup);        // erases [itlow,itup)
 
 	// print content:

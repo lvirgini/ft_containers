@@ -52,7 +52,7 @@ namespace ft
 		typedef Node &			reference;
 		typedef const Node &	const_reference;
 		typedef Value			value_type;
-		typedef Value &			value_reference;
+		typedef value_type &	value_reference;
 		typedef value_type *	value_pointer;
 
 		bool			color;

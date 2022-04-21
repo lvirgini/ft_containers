@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 18:07:51 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:40:46 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,14 @@ class Rb_tree_const_iterator
 
 		reference	operator*() const
 		{
+			// return *_node;
 			return _node->operator*();
 		}
 
 		pointer		operator->() const
 		{
 			return _node->operator->();
+			// return &(operator*());
 		}
 
 		self &	operator++()

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:17:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 18:47:18 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:18:59 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,14 @@ class reverse_iterator
 		return *(--ref);
 	}
 
-      _GLIBCXX17_CONSTEXPR pointer
-      operator->() const
-      { return std::__addressof(operator*()); }
+    //   _GLIBCXX17_CONSTEXPR pointer
+    //   operator->() const
+    //   { return std::__addressof(operator*()); }
 
-
+    	pointer operator->() const
+        {
+            return &(operator*());
+        }
 
 	// pointer				operator->() const	////
 	// {

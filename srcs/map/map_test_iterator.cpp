@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:22:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 19:02:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:40:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,7 @@ void	map_test_iterator()
 			std::cout << it->first << " -> " << it->second << std::endl;
 	}
 
-/* -------------------------------------------------------------------------- */
 
-	PRINT(SEP_FUNCTIONS);
-	PRINT("map test reverse iterator");
-	{
-		named_map::reverse_iterator		rit = map1.rbegin();
-		named_map::reverse_iterator		rite;
-
-
-		PRINT(SEP_FUNCTIONS);
-		PRINT("map test reverse iterators : change pair->second : ");
-
-		// rit->second = "reverse iterator OK";
-		// for (rit = map1.rbegin(), rite = map1.rend(); rit != rite; rit++)
-		// 	std::cout << rit->first << " -> " << rit->second << std::endl;
-
-	// 	for (rit = map1.rend(), rite = map1.rend(); rit != rite; rit++)
-	// 		std::cout << rit->first << " -> " << rit->second << std::endl;
-	}
-
-	std::cout << "end" << std::endl;
 
 /* -------------------------------------------------------------------------- */
 
@@ -144,5 +124,25 @@ void	map_test_iterator()
 		for (; std_cit != std_cite; std_cit++)
 			std::cout << std_cit->first << " -> " << std_cit->second << std::endl;
 	}
+/* -------------------------------------------------------------------------- */
 
+	PRINT(SEP_FUNCTIONS);
+	PRINT("map test reverse iterator");
+	{
+		named_map::reverse_iterator		rit = map1.rbegin();
+		named_map::reverse_iterator		rite;
+
+
+		PRINT(SEP_FUNCTIONS);
+		PRINT("map test reverse iterators : change pair->second : ");
+
+		// rit->second = "reverse iterator OK";
+		// for (rit = map1.rbegin(), rite = map1.rend(); rit != rite; rit++)
+		// 	std::cout << rit->first << " -> " << rit->second << std::endl;
+
+	// 	for (rit = map1.rend(), rite = map1.rend(); rit != rite; rit++)
+	// 		std::cout << rit->first << " -> " << rit->second << std::endl;
+	}
+
+	std::cout << "end" << std::endl;
 }

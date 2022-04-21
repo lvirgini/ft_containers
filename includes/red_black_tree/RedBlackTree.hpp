@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 19:49:10 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:00:51 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -496,15 +496,15 @@ _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::
 **	key
 */
 
-iterator	upper_bound(const_value_type & value)
+iterator	upper_bound(const value_type & value)
 	{
-		return iterator(M_upper_bound());
+		return iterator(M_upper_bound(value));
 	}
 
-	const_iterator	upper_bound(const value_type & value) const
-	{
-		return const_iterator(M_upper_bound(value));
-	}
+const_iterator	upper_bound(const value_type & value) const
+{
+	return const_iterator(M_upper_bound(value));
+}
 private:
 
 	node_pointer	M_lower_bound(const value_type & value)
@@ -514,7 +514,22 @@ private:
 
 		while (current != NULL)
 		{
-			if (_comp(current->data, value) == false)
+			if (_comp(current->data, value) == true)
+				current = current->right;
+			else
+				result = current, current = current->left;
+		}
+		return result;
+	}
+
+	node_pointer	M_upper_bound(const value_type & value)
+	{
+		node_pointer current = _root;
+		node_pointer result = _sentinel;;
+
+		while (current != NULL)
+		{
+			if (_comp(value, current->data) == true)
 				result = current, current = current->left;
 			else
 				current = current->right;
