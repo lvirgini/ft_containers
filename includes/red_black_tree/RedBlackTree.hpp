@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 17:32:17 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:54:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include "TreeNode.hpp"
 # include "Rb_tree_iterator.hpp"
+# include "reverse_iterator.hpp"
 # include "pair.hpp"
 
 /*
@@ -248,25 +249,25 @@ class Rb_tree
 		}
 
 
-		// reverse_iterator	rbegin()
-		// {
-		// 	return reverse_iterator(_root->get_most_right());
-		// }
+		reverse_iterator	rbegin()
+		{
+			return reverse_iterator(end());
+		}
 
-		// const_reverse_iterator	rbegin() const
-		// {
-		// 	return const_reverse_iterator(_root->get_most_right());
-		// }
+		const_reverse_iterator	rbegin() const
+		{
+			return const_reverse_iterator(end());
+		}
 
-		// reverse_iterator	rend()
-		// {
-		// 	return reverse_iterator(_sentinel);
-		// }
+		reverse_iterator	rend()
+		{
+			return reverse_iterator(begin());
+		}
 
-		// const_reverse_iterator	rend() const
-		// {
-		// 	return const_reverse_iterator(_sentinel);
-		// }
+		const_reverse_iterator	rend() const
+		{
+			return const_reverse_iterator(begin());
+		}
 
 
 /* -------------------------------------------------------------------------- */
@@ -358,7 +359,6 @@ class Rb_tree
 
 		void	erase(iterator position)
 		{
-			std::cout<< "iterator position " << std::endl;
 			if (position != end())
 				_delete(position._node);
 		}
@@ -371,8 +371,6 @@ class Rb_tree
 
 		size_type	erase(const value_type & value)
 		{
-			std::cout<< "value type " << std::endl;
-
 			iterator	to_delete = find(value);
 			
 			if (to_delete != end())
@@ -936,147 +934,13 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 		#define STR_BLACK "\033[0m"
 		#define STR_RED "\033[31m"
 
-
-		void	display()
-		{
-			if (_root == NULL)
-				return ;
-
-			int level = 0;
-			bool finished = false;
-
-
-
-			// _print_space(level);
-			finished = _print_level(_root, 0, level++);
-			std::cout << std::endl;
-
-			// _print_space(level);
-			finished = _print_level(_root, 0, level++);
-			std::cout << std::endl;
-
-			// _print_space(level);
-			finished = _print_level(_root, 0, level++);
-			std::cout << std::endl;
-
-			// _print_space(level);
-			finished = _print_level(_root, 0, level++);
-			std::cout << std::endl;
-
-			// _print(_root->left, 1);
-			// _print(_root->right, 1);
-
-
-			// finished = _print_level(_root, 0, level);
-
-
-			// while (finished == false)
-			// {
-			// 	finished = _print_level(_root, 0, level);
-			// 	level++;
-				std::cout << std::endl;
-			// }
-
-			// _print(_root, this->_tree_size, 0);
-		}
-
-		bool 	_print_level(node_pointer current, int actual_level, int level_to_print)
-		{
-			bool left = false;
-			bool right = false;
-			if (current == NULL)
-			{
-				_print(NULL, level_to_print);
-				return false;
-			}
-			if (actual_level != level_to_print)
-			{
-				left = _print_level(current->left, actual_level + 1, level_to_print);
-				right = _print_level(current->right, actual_level + 1, level_to_print);
-			}
-			else
-				_print(current, actual_level);
-			if (right == false && left == false)
-				return false;
-			return true;
-
-
-
-			// static int to_print = 0;
-
-			// if (current == _root)
-			// 	to_print = 0;
-			// if (current != NULL && actual_level != to_print)
-			// {
-			// 	if (current->left)
-			// 		_print_level(current->left, actual_level + 1, level_to_print);
-			// 	if (current->right)
-			// 		_print_level(current->right, actual_level + 1, level_to_print);
-			// }
-			// else if (actual_level == level_to_print)
-			// {
-			// 	_print(current->left, actual_level);
-			// 	_print(current->right, actual_level);
-			// }
-			// if (current != NULL)
-			// 	to_print++;
-			// if (to_print > 0)
-			// 	return (false);
-			// return (true);
-		}
-
-		void	_print_space(int level)
-		{
-			if (level == 0)
-			{
-				for (size_t i = 0; i < _tree_size; i++)
-					std::cout << "  ";
-			}
-			else
-			{
-				for (size_t i = 0; i < (_tree_size / std::pow(2, level)) / level; i++)
-					std::cout << "  ";
-			}
-		}
-
-	
-		void	_print(node_pointer current, int level)
-		{
-
-			_print_space(level);
-			if (current == NULL)
-				std::cout << STR_BLACK << ".";
-			else
-			{
-				std::string color = current->color == RED ? STR_RED: STR_BLACK;
-				std::cout << color << current->data.first;
-			}
-			_print_space(level);
-		}
-
-
-
-public:
-// thanks to Tony :
-	void debug_print_btree_structure(){
-    debug_print_btree_structure_2(_root, 0);
-}
-
-private:
-
-
-	void debug_print_btree_structure_(node_pointer current, int space){
-    if ( current != NULL ){
-        space += 10;
-        debug_print_btree_structure_(current->right, space);
-        std::cout << std::endl;
-        for ( int _ = 0 ; _ < space ; _++ ){ std::cout << " "; }
-        std::cout << "( " << current->data.first << " : " << current->data.second  << ", " << " )" << std::endl;
-        debug_print_btree_structure_(current->left, space);
-    }
+	// thanks to Tony :
+	void debug_print_btree_structure()
+	{
+    	debug_print_btree_structure_2(_root, 0);
 	}
 
-
+private:
 
 	void	_print_separator(node_pointer current, int space)
 	{
@@ -1105,14 +969,14 @@ private:
 			space += 6;
 			debug_print_btree_structure_2(current->right, space);
 			_print_separator(current, space);
-			for ( int _ = 0 ; _ < space ; _++ ){ std::cout << " "; }
+			for ( int _ = 0 ; _ < space ; _++ )
+				std::cout << " ";
 			
 			std::cout << (current->color == RED ? STR_RED: STR_BLACK);
 			std::cout << current->data.first << ":" << current->data.second << STR_BLACK << std::endl;
 			debug_print_btree_structure_2(current->left, space);
     	}
 	}
-
 
 };
 

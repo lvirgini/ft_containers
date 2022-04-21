@@ -1,4 +1,3 @@
-namespace std {
 template <class Key, class T, class Compare = less<Key>,
 class Allocator = allocator<pair<const Key, T> > >
 class map {
@@ -47,21 +46,7 @@ typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 // 23.3.1.2 element access:
 T& operator[](const key_type& x);
 // modifiers:
-pair<iterator, bool> insert(const value_type& x);
-iterator insert(iterator position, const value_type& x);
-template <class InputIterator>
-void insert(InputIterator first, InputIterator last);
-void erase(iterator position);
-size_type erase(const key_type& x);
-void erase(iterator first, iterator last);
-void swap(map<Key,T,Compare,Allocator>&);
-void clear();
 // observers:
-key_compare key_comp() const;
-value_compare value_comp() const;
-491
-ISO/IEC 14882:1998(E) © ISO/IEC
-23.3.1 Template class map 23 Containers library
 // 23.3.1.3 map operations:
 iterator find(const key_type& x);
 const_iterator find(const key_type& x) const;

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:09:59 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/17 13:47:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:15:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	map_test_insert()
 {
+/* -------------------------------------------------------------------------- */
+
 	PRINT("MAP test insert");
 	PRINT(SEP_FUNCTIONS);
 
@@ -21,6 +23,7 @@ void	map_test_insert()
 	named_map::iterator	it;
 	named_map::iterator	ite;
 
+/* -------------------------------------------------------------------------- */
 
 	PRINT("insert same key with differente and same second param");
 	map1.insert(M_NAMESPACE::make_pair<int, std::string>(1, "truc"));
@@ -32,6 +35,7 @@ void	map_test_insert()
 	for (it = map1.begin(), ite = map1.end(); it != ite; it++)
 		std::cout << it->first << " " << it->second << std::endl;
 
+/* -------------------------------------------------------------------------- */
 
 	PRINT(SEP_FUNCTIONS);
 	PRINT("insert with iterator");
@@ -45,7 +49,7 @@ void	map_test_insert()
 
 	for (it = map1.begin(), ite = map1.end(); it != ite; it++)
 		std::cout << it->first << " " << it->second << "	map2: "<< it->first << " " << it->second << std::endl;
-
+/* -------------------------------------------------------------------------- */
 
 	PRINT(SEP_FUNCTIONS);
 	PRINT("insert with iterator end() : nothing to insert");
@@ -61,6 +65,22 @@ void	map_test_insert()
 
 for (it = map1.begin(), ite = map1.end(); it != ite; it++)
 		std::cout << it->first << " " << it->second << std::endl;
+/* -------------------------------------------------------------------------- */
+
+	PRINT(SEP_FUNCTIONS);
+	PRINT("insert pair <int, int");
+
+	M_NAMESPACE::map<int, int>	map5;
+	M_NAMESPACE::map<int, int>::iterator	it5;
+	M_NAMESPACE::map<int, int>::iterator	ite5;
+
+	int insert[] = {42, 24, 70, 35, 89, 101, 8, 9, 10};
+
+	for(int i = 0; i < 9; i++)
+		map5.insert(M_NAMESPACE::make_pair<int, int>(insert[i], i));
+
+	for (it5 = map5.begin(), ite5 = map5.end(); it5 != ite5; it5++)
+		std::cout << it5->first << " " << it5->second << std::endl;
 
 	PRINT(SEP_FUNCTIONS);
 

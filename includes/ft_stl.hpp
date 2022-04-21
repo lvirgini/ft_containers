@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/18 14:36:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:28:25 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ void	map_test_creation();
 void	map_test_capacity();
 void	map_test_insert();
 void	map_test_erase();
+void	map_test_iterator();
+void	map_test_others_functions();
+
 
 # include "printer.tpp"
 

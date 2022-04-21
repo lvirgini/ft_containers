@@ -189,7 +189,6 @@ void	test_tree_in_progression()
 	// 	node_begin->print();
 
 
-	tree.display();
 	tree.debug_print_btree_structure();
 
 	// ft::Node < ft::pair<int, std::string> > *node_search = tree.find(value1);

@@ -11,4 +11,4 @@ make
 ./ft_containers > ft.log
 
 # show the differences between std and ft
-diff std.log ft.log
+diff -a std.log ft.log

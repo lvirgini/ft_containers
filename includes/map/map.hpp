@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 17:43:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:39:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ class map
 	private:
 		typedef typename allocator_type:: template rebind <value_type>::other	_pair_alloc_type;
 		typedef Rb_tree<value_type, value_compare, _pair_alloc_type>		_tree_type;
+		typedef map<Key, T, Compare, Allocator>								self;
 
 	public:
 		typedef typename _pair_alloc_type::reference		reference;
@@ -75,8 +76,8 @@ class map
 		typedef typename _tree_type::difference_type		difference_type;
 		typedef typename _tree_type::iterator				iterator;
 		typedef typename _tree_type::const_iterator			const_iterator;
-		// typedef typename _tree_type::reverse_iterator		reverse_iterator;
-		// typedef typename _tree_type::const_reverse_iterator	const_reverse_iterator;
+		typedef typename _tree_type::reverse_iterator		reverse_iterator;
+		typedef typename _tree_type::const_reverse_iterator	const_reverse_iterator;
 
 	/* -------------------------------------------------------------------------- */
 
@@ -105,7 +106,7 @@ class map
 	** Copy constructor : create a complete copy of each element in copy.tree.
 	*/
 
-		map(const map<Key, T, Compare, Allocator> & copy)
+		map(const self & copy)
 		: _alloc(copy._alloc), _value_comp(copy._value_comp), _key_comp(copy._key_comp), _tree(copy._tree)
 		{}
 
@@ -192,20 +193,26 @@ class map
 			return _tree.end();
 		}
 
-	// reverse_iterator	rbegin()
-	// {
-	// 	return _tree.rbegin();
-	// }
+	/*
+	** rend()
+	**		Return reverse iterator to reverse beginning:
+	**		pointing to the last element in the container. iterate backwards.
+	*/
+
+		reverse_iterator	rbegin()
+		{
+			return _tree.rbegin();
+		}
 
 	// const_reverse_iterator rbegin() const
 	// {
 	// 	return _tree.rbegin();
 	// }
 
-	// reverse_iterator	rend()
-	// {
-	// 	return _tree.rend();
-	// }
+		reverse_iterator	rend()
+		{
+			return _tree.rend();
+		}
 
 	// const_reverse_iterator	rend() const
 	// {
@@ -313,10 +320,10 @@ class map
 		_tree.erase(first, last);
 	}
 
-	// void swap (map<key, T, Compare, Allocator> & other)
-	// {
-	// _tree.swap(other._tree)
-	// }
+	void swap (map<Key, T, Compare, Allocator> & other)
+	{
+	_tree.swap(other._tree);
+	}
 
 	/*
 	** Removes all ele;ent from the map which is destroyed, leaving the container 
@@ -331,17 +338,24 @@ class map
 /*                                observer                                    */
 /* -------------------------------------------------------------------------- */
 
-	// key_compare key_comp() const
-	// {
-	// 	return _tree.key_comp();
-	// }
+	/*
+	** Return a copy of key comparaison object
+	*/
 
-	// value_compare	value_comp() const
-	// {
-	// 	return value_compare(_tree.comp());
-	// }
+	key_compare key_comp() const
+	{
+		return _key_comp;
+	}
 
+	/*
+	** Return a copy of value comparaison object : defined by value type as pair<key, mapped type>
+	** but the mapped type part of the value is not taken iinto consideration in this comparaison.
+	*/
 
+	value_compare	value_comp() const
+	{
+		return _value_comp;
+	}
 
 
 	/*  This function only makes sense for multimaps; for map the result will

@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/04/18 22:32:57 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/04/21 15:28:08 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,9 @@ SRC_MAP 	=	test_pair.cpp \
 				map_test_constructor.cpp \
 				map_test_capacity.cpp \
 				map_test_insert.cpp \
-				map_test_erase.cpp
+				map_test_erase.cpp \
+				map_test_iterator.cpp \
+				map_test_others_functions.cpp
 
 # Obj
 # ----------------- #	

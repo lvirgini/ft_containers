@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 14:24:53 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/20 17:29:09 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:16:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ void	map_test_erase()
   mymap['e']=50;
   mymap['f']=60;
 
-
+PRINT(SEP_FUNCTIONS);
+PRINT("before erase");
 
   for (it = mymap.begin(); it != mymap.end(); it++)
   std::cout << it->first << " " << it->second <<  std::endl;
+
+/* -------------------------------------------------------------------------- */
+
 PRINT(SEP_FUNCTIONS);
-PRINT("delete b");
+PRINT("delete b by iterator");
 
   it=mymap.find('b');
   std::cout << it->first << std::endl;
@@ -39,43 +43,28 @@ PRINT("delete b");
 
   for (it = mymap.begin(); it != mymap.end(); it++)
   std::cout << it->first << " " << it->second <<  std::endl;
+/* -------------------------------------------------------------------------- */
 
 PRINT(SEP_FUNCTIONS);
-PRINT("delete c");
+PRINT("delete c by key");
+
   mymap.erase ('c');                  // erasing by key
-PRINT(SEP_FUNCTIONS);
-PRINT("delete a");               // erasing by key
-  mymap.erase ('a');
 
+  for (it = mymap.begin(); it != mymap.end(); it++)
+  std::cout << it->first << " " << it->second <<  std::endl;
+/* -------------------------------------------------------------------------- */
 
 PRINT(SEP_FUNCTIONS);
 PRINT("delete begin to end");
+
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';
   mymap.erase ( mymap.begin(), mymap.end() );    // erasing by range
 
-// if (STR_NAMESPACE[0] == 'f')
-//   mymap.display();
-  // show content:
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';
 
   std::cout << "size at end = " << mymap.size() << mymap.begin()->first << std::endl;
-
-
-
-ft_map  map;
-
-int insert[] = {42, 24, 70, 35, 89, 101, 8, 9, 10};
-
-for(int i = 0; i < 9; i++)
-{
-  map.insert(ft::make_pair<int, std::string>(insert[i], "ok"));
-}
-
-  map.display();
-
-  map.erase(map.find(24));
-  map.display();
+/* -------------------------------------------------------------------------- */
 
 }

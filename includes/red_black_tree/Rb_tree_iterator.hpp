@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/18 15:18:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:47:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,23 @@ namespace ft
 template <typename Value, typename Node >
 class Rb_tree_iterator
 {
-	public:
+	// public:
+	// 	typedef Value			value_type;
+	// 	typedef Value &			reference;
+	// 	typedef Value *			pointer;
+	// 	typedef ptrdiff_t		difference_type;
+
+	// 	typedef Rb_tree_iterator<Value, Node>			self;
+	// 	typedef std::bidirectional_iterator_tag	iterator_category;
+		
+	// 	typedef  Node *		node_pointer;
+	// 	typedef  Node &		node_reference;
+	// 	typedef  const Node &	node_const_reference;
+
+
+		private:
+			typedef ft::iterator_traits
+		public:
 		typedef Value			value_type;
 		typedef Value &			reference;
 		typedef Value *			pointer;
