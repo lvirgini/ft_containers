@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 22:00:51 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:11:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,6 +438,7 @@ class Rb_tree
 			return const_iterator(_find(_root, value));
 		}
 
+private:
 		node_pointer _find(node_pointer current, const value_type & key)
 		{
 			if (current != NULL)
@@ -451,6 +452,7 @@ class Rb_tree
 			return (_sentinel);
 		}
 
+public: 
 		node_pointer	minimum() const
 		{
 			return _root->get_most_left();
@@ -461,23 +463,9 @@ class Rb_tree
 			return _root->get_most_right();
 		}
 
-
 /*
 ** return iterator to lower bound : pointing to the first element in the container
 **	 whose key is not considered to go before;
-
-_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::
-    _M_lower_bound(_Link_type __x, _Base_ptr __y,
-		   const _Key& __k)
-    {
-      while (__x != 0)
-	if (!_M_impl._M_key_compare(_S_key(__x), __k))
-	  __y = __x, __x = _S_left(__x);
-	else
-	  __x = _S_right(__x);
-      return iterator(__y);
-    }
-
 */
 
 	iterator	lower_bound(const value_type & value)
@@ -540,6 +528,8 @@ private:
 /* -------------------------------------------------------------------------- */
 /*                                Allocator                                   */
 /* -------------------------------------------------------------------------- */
+
+public:
 
 	/*
 	** return a copy of the memory allocator

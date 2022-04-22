@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 19:47:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:13:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,6 +386,13 @@ class map
 		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
 	}
 
+
+	size_type	count(const key_type & key) const
+	{	
+		if (iterator(find(key) == end()))
+			return false;
+		return true;
+	}
 /*
 ** return iterator to lower bound : pointing to the first element in the container
 **	 whose key is not considered to go before;

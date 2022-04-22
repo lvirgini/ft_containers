@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:17:56 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 21:46:51 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:10:28 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,30 @@ void	map_test_lower_bound()
 }
 
 
+void	map_test_count()
+{
+	M_NAMESPACE::map<char,int> mymap;
+	char c;
+
+	mymap ['a']=101;
+	mymap ['c']=202;
+	mymap ['f']=303;
+
+	for (c='a'; c<'h'; c++)
+	{
+	std::cout << c;
+	if (mymap.count(c)>0)
+		std::cout << " is an element of mymap.\n";
+	else 
+		std::cout << " is not an element of mymap.\n";
+	}
+}
+
+
 void	map_test_others_functions()
 {
 	map_test_value_comp();
 	map_test_key_comp();
 	map_test_lower_bound();
+	map_test_count();
 }
