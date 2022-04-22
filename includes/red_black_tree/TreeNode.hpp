@@ -16,17 +16,6 @@
 
 namespace ft
 {
-
-	//   /// One of the @link comparison_functors comparison functors@endlink.
-//   template<typename _Tp>
-//     struct less : public binary_function<_Tp, _Tp, bool>
-//     {
-//       _GLIBCXX14_CONSTEXPR
-//       bool
-//       operator()(const _Tp& __x, const _Tp& __y) const
-//       { return __x < __y; }
-//     };
-
 	
 	template < typename T>
 	struct less : public std::binary_function<T, T, bool>
