@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 13:41:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 15:30:59 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "Rb_tree_iterator.hpp"
 # include "reverse_iterator.hpp"
 # include "pair.hpp"
+# include "usefull.hpp"
 
 /*
 **	Rules :
@@ -120,7 +121,7 @@ class Rb_tree
 		typedef	const node_type &	const_node_reference;
 
 		typedef	size_t				size_type;
-		typedef	ptrdiff_t			difference_type;
+		typedef	std::ptrdiff_t			difference_type;
 
 		typedef Rb_tree *			pointer;
 		typedef const Rb_tree *		const_pointer;
@@ -494,7 +495,7 @@ const_iterator	upper_bound(const value_type & value) const
 }
 private:
 
-	node_pointer	M_lower_bound(const value_type & value)
+	node_pointer	M_lower_bound(const value_type & value) const
 	{
 		node_pointer current = _root;
 		node_pointer result = _sentinel;;
@@ -509,7 +510,7 @@ private:
 		return result;
 	}
 
-	node_pointer	M_upper_bound(const value_type & value)
+	node_pointer	M_upper_bound(const value_type & value) const
 	{
 		node_pointer current = _root;
 		node_pointer result = _sentinel;;
@@ -1013,6 +1014,56 @@ private:
 	}
 
 };
+
+
+
+
+template <class T, class Compare, class Allocator>
+bool operator==(const Rb_tree<T,Compare,Allocator>& x, const  Rb_tree<T,Compare,Allocator>& y)
+{
+	return (x.size() == y.size() && ft::equal(x.begin(), x.end(), y.begin()));
+
+}
+
+template <class T, class Compare, class Allocator>
+bool operator< (const Rb_tree<T,Compare,Allocator>& x, const  Rb_tree<T,Compare,Allocator>& y)
+{
+	return ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+}
+
+template <class T, class Compare, class Allocator>
+bool operator!=(const Rb_tree<T,Compare,Allocator>& x, const  Rb_tree<T,Compare,Allocator>& y)
+{
+	return !(x == y);
+}
+
+template <class T, class Compare, class Allocator>
+bool operator>(const Rb_tree<T,Compare,Allocator>& x, const  Rb_tree<T,Compare,Allocator>& y)
+{
+	return (y < x);
+}
+
+template <class T, class Compare, class Allocator>
+bool operator<=(const Rb_tree<T,Compare,Allocator>& x, const  Rb_tree<T,Compare,Allocator>& y)
+{
+	return !(y < x);
+}
+
+template <class T, class Compare, class Allocator>
+bool operator>=(const Rb_tree<T,Compare,Allocator>& x, const  Rb_tree<T,Compare,Allocator>& y)
+{
+	return !(x < y);
+}
+
+// specialized algorithms:
+template <class T, class Compare, class Allocator>
+void	swap(Rb_tree<T,Compare,Allocator>& x, Rb_tree<T,Compare,Allocator>& y)
+{
+	x.swap(y);
+}
+
+
+
 
 
 }// end namespace ft

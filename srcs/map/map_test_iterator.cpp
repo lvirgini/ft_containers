@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:22:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 13:43:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:54:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ void	map_test_iterator()
 		for (rit = map1.rend(), rite = map1.rend(); rit != rite; rit++)
 			std::cout << rit->first << " -> " << rit->second << std::endl;
 	}
+
+	std::map<int, int>
 
 	std::cout << "end" << std::endl;
 }

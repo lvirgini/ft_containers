@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 21:40:46 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 15:45:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Rb_tree_iterator
 		typedef Value			value_type;
 		typedef Value &			reference;
 		typedef Value *			pointer;
-		typedef ptrdiff_t		difference_type;
+		typedef std::ptrdiff_t		difference_type;
 
 		typedef Rb_tree_iterator<Value, Node>			self;
 		typedef std::bidirectional_iterator_tag	iterator_category;
@@ -36,27 +36,8 @@ class Rb_tree_iterator
 		typedef  Node &			node_reference;
 		typedef  const Node &	node_const_reference;
 
-
-		// private:
-		// 	typedef ft::iterator_traits<Node>				node_trait_type;
-
-		// public:
-		// typedef typename node_trait_type::value_type		node_type;
-		// typedef typename node_trait_type::reference			node_reference;
-		// typedef typename node_trait_type::pointer			node_pointer;
-		// typedef typename node_trait_type::difference_type	difference_type;
-		// typedef typename node_trait_type::iterator_category	iterator_category;
-
-		// typedef Value &		value_reference;
-		// typedef Value *		value_pointer;
-
-		// typedef Rb_tree_iterator<Value, Node>			self;
-		
-	// private:
 		node_pointer	_node;
 
-
-	public:
 
 		Rb_tree_iterator()
 		: _node()
@@ -83,9 +64,11 @@ class Rb_tree_iterator
 			return _node->operator*();
 		}
 
-		pointer		operator->()
+		pointer		operator->() const
 		{
 			return _node->operator->();
+			// return &(operator*());
+
 		}
 
 		self &	operator++()
@@ -153,7 +136,7 @@ class Rb_tree_const_iterator
 		typedef Value			value_type;
 		typedef const Value &	reference;
 		typedef const Value *	pointer;
-		typedef ptrdiff_t		difference_type;
+		typedef std::ptrdiff_t		difference_type;
 
 		typedef Rb_tree_iterator<Value, Node>		iterator;
 		typedef Rb_tree_const_iterator<Value, Node>	self;
@@ -192,8 +175,8 @@ class Rb_tree_const_iterator
 
 		pointer		operator->() const
 		{
-			return _node->operator->();
-			// return &(operator*());
+			// return _node->operator->();
+			return &(operator*());
 		}
 
 		self &	operator++()
@@ -236,17 +219,15 @@ class Rb_tree_const_iterator
 		}
 };
 
-//   template<typename _Val>
-//     inline bool
-//     operator==(const _Rb_tree_iterator<_Val>& __x,
-// 	       const _Rb_tree_const_iterator<_Val>& __y) _GLIBCXX_NOEXCEPT
-//     { return __x._M_node == __y._M_node; }
+  template<typename Value, typename Node>
+    inline bool
+    operator==(const Rb_tree_iterator<Value, Node>& __x, const Rb_tree_const_iterator<Value, Node>& __y) 
+    { return __x._node == __y._node; }
 
-//   template<typename _Val>
-//     inline bool
-//     operator!=(const _Rb_tree_iterator<_Val>& __x,
-// 	       const _Rb_tree_const_iterator<_Val>& __y) _GLIBCXX_NOEXCEPT
-//     { return __x._M_node != __y._M_node; }
+  template<typename Value, typename Node>
+    inline bool
+    operator!=(const Rb_tree_iterator<Value, Node>& __x, const Rb_tree_const_iterator<Value, Node>& __y) 
+    { return __x._node != __y._node; }
 
 }// end namespace ft
 

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 11:28:54 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:00:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -434,14 +434,15 @@ class map
        *
        *  This function probably only makes sense for multimaps.
        */
-	std::pair<iterator, iterator> equal_range(const key_type & key)
-	{
-		return _tree.equal_range(key);
+
+	ft::pair<iterator, iterator> equal_range(const key_type & key)
+	{	
+		return ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key));
 	}
 
-		std::pair<const_iterator, const_iterator> equal_range(const key_type & key) const
+	ft::pair<const_iterator, const_iterator> equal_range(const key_type & key) const
 	{
-		return _tree.equal_range(key);
+		return ft::make_pair<const_iterator, const_iterator>(lower_bound(key), upper_bound(key));
 	}
 /* -------------------------------------------------------------------------- */
 /*                                Allocator                                   */
@@ -459,55 +460,53 @@ class map
 /* -------------------------------------------------------------------------- */
 
 
-	// void	display()
-	// {
-	// 	_tree.display();
-	// }
 
-};
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator==(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	return (x._tree == y._tree);
+}
 
-/*
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator< (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	return (x._tree < y._tree);
+}
 
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator!=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	return (x._tree != y._tree);
+}
 
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator> (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	return (x._tree > y._tree);
+}
 
-// 23.3.1.3 map operations:
-iterator find(const key_type& x);
-const_iterator find(const key_type& x) const;
-size_type count(const key_type& x) const;
-iterator lower_bound(const key_type& x);
-const_iterator lower_bound(const key_type& x) const;
-iterator upper_bound(const key_type& x);
-const_iterator upper_bound(const key_type& x) const;
-pair<iterator,iterator>
-equal_range(const key_type& x);
-pair<const_iterator,const_iterator>
-equal_range(const key_type& x) const;
-};
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator>=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	return (x._tree >= y._tree);
+}
 
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator<=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	return (x._tree <= y._tree);
+}
 
-template <class Key, class T, class Compare, class Allocator>
-bool operator==(const map<Key,T,Compare,Allocator>& x,
-const map<Key,T,Compare,Allocator>& y);
-template <class Key, class T, class Compare, class Allocator>
-bool operator< (const map<Key,T,Compare,Allocator>& x,
-const map<Key,T,Compare,Allocator>& y);
-template <class Key, class T, class Compare, class Allocator>
-bool operator!=(const map<Key,T,Compare,Allocator>& x,
-const map<Key,T,Compare,Allocator>& y);
-template <class Key, class T, class Compare, class Allocator>
-bool operator> (const map<Key,T,Compare,Allocator>& x,
-const map<Key,T,Compare,Allocator>& y);
-template <class Key, class T, class Compare, class Allocator>
-bool operator>=(const map<Key,T,Compare,Allocator>& x,
-const map<Key,T,Compare,Allocator>& y);
-template <class Key, class T, class Compare, class Allocator>
-bool operator<=(const map<Key,T,Compare,Allocator>& x,
-const map<Key,T,Compare,Allocator>& y);
 // specialized algorithms:
-template <class Key, class T, class Compare, class Allocator>
-void swap(map<Key,T,Compare,Allocator>& x,
-map<Key,T,Compare,Allocator>& y);
-}*/
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend void swap(map<Key_1,T_1,Comp_1,Alloc_1>& x, map<Key_1,T_1,Comp_1,Alloc_1>& y)
+{
+	x._tree.swap(y._tree);
+}
+
+
+
+};
 
 
 } // end namespace ft
