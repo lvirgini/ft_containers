@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 22:13:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:28:54 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,10 +388,11 @@ class map
 
 
 	size_type	count(const key_type & key) const
-	{	
-		if (iterator(find(key) == end()))
-			return false;
-		return true;
+	{
+		const_iterator	it = find(key);
+		if (it == end())
+			return 0;
+		return 1;
 	}
 /*
 ** return iterator to lower bound : pointing to the first element in the container

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 22:11:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:41:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,8 +207,7 @@ class Rb_tree
 		~Rb_tree()
 		{
 			this->clear();
-			_node_allocator.destroy(_sentinel);
-			_node_allocator.deallocate(_sentinel, 1);
+			_deallocate_node(_sentinel);
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -439,7 +438,7 @@ class Rb_tree
 		}
 
 private:
-		node_pointer _find(node_pointer current, const value_type & key)
+		node_pointer _find(node_pointer current, const value_type & key) const
 		{
 			if (current != NULL)
 			{
@@ -802,7 +801,6 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 {	
 	node_pointer sister;
 
-	// while (parent->is_sentinel() == false && (current == NULL || (current != _root && current->color == BLACK )))
 	while (current == NULL || (current != _root && current->color == BLACK ))
 	{
 		if (current != NULL)
@@ -896,12 +894,11 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 
 		node_pointer	_create_sentinel()
 		{
-			node_pointer	sentinel = _node_allocator.allocate(1);
-
-			_node_allocator.construct(sentinel, value_type());
+			node_pointer	sentinel = _allocate_node(value_type());
 			sentinel->parent = NULL;
+			sentinel->left = NULL;
+			sentinel->right = NULL;
 			sentinel->color = BLACK;
-			sentinel->left = _root;
 			return (sentinel);
 		}
 
@@ -913,40 +910,16 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 		}
 
 	/*
-	** allocate null node for help in erased
-	*/
-
-	// node_pointer	_allocate_null_node()
-	// {
-	// 	node_pointer	node = _allocate_node(value_type());
-
-	// 	return node;
-	// }
-
-	// void	_update_null_node(node_pointer parent, bool is_left)
-	// {
-	// 	_null_node->parent = parent;
-	// 	if (parent != NULL)
-	// 	{
-	// 		if (is_left)
-	// 			parent->left = _null_node;
-	// 		else
-	// 			parent->right = _null_node;
-	// 	}
-	// 	_null_node->left = NULL;
-	// 	_null_node->right = NULL;
-	// 	_null_node->color = BLACK;
-	// }
-
-	/*
 	** allocate and create node
 	*/
 		node_pointer	_allocate_node(const value_type & value)
 		{
 			node_pointer	node = _node_allocator.allocate(1);
 			
-			_allocator.construct(node->get_value_pointer(), value);
-			_node_allocator.construct(node, node->data);
+			_allocator.construct(&(node->data), value);
+			node->parent = NULL;
+			node->left = NULL;
+			node->right = NULL;
 			return node;
 		}
 		
@@ -962,31 +935,22 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 					_clear_forward(current->left);
 				if (current->right != NULL)
 					_clear_forward(current->right);
-				_destroy_node(current);
+				_deallocate_node(current);
 				current = NULL;
 			}
 		}
-		
-	/*
-	** destroy and deallocate node
-	*/
-
-		void	_destroy_node(node_pointer current)
-		{
-			_allocator.destroy(current->get_value_pointer());
-			_deallocate_node(current);
-		}
 
 	/*
-	** deallocate node without destroy value (usefull for sentinel)
+	** deallocate node
 	*/
 		void	_deallocate_node(node_pointer current)
 		{
+			_allocator.destroy(&current->data);
+			_node_allocator.deallocate(current, 1);
 			if (current == _root)
 				_root = NULL;
-			_node_allocator.destroy(current);
-			_node_allocator.deallocate(current, 1);
 			current = NULL;
+			_update_sentinel();
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -998,6 +962,11 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 
 		#define STR_BLACK "\033[0m"
 		#define STR_RED "\033[31m"
+
+	void	display()
+	{
+		    	debug_print_btree_structure_2(_root, 0);
+	}
 
 	// thanks to Tony :
 	void debug_print_btree_structure()

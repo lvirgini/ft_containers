@@ -7,8 +7,12 @@ rm std.log ft.log
 make
 
 # execute and save results
-./std_containers > std.log
-./ft_containers > ft.log
+echo "time for std:"
+time ./std_containers > std.log
+echo " -------------------- * "
+echo "time for ft:"
+time ./ft_containers > ft.log
+echo " -------------------- * "
 
 # show the differences between std and ft
 diff -a std.log ft.log

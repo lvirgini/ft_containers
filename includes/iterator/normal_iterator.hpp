@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 10:40:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:55:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ namespace ft
 
 template <typename Iterator, typename Container>
 class	normal_iterator
-	// : public iterator < 
-	// 	typename iterator_traits<Iterator>::iterator_category,
-	// 	typename iterator_traits<Iterator>::value_type,
-	// 	typename iterator_traits<Iterator>::difference_type,
-	// 	typename iterator_traits<Iterator>::pointer,
-	// 	typename iterator_traits<Iterator>::reference >
 {
 	private:
 		typedef ft::iterator_traits<Iterator>			__trait_type;
