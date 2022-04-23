@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 15:45:53 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 23:22:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ template <typename Value, typename Node >
 class Rb_tree_iterator
 {
 	public:
-		typedef Value			value_type;
-		typedef Value &			reference;
-		typedef Value *			pointer;
+		typedef Value				value_type;
+		typedef Value &				reference;
+		typedef Value *				pointer;
 		typedef std::ptrdiff_t		difference_type;
 
 		typedef Rb_tree_iterator<Value, Node>			self;
@@ -133,9 +133,9 @@ template <typename Value, typename Node>
 class Rb_tree_const_iterator
 {
 	public:
-		typedef Value			value_type;
-		typedef const Value &	reference;
-		typedef const Value *	pointer;
+		typedef Value				value_type;
+		typedef const Value &		reference;
+		typedef const Value *		pointer;
 		typedef std::ptrdiff_t		difference_type;
 
 		typedef Rb_tree_iterator<Value, Node>		iterator;
@@ -160,6 +160,11 @@ class Rb_tree_const_iterator
 		: _node(other._node)
 		{}
 
+		iterator	M_const_cast() const
+		{
+			return iterator(const_cast<typename iterator::node_pointer>(_node));
+		}
+
 		self &		operator=(const self & other)
 		{
 			if (this != &other)
@@ -169,13 +174,11 @@ class Rb_tree_const_iterator
 
 		reference	operator*() const
 		{
-			// return *_node;
 			return _node->operator*();
 		}
 
 		pointer		operator->() const
 		{
-			// return _node->operator->();
 			return &(operator*());
 		}
 

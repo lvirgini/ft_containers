@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 15:28:25 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 23:29:28 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@
 # include <vector>
 # include <stack>
 # include <map>
+# include <set>
 # include <cstring>
 # include <iostream>
 
 # include "vector.hpp"
 # include "stack.hpp"
 # include "map.hpp"
+# include "set.hpp"
 # include "RedBlackTree.hpp"
 
 # define SEP	" | "
@@ -98,6 +100,16 @@ void	map_test_iterator();
 void	map_test_others_functions();
 
 
+/* set */
+
+void	set_test_constructor();
+void	set_test_iterator();
+void	test_bound();
+void	set_test_erase();
+void	set_test_find();
+void	set_test_insert();
+void	set_test_others_functions();
+void	set_test_size();
 # include "printer.tpp"
 
 #endif

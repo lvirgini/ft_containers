@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 16:00:10 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 20:55:17 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ class map
 		// map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),  typename ft::enable_if< !ft::is_integer<InputIterator>::value, InputIterator >::type * = NULL)
 
 		template <typename InputIterator>
-		map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type())
+		map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
+		typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
 		: _alloc(alloc), _value_comp(value_compare(comp)), _key_comp(comp), _tree(first, last, value_compare(comp), _pair_alloc_type(alloc))
 		{}
 
@@ -283,7 +284,7 @@ class map
 */
 
 	template <typename InputIterator>
-	void	insert(InputIterator first, InputIterator last)
+	void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
 	{
 			_tree.insert(first, last);
 	}
@@ -327,7 +328,7 @@ class map
 	}
 
 	/*
-	** Removes all ele;ent from the map which is destroyed, leaving the container 
+	** Removes all element from the map which is destroyed, leaving the container 
 	**	with the size of 0;
 	*/
 
@@ -359,14 +360,7 @@ class map
 	}
 
 
-	/*  This function only makes sense for multimaps; for map the result will
-    *  either be 0 (not present) or 1 (present).
-    */
 
-	// size_type	count(const key_type & x) const
-	// {
-	// 	return (_tree.find(x) == _tree.end() ? 0 : 1)
-	// }
 
 /* -------------------------------------------------------------------------- */
 /*                                operation                                   */
@@ -386,6 +380,10 @@ class map
 		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
 	}
 
+/*  
+**	This function only makes sense for multimaps; for map the result will
+**		either be 0 (not present) or 1 (present).
+*/
 
 	size_type	count(const key_type & key) const
 	{

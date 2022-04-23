@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 11:58:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 23:08:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ class Rb_tree
 	*/
 
 		template < typename InputIterator >
-		Rb_tree(InputIterator first, InputIterator last, const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
+		Rb_tree(InputIterator first, InputIterator last, const Compare & comp = Compare(), const allocator_type & alloc = allocator_type(),
+		typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
 		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()) ,_comp(comp)
 		{
 			_sentinel = _create_sentinel();
@@ -331,10 +332,10 @@ class Rb_tree
 			iterator		next = position;
 
 			next++;
-			if (*position.is_sentinel() == false
-				&& _compare(*position, to_add) == true
-				&& (next->is_sentinel() == true || _compare(*next, to_add) == false))
-				return (insert(position, to_add).first);
+			if (position._node->is_sentinel() == false
+				&& _compare(position._node, to_add) == true
+				&& (next._node->is_sentinel() == true || _compare(next._node, to_add) == false))
+				return (_insert(position._node, to_add).first);
 			return (_insert(_root, to_add).first);
 		}
 
@@ -343,7 +344,7 @@ class Rb_tree
 	*/
 
 		template < typename InputIterator >
-		void insert(InputIterator first, InputIterator last)
+		void insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
 		{
 			while (first != last)
 			{
@@ -428,15 +429,15 @@ class Rb_tree
 	**	to tree::end();
 	*/
 
-		iterator	find(const value_type & value)
+		iterator	find(const value_type & value) const
 		{
 			return iterator(_find(_root, value));
 		}
 
-		const_iterator	find(const value_type & value) const
-		{
-			return const_iterator(_find(_root, value));
-		}
+		// const_iterator	find(const value_type & value) const
+		// {
+		// 	return const_iterator(_find(_root, value));
+		// }
 
 private:
 		node_pointer _find(node_pointer current, const value_type & key) const
@@ -468,31 +469,31 @@ public:
 **	 whose key is not considered to go before;
 */
 
-	iterator	lower_bound(const value_type & value)
+	iterator	lower_bound(const value_type & value) const
 	{
 
 		return iterator(M_lower_bound(value));
 	}
 
-	const_iterator	lower_bound(const value_type & value) const
-	{
-		return const_iterator(M_lower_bound(value));
-	}
+	// const_iterator	lower_bound(const value_type & value) const
+	// {
+	// 	return const_iterator(M_lower_bound(value));
+	// }
 
 /*
 ** return iterator to upper bound : first element whose key is considered to go after
 **	key
 */
 
-iterator	upper_bound(const value_type & value)
+iterator	upper_bound(const value_type & value) const
 	{
 		return iterator(M_upper_bound(value));
 	}
 
-const_iterator	upper_bound(const value_type & value) const
-{
-	return const_iterator(M_upper_bound(value));
-}
+// const_iterator	upper_bound(const value_type & value) const
+// {
+// 	return const_iterator(M_upper_bound(value));
+// }
 private:
 
 	node_pointer	M_lower_bound(const value_type & value) const

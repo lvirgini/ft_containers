@@ -86,14 +86,14 @@ namespace ft
 			return *this ;
 		}
 
-		bool		is_left()
+		bool		is_left() const
 		{
 			if (this->parent != NULL && this->parent->left == this)
 				return true ;
 			return false ;
 		}
 
-		bool		is_right()
+		bool		is_right() const
 		{
 			if (this->parent != NULL && this->parent->right == this)
 				return true;
@@ -108,7 +108,7 @@ namespace ft
 			return false;
 		}
 
-		void	print()
+		void	print() const
 		{
 			std::cout << "THIS = " << this->data.first << " " << (color ? "black" : "red");
 			if (this->parent == NULL)
@@ -152,7 +152,7 @@ namespace ft
 			return result->parent;
 		}
 
-		pointer		get_most_left()
+		pointer		get_most_left() 
 		{
 			pointer	result = this;
 
@@ -161,16 +161,8 @@ namespace ft
 			return (result);
 		}
 
-		const_pointer		get_most_left() const //
-		{
-			const_pointer	result = this;
 
-			while (result->left != NULL)
-				result = result->left;
-			return (result);
-		}
-
-		pointer		get_most_right()
+		pointer		get_most_right() 
 		{
 			pointer result = this;
 
@@ -180,7 +172,7 @@ namespace ft
 		}
 
 
-		pointer		get_sister()
+		pointer		get_sister() const
 		{
 			if (this->parent == NULL)
 				return (NULL);
@@ -191,7 +183,7 @@ namespace ft
 		}
 
 
-		pointer		get_aunt()
+		pointer		get_aunt() const
 		{
 
 			if (this->parent == NULL)
@@ -200,7 +192,7 @@ namespace ft
 		}
 
 
-		pointer	get_grand_parent()
+		pointer	get_grand_parent() const
 		{
 			if (this->parent != NULL)
 				return (this->parent->parent);

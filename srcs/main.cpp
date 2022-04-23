@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 18:54:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 23:27:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ void	test_map(void)
 	map_test_erase();
 	map_test_iterator();
 	map_test_others_functions();
+}
+
+
+void	test_set()
+{
+	set_test_constructor();
+	set_test_iterator();
+	test_bound();
+	set_test_erase();
+	set_test_find();
+	set_test_insert();
+	set_test_others_functions();
+	set_test_size();
 }
 
 int main(void)

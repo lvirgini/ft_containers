@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/04/21 15:28:08 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/04/23 20:55:55 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ INC_DIR	=	includes \
 			includes/vector \
 			includes/others \
 			includes/iterator \
-			includes/red_black_tree 
+			includes/red_black_tree \
+			includes/set
 
 INCLUDE	=	$(INC_MAP) $(INC_VECTOR) $(INC_STACK) $(INC_UTILS)\
 				ft_stl.hpp \
@@ -54,9 +55,9 @@ HEADERS 	=	$(foreach dir, $(INC_DIR), $(wildcard $(dir)/*.hpp) )
 # Sources
 # ----------------- #
 
-SRC_DIR		=	srcs srcs/vector srcs/stack srcs/map
+SRC_DIR		=	srcs srcs/vector srcs/stack srcs/map srcs/set
 
-SRC			= 	$(SRC_VECTOR) $(SRC_STACK) $(SRC_MAP) main.cpp \
+SRC			= 	$(SRC_VECTOR) $(SRC_STACK) $(SRC_MAP) $(SRC_SET) main.cpp \
 
 SRC_VECTOR	=	vector_test_iterator.cpp \
 				vector_test_empty.cpp \
@@ -77,6 +78,15 @@ SRC_MAP 	=	test_pair.cpp \
 				map_test_erase.cpp \
 				map_test_iterator.cpp \
 				map_test_others_functions.cpp
+
+SRC_SET		=	set_test_bound.cpp \
+				set_test_constructor.cpp \
+				set_test_erase.cpp \
+				set_test_find.cpp \
+				set_test_insert.cpp \
+				set_test_iterator.cpp \
+				set_test_size.cpp \
+				set_test_others_functions.cpp \
 
 # Obj
 # ----------------- #	
