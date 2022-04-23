@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 21:47:59 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/28 11:58:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:51:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft
 	** Constructor
 	*/
 
-		pair() :first(), second()
+		pair() :first(first_type()), second(second_type())
 		{};
 
 		pair(const first_type & _first, const second_type & _second)

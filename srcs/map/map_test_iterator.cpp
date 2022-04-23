@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:22:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 14:54:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:27:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,15 @@ void	map_test_iterator()
 		named_map::reverse_iterator		rit = map1.rbegin();
 		named_map::reverse_iterator		rite;
 
-		// ft::map<int, std::string>::reverse_iterator revFirst = ftmap.rbegin();
-	// rit->second = "Ok";
-		// PRINT(SEP_FUNCTIONS);
-		// PRINT("map test reverse iterators : change pair->second : ");
 
-		rit->second = "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOK";
+	for (rit = map1.rbegin(), rite = map1.rend(); rit != rite; rit++)
+		std::cout << rit->first << " -> " << rit->second << std::endl;
+
+		PRINT(SEP_FUNCTIONS);
+		PRINT("map test reverse iterators : change pair->second : ");
+
+		rit = map1.rbegin();
+		rit->second = "Bonjour reverse iterator";
 		for (rit = map1.rbegin(), rite = map1.rend(); rit != rite; rit++)
 			std::cout << rit->first << " -> " << rit->second << std::endl;
 
@@ -146,7 +149,39 @@ void	map_test_iterator()
 			std::cout << rit->first << " -> " << rit->second << std::endl;
 	}
 
-	std::map<int, int>
 
-	std::cout << "end" << std::endl;
+	// /* -------------------------------------------------------------------------- */
+
+	PRINT(SEP_FUNCTIONS);
+	PRINT("map test const reverse iterator");
+	{
+		named_map::const_reverse_iterator		rit = map1.rbegin();
+		named_map::const_reverse_iterator		rite;
+
+		ft_map::const_reverse_iterator		ftit = ftmap.rbegin();
+		std_map::const_reverse_iterator		stdrit = stdmap.rbegin();
+
+
+	for (rit = map1.rbegin(), rite = map1.rend(); rit != rite; rit++)
+		std::cout << rit->first << " -> " << rit->second << std::endl;
+
+		PRINT(SEP_FUNCTIONS);
+		PRINT("map test reverse iterators : can't change pair->second : ");
+
+		ftit = ftmap.rbegin();
+		stdrit = stdmap.rbegin();
+
+		ftit++;
+		stdrit++;
+		
+		// stdrit->second = "CONST reverse iterator cannot compile";
+		// ftit->second = "CONST reverse iterator cannot compile";
+
+		for (rit = map1.rbegin(), rite = map1.rend(); rit != rite; rit++)
+			std::cout << rit->first << " -> " << rit->second << std::endl;
+
+		for (rit = map1.rend(), rite = map1.rend(); rit != rite; rit++)
+			std::cout << rit->first << " -> " << rit->second << std::endl;
+	}
+
 }

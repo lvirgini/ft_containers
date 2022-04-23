@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 19:42:51 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/29 00:00:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 18:54:37 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
 									InputIterator2 first2, InputIterator2 last2)
 	{
-		while (first1!=last1)
+		while (first1 != last1)
 		{
 			if (first2 == last2 || *first2 < *first1) 
 				return false;
@@ -50,11 +50,6 @@ namespace ft
 		}
 		return (true);
 	}
-
-	// template <class InputIterator1, class InputIterator2, class BinaryPredicate>
-//   bool equal (InputIterator1 first1, InputIterator1 last1,
-            //   InputIterator2 first2, BinaryPredicate pred);
-
 
 } // end namespace ft
 

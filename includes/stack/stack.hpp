@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:08 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/14 11:27:21 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:06:04 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,8 @@
 # define STACK_HPP
 
 #include <deque>
-#include <stack>
+#include "vector.hpp"
 namespace ft
-/*Public Types
-typedef _Sequence::const_reference const_reference
-typedef _Sequence container_type
-typedef _Sequence::reference reference
-typedef _Sequence::size_type size_type
-typedef _Sequence::value_type value_type
-Public Member Functions
-stack (const _Sequence &__c)
-stack (_Sequence &&__c=_Sequence())
-template<typename... _Args> void emplace (_Args &&...__args)
-bool empty () const
-void pop ()
-void push (const value_type &__x)
-void push (value_type &&__x)
-size_type size () const
-void swap (stack &__s)
-reference top ()
-const_reference top () const
-Protected Attributes
-_Sequence c
-Friends
-template<typename _Tp1 , typename _Seq1 > bool operator< (const stack< _Tp1, _Seq1 > &, const stack< _Tp1, _Seq1 > &)
-template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _Seq1 > &, const stack< _Tp1, _Seq1 > &)
-*/
 {
 	template <typename T, class Container = ft::vector<T> >
 	class stack
@@ -54,11 +30,6 @@ template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _S
 		protected:
 			Container _c;
 
-	template < typename T2, typename Container2>
-	friend inline bool		operator==(const stack<T2, Container2> & lhs, const stack <T2, Container2> & rhs);
-
-	template < typename T2, typename Container2>
-	friend	inline bool		operator<(const stack<T2, Container2> & lhs, const stack <T2, Container2> & rhs);
 
 	/* -------------------------------------------------------------------------- */
 	/*                     Constructor Destructor                                 */
@@ -74,7 +45,6 @@ template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _S
 	/* -------------------------------------------------------------------------- */
 	/*                                Functions                                   */
 	/* -------------------------------------------------------------------------- */
-
 
 	/*
 	**	empty()
@@ -120,7 +90,6 @@ template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _S
 
 		void	pop()
 		{
-			// check empty ? 
 			_c.pop_back();
 		}
 
@@ -134,6 +103,13 @@ template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _S
 	{
 		_c.push_back(data);
 	}
+
+
+	template < typename T2, typename Container2>
+	friend inline bool		operator==(const stack<T2, Container2> & lhs, const stack <T2, Container2> & rhs);
+
+	template < typename T2, typename Container2>
+	friend	inline bool		operator<(const stack<T2, Container2> & lhs, const stack <T2, Container2> & rhs);
 
 };
 

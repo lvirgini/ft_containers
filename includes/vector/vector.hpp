@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/30 18:10:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 18:23:33 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 **		member functions p 483
 **		container requirement p.486
 */
-
 
 /*
 ** T:		type of the elements 
@@ -124,7 +123,6 @@ class vector
 			this->insert(this->begin(), first, last);
 		}
 
-		
 	/*
 	** destructor
 	**		destroys all container elements and deallocates all the storage capacity allocated.
@@ -134,7 +132,6 @@ class vector
 			this->clear();
 			this->_allocator.deallocate(this->_first, this->capacity());
 		};
-
 
 /* -------------------------------------------------------------------------- */
 /*                                Assignation                                 */
@@ -146,10 +143,12 @@ class vector
 	**		the allocator is not modified.
 	*/
 
-		vector	&	operator=( vector & copy)
+		vector	&	operator=( const vector & copy)
 		{
 			if (this != &copy)
+			{
 				this->assign(copy.begin(), copy.end());
+			}
 			return (*this);
 		}
 
@@ -168,8 +167,10 @@ class vector
 		void 			assign(InputIterator first, InputIterator last, 
 			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
 		{
-			if (first > last)
-				throw std::bad_alloc();  /// si reverse iterator ???
+			// size_type size = std::distance(first, last);
+			// if (size > _capacity && size > this->max_size())
+			// 	throw std::length_error("ft::vector assign : n");
+			_check_new_size(std::distance(first, last));
 			this->clear();
 			this->insert(this->begin(), first, last);
 		}
@@ -181,8 +182,9 @@ class vector
 
 		void 			assign(size_type n, const value_type & val)
 		{
-			if (n != 0)
-				_check_new_size(n);
+			// if (n > _capacity && n > this->max_size() )
+			// 	throw std::length_error(msg);
+			_check_new_size(n);
 			this->clear();
 			this->insert(this->begin(), n, val);
 		}
@@ -196,7 +198,6 @@ class vector
 		{
 			return (this->_allocator);
 		}
-
 
 /* -------------------------------------------------------------------------- */
 /*                                Iterator                                    */
@@ -265,7 +266,6 @@ class vector
 		{
 			return const_reverse_iterator(this->_first);
 		}
-
 
 /* -------------------------------------------------------------------------- */
 /*                                Capacity                                    */
@@ -421,7 +421,6 @@ class vector
 			return *(this->_first + n);
 		}
 
-
 /* -------------------------------------------------------------------------- */
 /*                                Modifiers                                   */
 /* -------------------------------------------------------------------------- */
@@ -465,7 +464,7 @@ class vector
 
 		iterator	insert(iterator position, const value_type & val)
 		{
-			size_type	pos_index = position - this->begin();
+			difference_type	pos_index = std::distance(this->begin(), position);
 			
 			this->insert(position, 1, val);
 			return (this->begin() + pos_index);
@@ -473,9 +472,9 @@ class vector
 		
 		void		insert(iterator position, size_type n, const value_type & val)
 		{
-			difference_type pos_index = position - this->begin();
+			difference_type pos_index = std::distance(this->begin(), position);
 			size_type		old_size = this->_size;
-			bool			is_in_the_end = (position.base() == this->end().base());
+			bool			is_in_the_end = position == this->end();
 			
 			if (n == 0)
 				return ;
@@ -483,7 +482,6 @@ class vector
 			position = this->begin() + pos_index;
 			if (old_size > 0 && is_in_the_end == false)
 				_move_elements_to_the_end(this->_first + this->_size - 1, n, this->_first + pos_index);
-				// _move_elements_to_the_end(this->rend(), n, this->rbegin() - pos_index);
 			_m_fill(this->begin() + pos_index, n, val);
 		}
 
@@ -491,11 +489,10 @@ class vector
 		void insert(iterator position, InputIterator first, InputIterator last, 
 			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
 		{
-			difference_type pos_index = position - this->begin();
-			difference_type size_insert = last - first;
+			difference_type pos_index = std::distance(this->begin(), position);
+			difference_type size_insert = std::distance(first, last);
 			size_type		old_size = this->_size;
 			bool			is_in_the_end = position == this->end();
-
 
 			if (first == last)
 				return ;
@@ -503,11 +500,9 @@ class vector
 			position = this->begin() + pos_index;
 			if (old_size > 0 && is_in_the_end == false)
 				_move_elements_to_the_end(this->_first + this->_size - 1, size_insert, this->_first + pos_index + 1);
-				// _move_elements_to_the_end(this->rend(), size_insert, this->rbegin() - pos_index);
 			 for(;first != last; first++, position++)
 			 	this->_allocator.construct(position.base(), *first);
 		}
-
 
 	/*
 	**	erase()
@@ -558,11 +553,24 @@ class vector
 
 		void		swap(vector & x)
 		{
-			vector tmp(*this);
-			*this = x;
-			x = *this;
-		}
+			pointer tmp_first = this->_first;
+			pointer tmp_last = this->_last;
+			allocator_type tmp_allocator = this->_allocator;
+			size_type tmp_size = this->_size;
+			size_type tmp_capacity = this->_capacity;
 
+			_first = x._first;
+			_last = x._last;
+			_allocator = x._allocator;
+			_size = x._size;
+			_capacity = x._capacity;
+
+			x._first = tmp_first;
+			x._last = tmp_last;
+			x._allocator = tmp_allocator;
+			x._size = tmp_size;
+			x._capacity = tmp_capacity;
+		}
 
 	/*
 	**	clear()
@@ -578,7 +586,6 @@ class vector
 				this->_size = 0;
 			}
 		}
-
 
 /* -------------------------------------------------------------------------- */
 /*                               Private Functions                            */
@@ -601,7 +608,11 @@ class vector
 		bool	_check_new_size(size_type new_size) const
 		{
 			if (new_size > this->max_size())
-				throw std::length_error("vector::_check_new_size");
+			{
+				std::ostringstream msg;
+				msg << "ft::vector::check_size: n (which is " << new_size << ") > std::allocator.max_size() (which is " << this->_allocator.max_size() << ")";
+				throw std::length_error(msg.str());
+			}
 			if (new_size <= this->capacity())
 				return true;
 			return false;
@@ -632,7 +643,6 @@ class vector
 			return (pointer());
 		}
 
-
 		void		_check_capacity_for_insert(size_type new_size)
 		{
 			if ( new_size > this->capacity())
@@ -650,34 +660,6 @@ class vector
 				this->_allocator.destroy(end - i - size_insert);
 			}
 		}
-
-		// void	_move_elements_to_the_end(iterator end, size_type size_insert, iterator position)
-		// {
-		// 	if (size_insert == this->_size)
-		// 		return ;
-		// 	for (; end != position; end--)
-		// 	{
-		// 		this->_allocator.construct(end.base(), *(end.base() - size_insert));
-		// 		this->_allocator.destroy(end.base() - size_insert);
-		// 	}
-		// }inline std::reverse_iterator<std::vector<int>::iterator>::iterator_type std::reverse_iterator<std::vector<int>::iterator>::base() const
-
-// Retourne :
-// current, the %iterator used for underlying work.
-
-// Fichier : stl_iterator.h
-// std::reverse_iterator<std::vector<int, std::allocator<int>>::iterator>::iterator_type base() const
-
-		// void	_move_elements_to_the_end(reverse_iterator end, size_type size_insert, reverse_iterator position)
-		// {
-		// 	if (size_insert == this->_size)
-		// 		return ;
-		// 	for (; end != position; end++)
-		// 	{
-		// 		this->_allocator.construct(end.base().base(), *(end.base().base() + size_insert));
-		// 		this->_allocator.destroy(end.base().base() + size_insert);
-		// 	}
-		//  }
 };
 
 /*
@@ -685,49 +667,46 @@ class vector
 */
 
 template <class T, class Allocator>
-inline bool operator==(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs)
+inline bool operator==(const ft::vector<T,Allocator>& x, const ft::vector<T,Allocator>& y)
 {
-	
-	if (lhs.size() != rhs.size())
-		return (false);
-	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	return (x.size() == y.size() && ft::equal(x.begin(), x.end(), y.begin()));
 }
 
 template <class T, class Allocator>
-bool operator!=(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs)
+inline bool operator!=(const ft::vector<T,Allocator>& x, const ft::vector<T,Allocator>& y)
 {
-	return !(lhs == rhs);
+	return !(x == y);
 }
 
 template <class T, class Allocator>
-bool operator< (const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs)
+inline bool operator< (const ft::vector<T,Allocator>& x, const ft::vector<T,Allocator>& y)
 {
-	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	return ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
 }
 
 template <class T, class Allocator>
-bool operator> (const vector<T,Allocator>& lhs,const vector<T,Allocator>& rhs)
+inline bool operator> (const ft::vector<T,Allocator>& x,const ft::vector<T,Allocator>& y)
 {
-	return rhs < lhs;
+	return y < x;
 }
 
 template <class T, class Allocator>
-bool operator>=(const vector<T,Allocator>& lhs,const vector<T,Allocator>& rhs)
+inline bool operator>=(const ft::vector<T,Allocator>& x,const ft::vector<T,Allocator>& y)
 {
-	return !(lhs < rhs);
+	return !(x < y);
 }
 
 template <class T, class Allocator>
-bool operator<=(const vector<T,Allocator>& lhs,const vector<T,Allocator>& rhs)
+bool operator<=(const ft::vector<T,Allocator>& x,const ft::vector<T,Allocator>& y)
 {
-	return !(rhs < lhs);
+	return !(y < x);
 }
 
 // specialized algorithms:
 template <class T, class Allocator>
-void swap(vector<T,Allocator>& lhs, vector<T,Allocator>& rhs)
+inline void swap(vector<T,Allocator>& x, vector<T,Allocator>& y)
 {
-	lhs.swap(rhs);
+	x.swap(y);
 }
 
 } // end of namespace ft

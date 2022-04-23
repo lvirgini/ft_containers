@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 11:30:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 18:54:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	test_type_trait(void)
 
 void	test_vector(void)
 {
-	// vector_test_iterator();
-	// vector_test_reverse_iterator();
-	// vector_test_empty();
-	// vector_test_insert();
-	// vector_test_push_pop();
-	// vector_test_assign();
-	// vector_test_erase();
-	// test_operator();
+	vector_test_iterator();
+	vector_test_reverse_iterator();
+	vector_test_empty();
+	vector_test_insert();
+	vector_test_push_pop();
+	vector_test_assign();
+	vector_test_erase();
+	vector_test_operator();
 }
 
 void	test_stack(void)
@@ -51,26 +51,21 @@ void	test_stack(void)
 void	test_map(void)
 {
 	test_pair();
-	// test_node();
 	map_test_creation();
 	map_test_capacity();
 	map_test_insert();
 	map_test_erase();
-	map_test_others_functions();
 	map_test_iterator();
+	map_test_others_functions();
 }
 
 int main(void)
 {
-
-
-	// return (0);
-
 	PRINT(STR_NAMESPACE);
 	PRINT(SEP_FUNCTIONS);
 	
-	// test_vector();
-	// stack_test();
+	test_vector();
+	stack_test();
 	test_map();
 
 	return (0);

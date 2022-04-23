@@ -4,4 +4,6 @@
 ft_containers
 std_containers
 ft.log
+ft_err.log
 std.log
+std_err.log

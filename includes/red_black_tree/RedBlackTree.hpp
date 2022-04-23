@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 15:30:59 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:58:23 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -498,14 +498,17 @@ private:
 	node_pointer	M_lower_bound(const value_type & value) const
 	{
 		node_pointer current = _root;
-		node_pointer result = _sentinel;;
+		node_pointer result = _sentinel;
 
 		while (current != NULL)
 		{
 			if (_comp(current->data, value) == true)
 				current = current->right;
 			else
-				result = current, current = current->left;
+			{
+				result = current;
+				current = current->left;
+			}
 		}
 		return result;
 	}
@@ -513,12 +516,15 @@ private:
 	node_pointer	M_upper_bound(const value_type & value) const
 	{
 		node_pointer current = _root;
-		node_pointer result = _sentinel;;
+		node_pointer result = _sentinel;
 
 		while (current != NULL)
 		{
 			if (_comp(value, current->data) == true)
-				result = current, current = current->left;
+			{
+				result = current;
+				current = current->left;
+			}
 			else
 				current = current->right;
 		}
@@ -745,7 +751,7 @@ void	_transplant(node_pointer deleted, node_pointer replaced)
 
 void	_delete(node_pointer to_dell)
 {
-	node_pointer child;
+	node_pointer child = NULL;
 	node_pointer successor = to_dell;
 	node_pointer parent = to_dell->parent;
 
