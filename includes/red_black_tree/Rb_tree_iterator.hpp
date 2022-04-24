@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 23:22:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:15:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 namespace ft 
 {
-
-	// IMPLEMENTATION ITERATORS
 
 template <typename Value, typename Node >
 class Rb_tree_iterator
@@ -67,8 +65,6 @@ class Rb_tree_iterator
 		pointer		operator->() const
 		{
 			return _node->operator->();
-			// return &(operator*());
-
 		}
 
 		self &	operator++()
@@ -122,9 +118,6 @@ inline bool		operator!=(const Rb_tree_iterator<Val, Node> & x, const Rb_tree_ite
 {
 	return x._node != y._node;
 }
-
-
-
 
 
 
@@ -210,7 +203,6 @@ class Rb_tree_const_iterator
 			return tmp;
 		}
 
-
 		bool	operator==( const self & other) const
 		{
 			return (_node == other._node);
@@ -233,6 +225,5 @@ class Rb_tree_const_iterator
     { return __x._node != __y._node; }
 
 }// end namespace ft
-
 
 # endif

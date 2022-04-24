@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 23:08:05 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:08:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,6 @@
 
 namespace ft 
 {
-
-
-  // Helper type offering value initialization guarantee on the compare functor.
-//   template<typename _Key_compare>
-//     struct _Rb_tree_key_compare
-//     {
-//       _Key_compare		_M_key_compare;
-
-//       _Rb_tree_key_compare()
-//       _GLIBCXX_NOEXCEPT_IF(
-// 	is_nothrow_default_constructible<_Key_compare>::value)
-//       : _M_key_compare()
-//       { }
-
-//       _Rb_tree_key_compare(const _Key_compare& __comp)
-//       : _M_key_compare(__comp)
-//       { }
-
-
 template <typename Value, typename Compare = ft::less<Value>, typename Alloc = std::allocator < Value > >
 class Rb_tree
 {
@@ -111,6 +92,8 @@ class Rb_tree
 		/* member type	*/
 		typedef	Value					value_type;
 		typedef ft::Node<value_type>	node_type;
+		typedef	size_t					size_type;
+		typedef	std::ptrdiff_t			difference_type;
 
 		typedef	Alloc					allocator_type;
 		typedef typename allocator_type::template rebind<node_type>::other node_allocator_type;
@@ -120,8 +103,6 @@ class Rb_tree
 		typedef	node_type &			node_reference;
 		typedef	const node_type &	const_node_reference;
 
-		typedef	size_t				size_type;
-		typedef	std::ptrdiff_t			difference_type;
 
 		typedef Rb_tree *			pointer;
 		typedef const Rb_tree *		const_pointer;
@@ -130,11 +111,11 @@ class Rb_tree
 
 		typedef ft::Rb_tree_iterator<value_type, node_type>			iterator;
 		typedef ft::Rb_tree_const_iterator<value_type, node_type>	const_iterator;
-
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		typedef ft::Rb_tree<Value, Compare, Alloc>		self;
+
 
 	private:
 
@@ -157,7 +138,7 @@ class Rb_tree
 	*/
 		
 		Rb_tree(const Compare & comp = Compare(), const allocator_type & alloc = allocator_type())
-		: _root(NULL), _tree_size(0), _allocator(alloc), _comp(comp)
+		: _root(NULL), _tree_size(0), _allocator(alloc), _node_allocator(node_allocator_type()), _comp(comp)
 		{
 			_sentinel = _create_sentinel();
 		}
@@ -249,6 +230,9 @@ class Rb_tree
 			return const_iterator(_sentinel);
 		}
 
+	/*
+	**		Reverse iterator:
+	*/
 
 		reverse_iterator	rbegin()
 		{
@@ -309,7 +293,6 @@ class Rb_tree
 /*                            Modifiers                                       */
 /* -------------------------------------------------------------------------- */
 
-
 	/*
 	** insert single element
 	*/
@@ -348,11 +331,11 @@ class Rb_tree
 		{
 			while (first != last)
 			{
+				// display();
 				_insert(_root, _allocate_node(*first));
-				first++;
+				++first;
 			}
 		}
-
 
 	/*
 	** removes from the tree a single element at position
@@ -368,7 +351,6 @@ class Rb_tree
 	** removes from the tree a single element with key (key)
 	**	return the number of element erased.
 	*/
-
 
 		size_type	erase(const value_type & value)
 		{
@@ -392,21 +374,24 @@ class Rb_tree
 				erase(first++);
 		}
 
+	/*
+	**	swap()
+	**		swap two tree
+	*/
+		void	swap(self & other)
+		{
+			node_pointer	root = other._root;
+			node_pointer	sentinel = other._sentinel;
+			size_type		tree_size = other._tree_size;
 
-	void	swap(self & other)
-	{
-		node_pointer	root = other._root;
-		node_pointer	sentinel = other._sentinel;
-		size_type		tree_size = other._tree_size;
+			other._root = this->_root;
+			other._tree_size = this->_tree_size;
+			other._sentinel = this->_sentinel;
 
-		other._root = this->_root;
-		other._tree_size = this->_tree_size;
-		other._sentinel = this->_sentinel;
-
-		this->_root = root;
-		this->_tree_size = tree_size;
-		this->_sentinel = sentinel;
-	}
+			this->_root = root;
+			this->_tree_size = tree_size;
+			this->_sentinel = sentinel;
+		}
 
 	/*
 	** Removes all ele;ent from the tree which are destroyed, leaving the tree 
@@ -434,10 +419,6 @@ class Rb_tree
 			return iterator(_find(_root, value));
 		}
 
-		// const_iterator	find(const value_type & value) const
-		// {
-		// 	return const_iterator(_find(_root, value));
-		// }
 
 private:
 		node_pointer _find(node_pointer current, const value_type & key) const
@@ -464,79 +445,72 @@ public:
 			return _root->get_most_right();
 		}
 
-/*
-** return iterator to lower bound : pointing to the first element in the container
-**	 whose key is not considered to go before;
-*/
+	/*
+	** return iterator to lower bound : pointing to the first element in the container
+	**	 whose key is not considered to go before;
+	*/
 
-	iterator	lower_bound(const value_type & value) const
-	{
-
-		return iterator(M_lower_bound(value));
-	}
-
-	// const_iterator	lower_bound(const value_type & value) const
-	// {
-	// 	return const_iterator(M_lower_bound(value));
-	// }
-
-/*
-** return iterator to upper bound : first element whose key is considered to go after
-**	key
-*/
-
-iterator	upper_bound(const value_type & value) const
-	{
-		return iterator(M_upper_bound(value));
-	}
-
-// const_iterator	upper_bound(const value_type & value) const
-// {
-// 	return const_iterator(M_upper_bound(value));
-// }
-private:
-
-	node_pointer	M_lower_bound(const value_type & value) const
-	{
-		node_pointer current = _root;
-		node_pointer result = _sentinel;
-
-		while (current != NULL)
+		iterator	lower_bound(const value_type & value) const
 		{
-			if (_comp(current->data, value) == true)
-				current = current->right;
-			else
-			{
-				result = current;
-				current = current->left;
-			}
+
+			return iterator(M_lower_bound(value));
 		}
-		return result;
-	}
 
-	node_pointer	M_upper_bound(const value_type & value) const
-	{
-		node_pointer current = _root;
-		node_pointer result = _sentinel;
+	/*
+	** return iterator to upper bound : first element whose key is considered to go after
+	**	key
+	*/
 
-		while (current != NULL)
+		iterator	upper_bound(const value_type & value) const
 		{
-			if (_comp(value, current->data) == true)
-			{
-				result = current;
-				current = current->left;
-			}
-			else
-				current = current->right;
+			return iterator(M_upper_bound(value));
 		}
-		return result;
-	}
+
+
+
+	private:
+
+		node_pointer	M_lower_bound(const value_type & value) const
+		{
+			node_pointer current = _root;
+			node_pointer result = _sentinel;
+
+			while (current != NULL)
+			{
+				if (_comp(current->data, value) == true)
+					current = current->right;
+				else
+				{
+					result = current;
+					current = current->left;
+				}
+			}
+			return result;
+		}
+
+		node_pointer	M_upper_bound(const value_type & value) const
+		{
+			node_pointer current = _root;
+			node_pointer result = _sentinel;
+
+			while (current != NULL)
+			{
+				if (_comp(value, current->data) == true)
+				{
+					result = current;
+					current = current->left;
+				}
+				else
+					current = current->right;
+			}
+			return result;
+		}
 
 /* -------------------------------------------------------------------------- */
 /*                                Allocator                                   */
 /* -------------------------------------------------------------------------- */
 
-public:
+	public:
 
 	/*
 	** return a copy of the memory allocator
@@ -602,16 +576,13 @@ public:
 			return (ft::make_pair<iterator, bool>(iterator(to_add), true));
 		}
 
-		// if node and parent are red : 
-		//CAS1:		if aunt of node is red : push black to grandparent
-		// 		else
-		// CAS2			// if node is left : left_rotate
-		// CAS3			// else right rotate
-
-
-		// Case 2: z ́’s uncle y is black and  ́z is a right child
-		// Case 3: z ́’s uncle y is black and  ́z is a left child
-
+	/*
+	**	Insert fixup :
+	**	if node and parent are red : 
+	**	Case 1:	if aunt of node is red : push black to grandparent
+	**	Case 2: node ́’s uncle y is black and  node is a right child
+	**	Case 3: node ́’s uncle y is black and  node is a left child
+	*/
 
 		void	_insert_fixup(node_pointer current)
 		{
@@ -633,7 +604,10 @@ public:
 					else
 					{
 						if (current->is_right())
-							_left_rotate(current->parent);
+						{
+							current = current->parent;
+							_left_rotate(current);
+						}
 						current->parent->color = BLACK;
 						current = current->get_grand_parent();
 						if (current != NULL)
@@ -653,17 +627,16 @@ public:
 						if (current)
 							current->color = RED;
 					}
-					else if (current->is_left())
+					else 
 					{
-						current = current->parent;
-						if (current)
+						if (current->is_left())
+						{
+							current = current->parent;
 							_right_rotate(current);
-					}
-					else
-					{
+						}
 						current->parent->color = BLACK;
 						current = current->get_grand_parent();
-						if (current)
+						if (current != NULL)
 						{
 							current->color = RED;
 							_left_rotate(current);
@@ -894,12 +867,13 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 		current->color = BLACK;
 }
 
-
 /* -------------------------------------------------------------------------- */
 /*                     Node allocate and destroy                              */
 /* -------------------------------------------------------------------------- */
 
-
+	/*
+	** allocate and create sentinel
+	*/
 		node_pointer	_create_sentinel()
 		{
 			node_pointer	sentinel = _allocate_node(value_type());
@@ -968,19 +942,16 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 
 	public:
 
-		#define STR_BLACK "\033[0m"
-		#define STR_RED "\033[31m"
-
-	void	display()
-	{
-		    	debug_print_btree_structure_2(_root, 0);
-	}
+		void	display()
+		{
+					debug_print_btree_structure_2(_root, 0);
+		}
 
 	// thanks to Tony :
-	void debug_print_btree_structure()
-	{
-    	debug_print_btree_structure_2(_root, 0);
-	}
+		void debug_print_btree_structure()
+		{
+			debug_print_btree_structure_2(_root, 0);
+		}
 
 private:
 
@@ -1006,6 +977,9 @@ private:
 
 	void debug_print_btree_structure_2(node_pointer current, int space)
 	{
+		std::string str_black = "\033[0m";
+		std::string str_red = "\033[31m";
+
 		if ( current != NULL )
 		{
 			space += 6;
@@ -1014,13 +988,13 @@ private:
 			for ( int _ = 0 ; _ < space ; _++ )
 				std::cout << " ";
 			
-			std::cout << (current->color == RED ? STR_RED: STR_BLACK);
-			std::cout << current->data.first << ":" << current->data.second << STR_BLACK << std::endl;
+			std::cout << (current->color == RED ? str_red: str_black);
+			std::cout << current->data.first << ":" << current->data.second << str_black << std::endl;
 			debug_print_btree_structure_2(current->left, space);
     	}
 	}
 
-};
+}; // end class rb_tree
 
 
 
@@ -1070,10 +1044,6 @@ void	swap(Rb_tree<T,Compare,Allocator>& x, Rb_tree<T,Compare,Allocator>& y)
 }
 
 
-
-
-
 }// end namespace ft
-
 
 # endif

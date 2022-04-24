@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 23:27:44 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 11:09:59 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,53 @@ void	test_set()
 	set_test_size();
 }
 
+#include <list>
 int main(void)
 {
 	PRINT(STR_NAMESPACE);
 	PRINT(SEP_FUNCTIONS);
 	
-	test_vector();
-	stack_test();
-	test_map();
+	// test_vector();
+	// stack_test();
+	// test_map();
+
+
+	std::list<std::string> lst;
+	std::list<std::string>::iterator itlst;
+
+	lst.push_back("lol");
+	lst.push_back("mdr");
+	lst.push_back("funny");
+	lst.push_back("bunny");
+	lst.push_back("fizz");
+	lst.push_back("this key is already inside");
+	lst.push_back("fuzzy");
+	lst.push_back("buzz");
+	lst.push_back("inside too");
+
+	std::cout << "List contains: " << lst.size() << " elements." << std::endl;
+	for (itlst = lst.begin(); itlst != lst.end(); ++itlst)
+		std::cout << *itlst << std::endl;
+	std::cout << "---------------------------------------------" << std::endl;
+
+	// ft::set<std::string> set(lst.begin(), lst.end());
+
+	ft::set<std::string>	set;
+
+	for (itlst = lst.begin(); itlst != lst.end(); itlst++)
+	{
+		std::cout << *itlst << std::endl;
+		set.insert(*itlst);
+	}
+
+	std::cout << "end" << std::endl;
+	lst.clear();
+
+
+	ft::set<std::string>::iterator it = set.begin();
+	for (; it != set.end(); it++)
+		std::cout << *it << std::endl;
+
 
 	return (0);
 }

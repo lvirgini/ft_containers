@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 13:55:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:11:11 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 
 namespace ft 
 {
-
-// defined for double_inclusion
-// template <typename, class>
-// class	vector;
 
 template <typename Iterator, typename Container>
 class	normal_iterator
@@ -72,14 +68,6 @@ class	normal_iterator
 **	typedef normal_iterator<int *, ft::vector<int>> ft::vector<int>::iterator
 */
 
-	/*template <typename Iter>
-	normal_iterator(const normal_iterator <Iter, 
-		typename ft::enable_if<
-			(ft::are_same<Iter, typename Container::pointer>::value), Container>::type> & i)
-	: _current(i.base())
-	{}*/
-	
-
 /*
 **	if const_iter : Iterator != Iter (like int and const int)
 */
@@ -88,10 +76,6 @@ class	normal_iterator
 	: _current(i.base())
 	{}
 
-	// template <typename __Iter>
-	// normal_iterator(const normal_iterator <__Iter, typename ft::remove_const<Container>::type> & i)
-	// : _current(i.base())
-	// {}
 
 	~normal_iterator(void)
 	{}

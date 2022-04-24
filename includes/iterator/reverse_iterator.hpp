@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:17:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 13:54:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:11:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ class reverse_iterator
 		return &(operator*());
 	}
 
-	reference			operator[](difference_type	n) const /////
+	reference			operator[](difference_type	n) const
 	{
 		return *(this->_current - n - 1);
 	}
@@ -254,9 +254,6 @@ class reverse_iterator
     {
 		return rhs.base() - lhs.base();
 	}
-
-
-
 
 
 } // end namespace ft

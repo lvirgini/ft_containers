@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 19:23:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 19:47:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:15:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 namespace ft
 {
-	/*
-	** ENABLE IF:
-	**		enable typedef type only (condition bool) is true.
-	*/
+/*
+** ENABLE IF:
+**		enable typedef type only (condition bool) is true.
+*/
 	template <bool B, typename T>
 	struct enable_if
 	{};

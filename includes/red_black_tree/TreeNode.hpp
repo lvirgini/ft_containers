@@ -56,10 +56,6 @@ namespace ft
 	/* -------------------------------------------------------------------------- */
 	
 
-		// Node()
-		// : color(BLACK), parent(NULL), left(NULL), right(NULL), data()
-		// {}
-
 		Node(const value_type & o_data, pointer o_parent = NULL, pointer o_left = NULL, pointer o_right = NULL)
 		: color(RED), parent(o_parent), left(o_left), right(o_right), data(o_data)
 		{}
@@ -226,7 +222,6 @@ namespace ft
 			this->increment();
 			return *this;
 		}
-
 
 	};
 

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 20:55:17 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:14:54 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ class map
 	/*
 	** Create map from elements first to last with comparaison and/or allocator_type
 	*/
-		// map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),  typename ft::enable_if< !ft::is_integer<InputIterator>::value, InputIterator >::type * = NULL)
 
 		template <typename InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
@@ -132,30 +131,26 @@ class map
 /*                         Assignation / Element access                        */
 /* -------------------------------------------------------------------------- */
 
-	void	display()
-	{
-		_tree.debug_print_btree_structure();
-	}
 	/*
 	** call operator= of tree: clear tree and copie all the element from other into this tree.
 	*/
 
-	map	&	operator=(const map<Key, T, Compare, Allocator> & other)
-	{
-		if (this != &other)
-			_tree = other._tree;
-		return *this;
-	}
+		map	&	operator=(const map<Key, T, Compare, Allocator> & other)
+		{
+			if (this != &other)
+				_tree = other._tree;
+			return *this;
+		}
 
 	/*
 	** if key exist: return a reference to the corresponding mapped_type.
 	** else insert a new element with that key and default mapped_value;
 	*/
 
-	mapped_type & operator[](const key_type & key)
-	{
-	 	return (*((this->insert(ft::make_pair(key,mapped_type()))).first)).second;
-	}
+		mapped_type & operator[](const key_type & key)
+		{
+			return (*((this->insert(ft::make_pair(key,mapped_type()))).first)).second;
+		}
 
 
 /* -------------------------------------------------------------------------- */
@@ -221,7 +216,6 @@ class map
 			return _tree.rend();
 		}
 
-
 /* -------------------------------------------------------------------------- */
 /*                                Capacity                                    */
 /* -------------------------------------------------------------------------- */
@@ -231,111 +225,112 @@ class map
 	**		Return true if the map is empty.
 	*/
 
-	bool	empty() const 
-	{
-		return _tree.empty();
-	}
+		bool	empty() const 
+		{
+			return _tree.empty();
+		}
 
 	/*
 	**	size()
 	**		Return current size : the number of elements in the tree
 	*/
 
-	size_type size() const
-	{
-		return _tree.size();
-	}
+		size_type size() const
+		{
+			return _tree.size();
+		}
 
 	/*
 	**	max_size()
 	**		Returns the maximum number of elements that the vector can hold.
 	*/
 
-	size_type	max_size() const
-	{
-		return _tree.max_size();
-	}
+		size_type	max_size() const
+		{
+			return _tree.max_size();
+		}
 	
 /* -------------------------------------------------------------------------- */
 /*                            Modifiers                                       */
 /* -------------------------------------------------------------------------- */
 
-/*
-** insert single element
-*/
+	/*
+	** insert single element
+	*/
 
-	ft::pair<iterator, bool>	insert(const value_type & x)
-	{
-		return _tree.insert(x);
-	}
-
-/*
-** insert single element with position for max efficiency if value position
-**	is just before insert value. 
-*/
-	iterator insert(iterator position, const value_type & x)
-	{
-		(void) position;
-		return (_tree.insert(x)).first;
-	}
-
-/*
-** insert a range of elements between [first to last]
-*/
-
-	template <typename InputIterator>
-	void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
-	{
-			_tree.insert(first, last);
-	}
-
-/*
-** removes from the tree a single element at position
-*/
-
-	void	erase(iterator position)
-	{
-			_tree.erase(position);
-	}
-
-/*
-** removes from the tree a single element with key (key)
-**	return the number of element erased.
-*/
-
-	size_type	erase(const key_type & key)
-	{
-		iterator	it = find(key);
-		if (it != end())
+		ft::pair<iterator, bool>	insert(const value_type & x)
 		{
-			_tree.erase(it);
-			return (1);
-		}	
-		return (0);
-	}
+			return _tree.insert(x);
+		}
 
-/*
-** erase all element between [first to last].
-*/
-	void erase(iterator first, iterator last)
-	{
-		_tree.erase(first, last);
-	}
+	/*
+	** insert single element with position for max efficiency if value position
+	**	is just before insert value. 
+	*/
+		iterator insert(iterator position, const value_type & x)
+		{
+			(void) position;
+			return (_tree.insert(x)).first;
+		}
 
-	void swap (map<Key, T, Compare, Allocator> & other)
-	{
-	_tree.swap(other._tree);
-	}
+	/*
+	** insert a range of elements between [first to last]
+	*/
+
+		template <typename InputIterator>
+		void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
+		{
+				_tree.insert(first, last);
+		}
+
+	/*
+	** removes from the tree a single element at position
+	*/
+
+		void	erase(iterator position)
+		{
+				_tree.erase(position);
+		}
+
+	/*
+	** removes from the tree a single element with key (key)
+	**	return the number of element erased.
+	*/
+
+		size_type	erase(const key_type & key)
+		{
+			iterator	it = find(key);
+			if (it != end())
+			{
+				_tree.erase(it);
+				return (1);
+			}	
+			return (0);
+		}
+
+	/*
+	** erase all element between [first to last].
+	*/
+		void erase(iterator first, iterator last)
+		{
+			_tree.erase(first, last);
+		}
+
+		void swap (map<Key, T, Compare, Allocator> & other)
+		{
+		_tree.swap(other._tree);
+		}
 
 	/*
 	** Removes all element from the map which is destroyed, leaving the container 
 	**	with the size of 0;
 	*/
 
-	void	clear()
-	{
-		_tree.clear();
-	}
+		void	clear()
+		{
+			_tree.clear();
+		}
+
 /* -------------------------------------------------------------------------- */
 /*                                observer                                    */
 /* -------------------------------------------------------------------------- */
@@ -344,107 +339,98 @@ class map
 	** Return a copy of key comparaison object
 	*/
 
-	key_compare key_comp() const
-	{
-		return _key_comp;
-	}
+		key_compare key_comp() const
+		{
+			return _key_comp;
+		}
 
 	/*
 	** Return a copy of value comparaison object : defined by value type as pair<key, mapped type>
 	** but the mapped type part of the value is not taken iinto consideration in this comparaison.
 	*/
 
-	value_compare	value_comp() const
-	{
-		return _value_comp;
-	}
-
-
-
+		value_compare	value_comp() const
+		{
+			return _value_comp;
+		}
 
 /* -------------------------------------------------------------------------- */
 /*                                operation                                   */
 /* -------------------------------------------------------------------------- */
 
-/*
-** searches element with a key and return an iterator if found, otherwize it returns an iterator
-**	to map::end();
-*/
-	iterator	find(const key_type & key)
-	{
-		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-	}
+	/*
+	** searches element with a key and return an iterator if found, otherwize it returns an iterator
+	**	to map::end();
+	*/
+		iterator	find(const key_type & key)
+		{
+			return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		}
 
-	const_iterator	find(const key_type & key) const
-	{
-		return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-	}
+		const_iterator	find(const key_type & key) const
+		{
+			return _tree.find(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		}
 
-/*  
-**	This function only makes sense for multimaps; for map the result will
-**		either be 0 (not present) or 1 (present).
-*/
+	/*  
+	**	This function only makes sense for multimaps; for map the result will
+	**		either be 0 (not present) or 1 (present).
+	*/
 
-	size_type	count(const key_type & key) const
-	{
-		const_iterator	it = find(key);
-		if (it == end())
-			return 0;
-		return 1;
-	}
-/*
-** return iterator to lower bound : pointing to the first element in the container
-**	 whose key is not considered to go before;
-*/
+		size_type	count(const key_type & key) const
+		{
+			const_iterator	it = find(key);
+			if (it == end())
+				return 0;
+			return 1;
+		}
+	/*
+	** return iterator to lower bound : pointing to the first element in the container
+	**	 whose key is not considered to go before;
+	*/
 
-	iterator	lower_bound(const key_type & key)
-	{
-		return _tree.lower_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-	}
+		iterator	lower_bound(const key_type & key)
+		{
+			return _tree.lower_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		}
 
-	const_iterator	lower_bound(const key_type & key) const
-	{
-		return _tree.lower_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-	}
+		const_iterator	lower_bound(const key_type & key) const
+		{
+			return _tree.lower_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		}
 
-/*
-** return iterator to upper bound : first element whose key is considered to go after
-**	key
-*/
+	/*
+	** return iterator to upper bound : first element whose key is considered to go after
+	**	key
+	*/
 
-	iterator	upper_bound(const key_type & key)
-	{
-		return _tree.upper_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-	}
+		iterator	upper_bound(const key_type & key)
+		{
+			return _tree.upper_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		}
 
-	const_iterator	upper_bound(const key_type & key) const
-	{
-		return _tree.upper_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-	}
-	/*	
-       *  @brief Finds a subsequence matching given key.
-       *  This function is equivalent to
-       *  @code
-       *    std::make_pair(c.lower_bound(val),
-       *                   c.upper_bound(val))
-       *  @endcode
-       *  (but is faster than making the calls separately).
-       *
-       *  This function probably only makes sense for multimaps.
-       */
+		const_iterator	upper_bound(const key_type & key) const
+		{
+			return _tree.upper_bound(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+		}
 
-	ft::pair<iterator, iterator> equal_range(const key_type & key)
-	{	
-		return ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key));
-	}
+	/*
+	**	equal range : return pair(lower_bound(key), upper_bound(key))
+	*/
 
-	ft::pair<const_iterator, const_iterator> equal_range(const key_type & key) const
-	{
-		return ft::make_pair<const_iterator, const_iterator>(lower_bound(key), upper_bound(key));
-	}
+		ft::pair<iterator, iterator> equal_range(const key_type & key)
+		{	
+			return ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key));
+		}
+
+		ft::pair<const_iterator, const_iterator> equal_range(const key_type & key) const
+		{
+			return ft::make_pair<const_iterator, const_iterator>(lower_bound(key), upper_bound(key));
+		}
 /* -------------------------------------------------------------------------- */
 /*                                Allocator                                   */
 /* -------------------------------------------------------------------------- */
+
 	/*
 	** return a copy of the memory allocator
 	*/
@@ -454,9 +440,19 @@ class map
 			return allocator_type(_tree.get_allocator());
 		}
 /* -------------------------------------------------------------------------- */
-/*                                Display                                     */
+/*                                Display for debug                           */
 /* -------------------------------------------------------------------------- */
 
+	private:
+		void	display()
+		{
+			_tree.debug_print_btree_structure();
+		}
+
+/* -------------------------------------------------------------------------- */
+/*                                operator                                     */
+/* -------------------------------------------------------------------------- */
+	public:
 
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
