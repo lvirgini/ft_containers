@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 19:23:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:15:10 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/04/24 13:11:22 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,6 @@ namespace ft
 
 	struct false_type : ft::integral_constant<bool, false>
 	{};
-
-	
-
 
 
 /*		
