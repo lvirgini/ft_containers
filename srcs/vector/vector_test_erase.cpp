@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:42:33 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 18:52:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:41:35 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,7 @@ void	vector_test_erase(void)
 	vector2.insert(vector2.end(), 5);
 
 	vector2.clear();
-	vector2.insert(vector2.end() - 2, 44);
 	print_vector(vector2);
 
-	vector2.front() = 55;
-	vector2.back() = 22;
-	vector2.pop_back();
-
-	print_vector(vector2);
 	PRINT(SEP_FUNCTIONS);
 }
