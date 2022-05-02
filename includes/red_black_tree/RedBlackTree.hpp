@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:08:13 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:22:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ class Rb_tree
 		~Rb_tree()
 		{
 			this->clear();
-			_deallocate_node(_sentinel);
+			_allocator.destroy(&_sentinel->data);
+			_node_allocator.deallocate(_sentinel, 1);
 		}
 
 /* -------------------------------------------------------------------------- */
@@ -586,14 +587,14 @@ public:
 
 		void	_insert_fixup(node_pointer current)
 		{
-			node_pointer aunt;
+			node_pointer aunt = NULL;
 			
 			while (current != NULL && current->parent != NULL && current->parent->color == RED)
 			{
 				aunt = current->get_aunt();
 				if (current->parent->is_left())
 				{
-					if (aunt && aunt->color == RED)
+					if (aunt != NULL && aunt->color == RED)
 					{
 						current->parent->color = BLACK;
 						aunt->color = BLACK;
@@ -619,7 +620,7 @@ public:
 				}
 				else
 				{
-					if (aunt && aunt->color == RED)
+					if (aunt != NULL && aunt->color == RED)
 					{
 						current->parent->color = BLACK;
 						aunt->color = BLACK;
@@ -942,16 +943,13 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 
 	public:
 
-		void	display()
-		{
-					debug_print_btree_structure_2(_root, 0);
-		}
-
 	// thanks to Tony :
-		void debug_print_btree_structure()
+		void	display()
 		{
 			debug_print_btree_structure_2(_root, 0);
 		}
+
+
 
 private:
 
@@ -1044,6 +1042,6 @@ void	swap(Rb_tree<T,Compare,Allocator>& x, Rb_tree<T,Compare,Allocator>& y)
 }
 
 
-}// end namespace ft
+}	// end namespace ft
 
 # endif

@@ -189,7 +189,7 @@ void	test_tree_in_progression()
 	// 	node_begin->print();
 
 
-	tree.debug_print_btree_structure();
+	tree.display();
 
 	// ft::Node < ft::pair<int, std::string> > *node_search = tree.find(value1);
 
@@ -204,7 +204,7 @@ void	test_tree_in_progression()
 
 	// std::cout << tree.find(value0)->data.first << std::endl;
 
-	tree.debug_print_btree_structure();
+	tree.display();
 }
 
 
@@ -217,7 +217,7 @@ void	test_rbtree_iterator()
 	ft::Rb_tree<ft::pair <int, std::string> >	tree;
 	
 	create_tree(tree);
-	tree.debug_print_btree_structure();
+	tree.display();
 
 	ft::Rb_tree<ft::pair <int, std::string> >::iterator it = tree.begin();
 	ft::Rb_tree<ft::pair <int, std::string> >::iterator ite = tree.end();

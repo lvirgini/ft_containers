@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 11:07:36 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/28 13:17:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:25:12 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 template <typename T>
 void	print_all_functions(std::vector<T> & STD, ft::vector<T> & FT)
 {
-	// std::cout << std::endl << "vector.maxSize()" << std::endl;
-	// std::cout << STD.max_size() << sep << FT.max_size() << std::endl;
-
 	// SIZE()
 	std::cout <<  "vector.size()		"; 
 	std::cout << STD.size() << SEP << FT.size() << std::endl;
@@ -36,9 +33,6 @@ void	print_all_functions(std::vector<T> & STD, ft::vector<T> & FT)
 template <typename T>
 void	print_all_functions(M_NAMESPACE::vector<T> & v)
 {
-	// std::cout << "vector.maxSize()		";
-	// std::cout << v.max_size()  << std::endl;
-
 	// SIZE()
 	std::cout << "vector.size()		"; 
 	std::cout << v.size() << std::endl;

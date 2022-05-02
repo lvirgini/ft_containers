@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:08 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 15:06:04 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:26:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace ft
 			typedef Container							container_type;
 
 		protected:
-			Container _c;
+			Container c;
 
 
 	/* -------------------------------------------------------------------------- */
@@ -37,8 +37,8 @@ namespace ft
 
 		public :
 
-		explicit stack (const Container & c = Container())
-		: _c(c)
+		explicit stack (const Container & _c = Container())
+		: c(_c)
 		{}
 
 
@@ -53,7 +53,7 @@ namespace ft
 
 		bool	empty() const
 		{
-			return _c.empty();
+			return c.empty();
 		}
 
 	/*
@@ -63,7 +63,7 @@ namespace ft
 
 		size_type	size() const
 		{
-			return _c.size();
+			return c.size();
 		}
 
 	/*
@@ -74,13 +74,13 @@ namespace ft
 
 		reference	top()
 		{
-			return _c.back();
+			return c.back();
 		}
 
 
 		const_reference top() const 
 		{
-			return _c.back();
+			return c.back();
 		}
 
 	/*
@@ -90,7 +90,7 @@ namespace ft
 
 		void	pop()
 		{
-			_c.pop_back();
+			c.pop_back();
 		}
 
 	
@@ -101,7 +101,7 @@ namespace ft
 
 	void	push(const value_type & data)
 	{
-		_c.push_back(data);
+		c.push_back(data);
 	}
 
 
@@ -114,25 +114,10 @@ namespace ft
 };
 
 
-			
-
-		
-/*Public Types
-
-Public Member Functions
-
-stack (_Sequence &&__c=_Sequence())
-template<typename... _Args> void emplace (_Args &&...__args)
-
-Friends
-template<typename _Tp1 , typename _Seq1 > bool operator< (const stack< _Tp1, _Seq1 > &, const stack< _Tp1, _Seq1 > &)
-template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _Seq1 > &, const stack< _Tp1, _Seq1 > &)
-*/
-
 	template < typename T, typename Container>
 	inline bool		operator==(const stack<T, Container> & lhs, const stack <T, Container> & rhs)
 	{
-		return lhs._c == rhs._c;
+		return lhs.c == rhs.c;
 	}
 
 	template < typename T, typename Container>
@@ -144,7 +129,7 @@ template<typename _Tp1 , typename _Seq1 > bool operator== (const stack< _Tp1, _S
 	template < typename T, typename Container>
 	inline bool		operator<(const stack<T, Container> & lhs, const stack <T, Container> & rhs)
 	{
-		return lhs._c < rhs._c;
+		return lhs.c < rhs.c;
 	}
 
 	template < typename T, typename Container>

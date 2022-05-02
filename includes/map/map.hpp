@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:14:54 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:05:57 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,7 @@ class map
 /* -------------------------------------------------------------------------- */
 
 	private:
+	
 		void	display()
 		{
 			_tree.debug_print_btree_structure();
@@ -454,54 +455,60 @@ class map
 /* -------------------------------------------------------------------------- */
 	public:
 
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend bool operator==(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y);
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend bool operator==(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+friend bool operator< (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y);
+
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+friend void swap(map<Key_1,T_1,Comp_1,Alloc_1>& x, map<Key_1,T_1,Comp_1,Alloc_1>& y);
+
+};
+
+
+template <class Key_1, class T_1, class Comp_1, class Alloc_1>
+bool operator==(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
 	return (x._tree == y._tree);
 }
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend bool operator< (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+bool operator< (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
 	return (x._tree < y._tree);
 }
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend bool operator!=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+bool operator!=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
-	return (x._tree != y._tree);
+	return !(x == y);
 }
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend bool operator> (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+bool operator> (const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
-	return (x._tree > y._tree);
+	return (y < x);
 }
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend bool operator>=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+bool operator>=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
-	return (x._tree >= y._tree);
+	return !(x < y);
 }
 
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend bool operator<=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
+bool operator<=(const map<Key_1,T_1,Comp_1,Alloc_1>& x, const map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
-	return (x._tree <= y._tree);
+	return !(y < x);
 }
 
 // specialized algorithms:
 template <class Key_1, class T_1, class Comp_1, class Alloc_1>
-friend void swap(map<Key_1,T_1,Comp_1,Alloc_1>& x, map<Key_1,T_1,Comp_1,Alloc_1>& y)
+void swap(map<Key_1,T_1,Comp_1,Alloc_1>& x, map<Key_1,T_1,Comp_1,Alloc_1>& y)
 {
 	x._tree.swap(y._tree);
 }
-
-
-
-};
-
 
 } // end namespace ft
 

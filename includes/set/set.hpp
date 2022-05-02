@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:10:08 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:10:23 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,51 +388,62 @@ class set
 /*                               operator                                     */
 /* -------------------------------------------------------------------------- */
 
-	
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend bool operator==(const set<Key_1, Comp_1,Alloc_1>& x, const set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		return (x.m_tree == y.m_tree);
-	}
+	public:
 
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend bool operator< (const set<Key_1, Comp_1,Alloc_1>& x, const set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		return (x.m_tree < y.m_tree);
-	}
+template <class Key_1, class Comp_1, class Alloc_1>
+friend bool	operator==(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y);
 
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend bool operator!=(const set<Key_1, Comp_1,Alloc_1>& x, const set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		return (x.m_tree != y.m_tree);
-	}
+template <class Key_1, class Comp_1, class Alloc_1>
+friend bool	operator< (const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y);
 
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend bool operator> (const set<Key_1, Comp_1,Alloc_1>& x, const set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		return (x.m_tree > y.m_tree);
-	}
-
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend bool operator>=(const set<Key_1, Comp_1,Alloc_1>& x, const set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		return (x.m_tree >= y.m_tree);
-	}
-
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend bool operator<=(const set<Key_1, Comp_1,Alloc_1>& x, const set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		return (x.m_tree <= y.m_tree);
-	}
-
-	// specialized algorithms:
-	template <class Key_1, class Comp_1, class Alloc_1>
-	friend void swap(set<Key_1, Comp_1,Alloc_1>& x, set<Key_1, Comp_1,Alloc_1>& y)
-	{
-		x.m_tree.swap(y.m_tree);
-	}
+template <class Key_1, class Comp_1, class Alloc_1>
+friend void	swap(set<Key_1 ,Comp_1, Alloc_1>& x, set<Key_1 ,Comp_1, Alloc_1>& y);
 
 }; // end class set
+
+
+template <class Key_1, class Comp_1, class Alloc_1>
+bool	operator==(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	return (x._tree == y._tree);
+}
+
+template <class Key_1, class Comp_1, class Alloc_1>
+bool	operator< (const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	return (x._tree < y._tree);
+}
+
+template <class Key_1, class Comp_1, class Alloc_1>
+bool	operator!=(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	return !(x == y);
+}
+
+template <class Key_1, class Comp_1, class Alloc_1>
+bool	operator> (const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	return (y < x);
+}
+
+template <class Key_1, class Comp_1, class Alloc_1>
+bool	operator>=(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	return !(x < y);
+}
+
+template <class Key_1, class Comp_1, class Alloc_1>
+bool	operator<=(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	return !(y < x);
+}
+
+// specialized algorithms:
+template <class Key_1, class Comp_1, class Alloc_1>
+void	swap(set<Key_1 ,Comp_1, Alloc_1>& x, set<Key_1 ,Comp_1, Alloc_1>& y)
+{
+	x._tree.swap(y._tree);
+}
 
 
 } // end namespace ft

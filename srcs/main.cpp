@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:16:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 11:09:59 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:18:07 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int main(void)
 	PRINT(STR_NAMESPACE);
 	PRINT(SEP_FUNCTIONS);
 	
+    // std::cout << ft::are_same< ft::remove_const<const int *> , int * >::value << std::endl;
+
 	// test_vector();
 	// stack_test();
 	// test_map();
@@ -101,9 +103,10 @@ int main(void)
 		std::cout << *itlst << std::endl;
 	std::cout << "---------------------------------------------" << std::endl;
 
-	// ft::set<std::string> set(lst.begin(), lst.end());
+	ft::set<std::string> set(lst.begin(), lst.end());
+	return (0);
 
-	ft::set<std::string>	set;
+	// ft::set<std::string>	set;
 
 	for (itlst = lst.begin(); itlst != lst.end(); itlst++)
 	{

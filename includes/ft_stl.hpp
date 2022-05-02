@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:14:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 23:29:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:24:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	set_test_find();
 void	set_test_insert();
 void	set_test_others_functions();
 void	set_test_size();
+
 # include "printer.tpp"
 
 #endif

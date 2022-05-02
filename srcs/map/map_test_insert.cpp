@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:09:59 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/21 15:15:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 12:27:15 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	map_test_insert()
 	PRINT("MAP test insert");
 	PRINT(SEP_FUNCTIONS);
 
-	named_map		map1;
+	named_map			map1;
 	named_map::iterator	it;
 	named_map::iterator	ite;
 
@@ -70,7 +70,7 @@ for (it = map1.begin(), ite = map1.end(); it != ite; it++)
 	PRINT(SEP_FUNCTIONS);
 	PRINT("insert pair <int, int");
 
-	M_NAMESPACE::map<int, int>	map5;
+	M_NAMESPACE::map<int, int>				map5;
 	M_NAMESPACE::map<int, int>::iterator	it5;
 	M_NAMESPACE::map<int, int>::iterator	ite5;
 
@@ -83,5 +83,4 @@ for (it = map1.begin(), ite = map1.end(); it != ite; it++)
 		std::cout << it5->first << " " << it5->second << std::endl;
 
 	PRINT(SEP_FUNCTIONS);
-
 }
