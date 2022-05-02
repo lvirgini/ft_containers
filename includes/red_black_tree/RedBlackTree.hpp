@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/05/02 12:22:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 13:27:52 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -903,6 +903,7 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 			node->parent = NULL;
 			node->left = NULL;
 			node->right = NULL;
+			node->color = RED;
 			return node;
 		}
 		
