@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/05/02 12:10:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:01:57 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,13 +405,13 @@ friend void	swap(set<Key_1 ,Comp_1, Alloc_1>& x, set<Key_1 ,Comp_1, Alloc_1>& y)
 template <class Key_1, class Comp_1, class Alloc_1>
 bool	operator==(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
 {
-	return (x._tree == y._tree);
+	return (x.m_tree == y.m_tree);
 }
 
 template <class Key_1, class Comp_1, class Alloc_1>
 bool	operator< (const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, Alloc_1>& y)
 {
-	return (x._tree < y._tree);
+	return (x.m_tree < y.m_tree);
 }
 
 template <class Key_1, class Comp_1, class Alloc_1>
@@ -442,7 +442,7 @@ bool	operator<=(const set<Key_1 ,Comp_1, Alloc_1>& x, const set<Key_1 ,Comp_1, A
 template <class Key_1, class Comp_1, class Alloc_1>
 void	swap(set<Key_1 ,Comp_1, Alloc_1>& x, set<Key_1 ,Comp_1, Alloc_1>& y)
 {
-	x._tree.swap(y._tree);
+	x.m_tree.swap(y.m_tree);
 }
 
 
