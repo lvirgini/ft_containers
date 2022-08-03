@@ -3,10 +3,9 @@
 #include <map>
 
 
-template < typename T>
-typename ft::Rb_tree<T>::reference		create_tree()
+
+void		create_tree(ft::Rb_tree< ft::pair<int, std::string> >::reference tree)
 {
-	ft::Rb_tree< ft::pair<int, std::string> >	tree;
 
 	// Init pair of value
 	ft::pair<int, std::string> value5(5, "E");
@@ -29,11 +28,6 @@ typename ft::Rb_tree<T>::reference		create_tree()
 	tree.insert(value0);
 	tree.insert(value8);
 	tree.insert(value1m);
-
-
-return (tree);
-
-
 }
 
 // Testing nodes functions in codage progression
@@ -122,6 +116,8 @@ void	test_tree_in_progression()
 	
 	ft::Rb_tree< ft::pair<int, std::string> >	tree;
 
+
+	std::cout << "created tree" << std::endl;
 	// Init pair of value
 	ft::pair<int, std::string> value5(5, "E");
 	ft::pair<int, std::string> value4(4, "D");
@@ -185,40 +181,95 @@ void	test_tree_in_progression()
 
 	PRINT(SEP_FUNCTIONS);
 	PRINT("ALL TREE");
-	ft::Node< ft::pair<int, std::string> > *node_begin = tree.minimum();
+	// ft::Node< ft::pair<int, std::string> > *node_begin = tree.minimum();
 
 	// ft::Node< ft::pair<int, std::string> > *node_end = tree.maximum();
 
-	for (; node_begin != NULL; node_begin = node_begin->increment())
-		node_begin->print();
+	// for (; node_begin != NULL; node_begin = node_begin->increment())
+	// 	node_begin->print();
 
 
 	tree.display();
-	tree.debug_print_btree_structure();
 
-	ft::Node < ft::pair<int, std::string> > *node_search = tree.find(value1);
+	// ft::Node < ft::pair<int, std::string> > *node_search = tree.find(value1);
 
-	std::cout << "search result is ";
-	if (node_search == NULL)
-		std::cout << "NULL";
-	else
-		std::cout << node_search->data.first;
-	std::cout << std::endl;
+	// std::cout << "search result is ";
+	// if (node_search == NULL)
+	// 	std::cout << "NULL";
+	// else
+	// 	std::cout << node_search->data.first;
+	// std::cout << std::endl;
 		
-	tree.erase(value1);
+	// tree.erase(value1);
 
 	// std::cout << tree.find(value0)->data.first << std::endl;
 
-	tree.debug_print_btree_structure();
+	tree.display();
 }
 
 
+void	test_rbtree_iterator()
+{
+	PRINT(SEP_FUNCTIONS);
+	PRINT("ITERATOR");
+
+
+	ft::Rb_tree<ft::pair <int, std::string> >	tree;
+	
+	create_tree(tree);
+	tree.display();
+
+	ft::Rb_tree<ft::pair <int, std::string> >::iterator it = tree.begin();
+	ft::Rb_tree<ft::pair <int, std::string> >::iterator ite = tree.end();
+	
+	// std::_Rb_tree<ft::pair < int, std::string> > std_tree;
+
+	// std_tree.insert()
+	// std::_Rb_tree<ft::pair < int, std::string> >::iterator std_it = 
+	// ft::pair <int, std::string>	pair;
+
+
+	// std::cout << it->first << " " << it->second << std::endl;
+	// it++;
+	// std::cout << it->first << " " << it->second << std::endl;
+
+
+	// std::cout << &(*ite) << std::endl;
+
+	PRINT("TEST ITERATOR");
+	for (; it != ite; it++)
+	{
+		// std::cout << &(*it) << std::endl;
+		std::cout << it->first << " " << it->second <<  std::endl;
+	}
+
+	ft::Rb_tree<ft::pair <int, std::string> >::const_iterator cit = tree.begin();
+	return ;
+	ft::Rb_tree<ft::pair <int, std::string> >::const_iterator cite = tree.end();
+	PRINT("TEST CONST ITERATOR");
+	
+	std::cout << &(*ite) << std::endl;
+
+	std::cout << cit->first << " " << cit->second << std::endl;
+	cit++;
+	std::cout << cit->first << " " << cit->second << std::endl;
+
+	for (; cit != cite; cit++)
+	{
+
+		// std::cout << &(*cit) << std::endl;
+		std::cout << cit->first << " " << cit->second <<  std::endl;
+	}
+	std::cout << std::endl;
+
+}
 
 void	test_node()
 {
 
 	test_node_in_progression();
 	test_tree_in_progression();
+	test_rbtree_iterator();
 
 	// ft::Rb_tree<ft::pair<int, std::string> >	tree;
 

@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/03/14 11:29:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:42:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_ITERATOR_HPP
 # define VECTOR_ITERATOR_HPP
 
-# include "iterator_traits.hpp"
+# include "iterators_traits.hpp"
 # include "type_traits.hpp"
 # include <iostream>
 
@@ -21,21 +21,11 @@
 namespace ft 
 {
 
-// defined for double_inclusion
-template <typename, class>
-class	vector;
-
 template <typename Iterator, typename Container>
 class	normal_iterator
-	// : public iterator < 
-	// 	typename iterator_traits<Iterator>::iterator_category,
-	// 	typename iterator_traits<Iterator>::value_type,
-	// 	typename iterator_traits<Iterator>::difference_type,
-	// 	typename iterator_traits<Iterator>::pointer,
-	// 	typename iterator_traits<Iterator>::reference >
 {
 	private:
-		typedef ft::iterator_traits<Iterator>			__trait_type;
+		typedef ft::iterators_traits<Iterator>			__trait_type;
 		Iterator										_current;
 	
 	
@@ -78,14 +68,6 @@ class	normal_iterator
 **	typedef normal_iterator<int *, ft::vector<int>> ft::vector<int>::iterator
 */
 
-	/*template <typename Iter>
-	normal_iterator(const normal_iterator <Iter, 
-		typename ft::enable_if<
-			(ft::are_same<Iter, typename Container::pointer>::value), Container>::type> & i)
-	: _current(i.base())
-	{}*/
-	
-
 /*
 **	if const_iter : Iterator != Iter (like int and const int)
 */
@@ -94,10 +76,6 @@ class	normal_iterator
 	: _current(i.base())
 	{}
 
-	// template <typename __Iter>
-	// normal_iterator(const normal_iterator <__Iter, typename ft::remove_const<Container>::type> & i)
-	// : _current(i.base())
-	// {}
 
 	~normal_iterator(void)
 	{}

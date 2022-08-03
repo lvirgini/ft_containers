@@ -16,20 +16,9 @@
 
 namespace ft
 {
-
-	//   /// One of the @link comparison_functors comparison functors@endlink.
-//   template<typename _Tp>
-//     struct less : public binary_function<_Tp, _Tp, bool>
-//     {
-//       _GLIBCXX14_CONSTEXPR
-//       bool
-//       operator()(const _Tp& __x, const _Tp& __y) const
-//       { return __x < __y; }
-//     };
-
 	
 	template < typename T>
-	struct less
+	struct less : public std::binary_function<T, T, bool>
 	{
 		bool	operator()(const T & x, const T & y) const
 		{
@@ -52,6 +41,8 @@ namespace ft
 		typedef Node &			reference;
 		typedef const Node &	const_reference;
 		typedef Value			value_type;
+		typedef value_type &	value_reference;
+		typedef value_type *	value_pointer;
 
 		bool			color;
 		pointer			parent;
@@ -64,9 +55,6 @@ namespace ft
 	/*                     Constructor Destructor                                 */
 	/* -------------------------------------------------------------------------- */
 	
-		// Node()
-		// : color(BLACK), parent(NULL), left(NULL), right(NULL), data()
-		// {}
 
 		Node(const value_type & o_data, pointer o_parent = NULL, pointer o_left = NULL, pointer o_right = NULL)
 		: color(RED), parent(o_parent), left(o_left), right(o_right), data(o_data)
@@ -94,21 +82,14 @@ namespace ft
 			return *this ;
 		}
 
-
-		// bool			operator<(const_reference other)
-		// {
-		// 	return comp(this->data, other.data);
-		// }
-
-
-		bool		is_left()
+		bool		is_left() const
 		{
 			if (this->parent != NULL && this->parent->left == this)
 				return true ;
 			return false ;
 		}
 
-		bool		is_right()
+		bool		is_right() const
 		{
 			if (this->parent != NULL && this->parent->right == this)
 				return true;
@@ -116,7 +97,14 @@ namespace ft
 		}
 
 
-		void	print()
+		bool		is_sentinel()
+		{
+			if (this->parent == NULL)
+				return true;
+			return false;
+		}
+
+		void	print() const
 		{
 			std::cout << "THIS = " << this->data.first << " " << (color ? "black" : "red");
 			if (this->parent == NULL)
@@ -147,7 +135,20 @@ namespace ft
 			return result->parent;
 		}
 
-		pointer		get_most_left()
+		pointer		decrement()
+		{
+			pointer	result = this;
+
+			if (result->left != NULL)
+				return result->left->get_most_right();
+			while (result->is_left())
+				result = result->parent;
+			if (result->is_sentinel())
+				return result;
+			return result->parent;
+		}
+
+		pointer		get_most_left() 
 		{
 			pointer	result = this;
 
@@ -156,7 +157,8 @@ namespace ft
 			return (result);
 		}
 
-		pointer		get_most_right()
+
+		pointer		get_most_right() 
 		{
 			pointer result = this;
 
@@ -166,7 +168,7 @@ namespace ft
 		}
 
 
-		pointer		get_sister()
+		pointer		get_sister() const
 		{
 			if (this->parent == NULL)
 				return (NULL);
@@ -177,7 +179,7 @@ namespace ft
 		}
 
 
-		pointer		get_aunt()
+		pointer		get_aunt() const
 		{
 
 			if (this->parent == NULL)
@@ -186,11 +188,39 @@ namespace ft
 		}
 
 
-		pointer	get_grand_parent()
+		pointer	get_grand_parent() const
 		{
 			if (this->parent != NULL)
 				return (this->parent->parent);
 			return (NULL);
+		}
+
+		value_pointer	get_value_pointer()
+		{
+			return &data;
+		}
+
+		value_reference		operator*()
+		{
+			return data;
+		}
+
+		value_pointer		operator->()
+		{
+			return & data;
+		}
+
+		reference		operator++()
+		{
+			reference tmp = *this;
+			this->increment();
+			return *tmp;
+		}
+
+		reference		operator++(int)
+		{
+			this->increment();
+			return *this;
 		}
 
 	};

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/31 14:09:18 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:17:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,24 @@ void	vector_test_vector(void)
 	PRINT("test reserve() : for vector created with 5 capacity and no value :");
 
 
-	PRINT("try reserve(-1)");
-	try
-	{
-		std_v.reserve(-1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	// PRINT("try reserve(-1)");
+	// try
+	// {
+	// 	std_v.reserve(-1);
+	// }
+	// catch(const std::exception& e)
+	// {
+	// 	std::cerr << e.what() << std::endl;
+	// }
 
-	try
-	{
-		ft_v.reserve(-1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	// try
+	// {
+	// 	ft_v.reserve(-1);
+	// }
+	// catch(const std::exception& e)
+	// {
+	// 	std::cerr << e.what() << std::endl;
+	// }
 
 	PRINT("reserve(666)");
 	std_v.reserve(666);
@@ -108,29 +108,29 @@ void	vector_test_vector(void)
 	print_all_value(std_v, ft_v);
 
 
-// 	//PRINT(std_v.capacity());
-// 	std_v.resize(100, 42);
-// //	PRINT(std_v.capacity());
-// //	std_v.resize(7, 42);
-// 	PRINT(std_v.capacity());
-// 	std_v.reserve(101);
-// 	PRINT(std_v.capacity());
+	PRINT(std_v.capacity());
+	std_v.resize(100, 42);
+	PRINT(std_v.capacity());
+	std_v.resize(7, 42);
+	PRINT(std_v.capacity());
+	std_v.reserve(101);
+	PRINT(std_v.capacity());
 
-	//print_all_value(std_v, ft_v);
-//	print_all_functions(std_v, ft_v);
+	print_all_value(std_v, ft_v);
+	print_all_functions(std_v, ft_v);
 
-//	PRINT(std_v.capacity());
-//	std_v.resize(5, 3);
+	PRINT(std_v.capacity());
+	std_v.resize(5, 3);
 
 
-	// ft::vector<int> foo (3,0);
-	// ft::vector<int> bar (5,0);
+	M_NAMESPACE::vector<int> foo (3,0);
+	M_NAMESPACE::vector<int> bar (5,0);
 
-	// bar = foo;
-	// foo = ft::vector<int>();
+	bar = foo;
+	foo = M_NAMESPACE::vector<int>();
 
-	// std::cout << "Size of foo: " << int(foo.size()) << '\n';
-	// std::cout << "Size of bar: " << int(bar.size()) << '\n';
+	std::cout << "Size of foo: " << int(foo.size()) << '\n';
+	std::cout << "Size of bar: " << int(bar.size()) << '\n';
 	PRINT(SEP_FUNCTIONS);
 
 }

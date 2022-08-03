@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_insert.cpp                                    :+:      :+:    :+:   */
+/*   vector_test_insert.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 22:42:31 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 17:33:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:16:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,6 @@ void	vector_test_insert(void)
 
   M_NAMESPACE::vector<int>    v;
 
-  // v.insert(v.begin(), -421);
-  // v.insert(v.begin(), -422);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-  // v.insert(v.begin(), -423);
-
-  // print_all_functions(v);
-  // print_all_value(v);
-
-  
   int   tab[] = {100, 200, 300, 400, 500, 600, 700, 800, 900};
 
   PRINT("insert (begin, 3, 5) on empty vector");

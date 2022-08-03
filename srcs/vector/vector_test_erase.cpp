@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:42:33 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 17:41:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:41:35 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ void	vector_test_erase(void)
 		v[i] = i * 11;
 
 	print_vector(v);
-
-	// PRINT("erase( end(), begin()");
-	// v.erase(v.end(), v.begin());
-	// print_vector(v);
-
 
 	PRINT("erase( end() - 1");
 	v.erase(v.end() -1);
@@ -48,48 +43,24 @@ void	vector_test_erase(void)
 	v.erase(v.begin(), v.begin() + 2);
 	print_vector(v);
 
-// 	PRINT("TEST VECTOR.ERASE");
-// 	std::vector<int>	std_insert(10, 10);
-// 	ft::vector<int>		ft_insert(10, 10); 
+	PRINT("TEST VECTOR.ERASE");
+	M_NAMESPACE::vector<int>	vector2(10, 10);
 
-// 	//std_insert.push_back(77);
-// 	// std_insert.push_back(77);
+	vector2.push_back(77);
 
-// 	std::vector<int>::iterator 	std_it_erase = std_insert.erase(std_insert.end() - 5, std_insert.end());
-// 	ft::vector<int>::iterator 	ft_it_erase = ft_insert.erase(ft_insert.end() - 5, ft_insert.end());
+	M_NAMESPACE::vector<int>::iterator 	it = vector2.erase(vector2.end() - 5, vector2.end());
 
-// 	std_insert.back() = 22;
-// 	ft_insert.back() = 22;
+	vector2.back() = 22;
 
-// 	std_it_erase = std_insert.erase(std_insert.end() - 1);
-// 	ft_it_erase = ft_insert.erase(ft_insert.end() - 1);	
+	it = vector2.erase(vector2.end() - 1);
 
+	std::cout << "Erase medium data" << std::endl << *it << std::endl;
 
-// 	std::cout << "Erase medium data" << std::endl << *std_it_erase << std::endl;
-// 	std::cout << *ft_it_erase << std::endl;
+	vector2.insert(vector2.end(), 5);
+	vector2.insert(vector2.end(), 5);
 
-
-// //  std_insert.insert(std_insert.end(), 5);
-// //  std_insert.insert(std_insert.end(), 5);
-
-
-// //std_insert.clear();
-// //std_insert.insert(std_insert.end() - 2, 44);
-
-// 	std_insert.front() = 55;
-// 	ft_insert.front() = 55;
-
-// 	std_insert.back() = 22;
-// 	ft_insert.back() = 22;
-
-// 	std_insert.pop_back();
-// 	ft_insert.pop_back();
-
-// 	std_insert.clear();
-// 	ft_insert.clear();
-
-// 	 print_all_functions(std_insert, ft_insert);
-// 	print_all_value(std_insert, ft_insert);
+	vector2.clear();
+	print_vector(vector2);
 
 	PRINT(SEP_FUNCTIONS);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator_traits.hpp                                :+:      :+:    :+:   */
+/*   iterators_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/30 17:27:36 by lvirgini         ###   ########.fr       */
+/*   Created: 2022/05/03 12:41:43 by lvirgini          #+#    #+#             */
+/*   Updated: 2022/05/03 12:41:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ITERATOR_TRAITS_HPP
 
 # include <iterator>
+
 namespace ft {
 
 /*
@@ -35,15 +36,14 @@ struct iterator
 ** Iterator_traits : nested typedef of iterator
 ** usefull for correct semantics for pointer and const_pointer
 */
-
-template <typename _Iterator>
-struct iterator_traits
+template <typename Iterator>
+struct iterators_traits
 {
-	typedef typename _Iterator::iterator_category iterator_category;
-	typedef typename _Iterator::value_type        value_type;
-	typedef typename _Iterator::difference_type   difference_type;
-	typedef typename _Iterator::pointer           pointer;
-	typedef typename _Iterator::reference         reference;
+	typedef typename Iterator::iterator_category iterator_category;
+	typedef typename Iterator::value_type        value_type;
+	typedef typename Iterator::difference_type   difference_type;
+	typedef typename Iterator::pointer           pointer;
+	typedef typename Iterator::reference         reference;
 };
 
 /*
@@ -51,11 +51,11 @@ struct iterator_traits
 */
 
 template <typename T>
-struct	iterator_traits<T*>
+struct	iterators_traits<T*>
 {
 	typedef std::random_access_iterator_tag	iterator_category;
 	typedef T								value_type;
-	typedef ptrdiff_t						difference_type;
+	typedef std::ptrdiff_t						difference_type;
 	typedef T*								pointer;
 	typedef T&								reference;
 };
@@ -65,11 +65,11 @@ struct	iterator_traits<T*>
 */
 
 template <typename T>
-struct	iterator_traits<const T*>
+struct	iterators_traits<const T*>
 {
 	typedef std::random_access_iterator_tag	iterator_category;
 	typedef T							  	value_type;
-	typedef ptrdiff_t						difference_type;
+	typedef std::ptrdiff_t						difference_type;
 	typedef const T*						pointer;
 	typedef const T&						reference;
 };
