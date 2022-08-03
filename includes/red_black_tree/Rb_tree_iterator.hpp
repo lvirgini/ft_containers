@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:55:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:15:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:42:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDBLACKTREE_ITERATOR_HPP
 # define REDBLACKTREE_ITERATOR_HPP
 
-# include "iterator_traits.hpp"
+# include "iterators_traits.hpp"
 
 namespace ft 
 {

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:17:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:11:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:42:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ namespace ft {
 template < typename Iterator>
 class reverse_iterator
 	: public ft::iterator < 
-		typename ft::iterator_traits<Iterator>::iterator_category,
-		typename ft::iterator_traits<Iterator>::value_type,
-		typename ft::iterator_traits<Iterator>::difference_type,
-		typename ft::iterator_traits<Iterator>::pointer,
-		typename ft::iterator_traits<Iterator>::reference >
+		typename ft::iterators_traits<Iterator>::iterator_category,
+		typename ft::iterators_traits<Iterator>::value_type,
+		typename ft::iterators_traits<Iterator>::difference_type,
+		typename ft::iterators_traits<Iterator>::pointer,
+		typename ft::iterators_traits<Iterator>::reference >
 {
 
 	private:
-		typedef ft::iterator_traits<Iterator>				_traits_type;
+		typedef ft::iterators_traits<Iterator>				_traits_type;
 		Iterator	_current;
 
 	public:

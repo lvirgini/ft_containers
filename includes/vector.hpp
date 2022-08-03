@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:52:37 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 18:23:33 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:46:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ class vector
 
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const Allocator & alloc = Allocator(), 
-			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
 		: _size(0), _capacity(0), _first(pointer()), _allocator(alloc)
 		{
 			this->insert(this->begin(), first, last);
@@ -165,11 +165,8 @@ class vector
 
 		template <class InputIterator>
 		void 			assign(InputIterator first, InputIterator last, 
-			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
 		{
-			// size_type size = std::distance(first, last);
-			// if (size > _capacity && size > this->max_size())
-			// 	throw std::length_error("ft::vector assign : n");
 			_check_new_size(std::distance(first, last));
 			this->clear();
 			this->insert(this->begin(), first, last);
@@ -182,8 +179,6 @@ class vector
 
 		void 			assign(size_type n, const value_type & val)
 		{
-			// if (n > _capacity && n > this->max_size() )
-			// 	throw std::length_error(msg);
 			_check_new_size(n);
 			this->clear();
 			this->insert(this->begin(), n, val);
@@ -487,7 +482,7 @@ class vector
 
 		template<class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last, 
-			typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
 		{
 			difference_type pos_index = std::distance(this->begin(), position);
 			difference_type size_insert = std::distance(first, last);
@@ -604,7 +599,7 @@ class vector
 			}
 		}
 
-
+	
 		bool	_check_new_size(size_type new_size) const
 		{
 			if (new_size > this->max_size())

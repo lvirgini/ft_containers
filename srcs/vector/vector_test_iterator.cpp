@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 11:13:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/01/31 14:17:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:16:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	vector_test_iterator(void)
 
 	PRINT("\n * testing operator > >= < <= == != -");
 
-	// NOT EXISTING 
-	//	std::cout << "v.begin() + v.end() : " << ( v.begin() + v.end() ) << std::endl;
 	std::cout << "v.begin() - v.end() : " << ( v.begin() - v.end() ) << std::endl;
 	std::cout << "v.begin() > v.end() : " << ( v.begin() > v.end() ) << std::endl;
 	std::cout << "v.begin() >= v.end() : " << ( v.begin() >= v.end() ) << std::endl;
@@ -91,10 +89,6 @@ void	vector_test_iterator(void)
 	cit = cit + 4;
 	std::cout << "it = it + 4 : " << *it << SEP << *cit << std::endl;
 
-	// NOT EXISTING
-	// it =  1 - it;
-	// cit =  1 - cit;
-	// std::cout << "it = 1 - it : " << *it << SEP << *cit << std::endl;
 
 	it = it - 4;
 	cit = cit - 4;
@@ -113,9 +107,6 @@ void	vector_test_iterator(void)
 	*(it - 1) = -42;
 	std::cout << "*(it - 1) = 42 : " << *(it - 1) << SEP << *(cit - 1) << std::endl;
 
-
-	// NO VIABLE OVERLOAD 
-	// it = cit;
 
 	it += 666;
 	cit = it;
@@ -155,8 +146,6 @@ void	vector_test_reverse_iterator(void)
 
 	PRINT("\n * testing operator > >= < <= == != -");
 
-	// NOT EXISTING 
-	//	std::cout << "v.rbegin() + v.rend() : " << ( v.rbegin() + v.rend() ) << std::endl;
 	std::cout << "v.rbegin() - v.rend() : " << ( v.rbegin() - v.rend() ) << std::endl;
 	std::cout << "v.rbegin() > v.rend() : " << ( v.rbegin() > v.rend() ) << std::endl;
 	std::cout << "v.rbegin() >= v.rend() : " << ( v.rbegin() >= v.rend() ) << std::endl;
@@ -208,10 +197,6 @@ void	vector_test_reverse_iterator(void)
 	crit = crit + 4;
 	std::cout << "rit = rit + 4 : " << *rit << SEP << *crit << std::endl;
 
-	// NOT EXISTING
-	// rit =  1 - rit;
-	// crit =  1 - crit;
-	// std::cout << "rit = 1 - it : " << *rit << SEP << *crit << std::endl;
 
 	rit = rit - 4;
 	crit = crit - 4;

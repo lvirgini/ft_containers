@@ -195,7 +195,7 @@ namespace ft
 			return (NULL);
 		}
 
-		value_pointer	get_value_pointer() ////
+		value_pointer	get_value_pointer()
 		{
 			return &data;
 		}

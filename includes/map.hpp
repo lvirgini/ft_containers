@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/05/02 12:05:57 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:46:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ class map
 
 		template <typename InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
-		typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL )
 		: _alloc(alloc), _value_comp(value_compare(comp)), _key_comp(comp), _tree(first, last, value_compare(comp), _pair_alloc_type(alloc))
 		{}
 
@@ -278,7 +278,7 @@ class map
 	*/
 
 		template <typename InputIterator>
-		void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
+		void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL )
 		{
 				_tree.insert(first, last);
 		}

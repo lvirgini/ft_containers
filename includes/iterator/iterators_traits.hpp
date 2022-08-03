@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator_traits.hpp                                :+:      :+:    :+:   */
+/*   iterators_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 10:34:47 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/22 14:55:52 by lvirgini         ###   ########.fr       */
+/*   Created: 2022/05/03 12:41:43 by lvirgini          #+#    #+#             */
+/*   Updated: 2022/05/03 12:41:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ITERATOR_TRAITS_HPP
 
 # include <iterator>
+
 namespace ft {
 
 /*
@@ -36,7 +37,7 @@ struct iterator
 ** usefull for correct semantics for pointer and const_pointer
 */
 template <typename Iterator>
-struct iterator_traits
+struct iterators_traits
 {
 	typedef typename Iterator::iterator_category iterator_category;
 	typedef typename Iterator::value_type        value_type;
@@ -50,7 +51,7 @@ struct iterator_traits
 */
 
 template <typename T>
-struct	iterator_traits<T*>
+struct	iterators_traits<T*>
 {
 	typedef std::random_access_iterator_tag	iterator_category;
 	typedef T								value_type;
@@ -64,7 +65,7 @@ struct	iterator_traits<T*>
 */
 
 template <typename T>
-struct	iterator_traits<const T*>
+struct	iterators_traits<const T*>
 {
 	typedef std::random_access_iterator_tag	iterator_category;
 	typedef T							  	value_type;

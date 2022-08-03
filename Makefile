@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 17:38:13 by lvirgini          #+#    #+#              #
-#    Updated: 2022/04/23 20:55:55 by lvirgini         ###   ########.fr        #
+#    Updated: 2022/08/03 08:37:59 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,9 @@ NAMESTD = std_containers
 # Includes
 # ----------------- #
 INC_DIR	=	includes \
-			includes/map \
-			includes/stack \
-			includes/vector \
 			includes/others \
 			includes/iterator \
 			includes/red_black_tree \
-			includes/set
 
 INCLUDE	=	$(INC_MAP) $(INC_VECTOR) $(INC_STACK) $(INC_UTILS)\
 				ft_stl.hpp \
@@ -41,7 +37,7 @@ INC_MAP 	=	map.hpp	\
 
 INC_UTILS 	=	usefull.hpp \
 				type_traits.hpp \
-				iterator_traits.hpp \
+				iterators_traits.hpp \
 				normal_iterator.hpp \
 				reverse_iterator.hpp \
 				RedBlacktree.hpp \
@@ -102,7 +98,7 @@ OBJ_STD =	$(addprefix $(OBJ_DIRSTD),$(SRC:%.cpp=%.o))
 
 CC 		=	clang++
 
-CFLAG 	= 	-Wall -Wextra -std=c++98 -pedantic -g
+CFLAG 	= 	-Wall -Wextra -Werror -std=c++98
 STDFLAG = -D M_NAMESPACE=std
 IFLAG 	=	$(foreach dir, $(INC_DIR), -I $(dir)/ )
 
@@ -134,6 +130,7 @@ $(NAMESTD):	$(OBJ_STD)
 			@$(CC) $(CFLAG) $(STDFLAG) $(IFLAG) $(OBJ_STD) -o $@ 
 			@echo "\033[32mC\n*     Compilation $(NAMESTD)     *\t   \033[32;1m--> Complete\033[0m"
 
+bonus:		all
 
 # ----------------- #
 # 		CLEAN		#
@@ -143,7 +140,7 @@ clean:
 			rm -rf $(OBJ_DIR) $(OBJ_DIRSTD)
 
 fclean: clean
-			rm -f $(NAME) $(NAMESTD)
+			rm -f $(NAME) $(NAMESTD) *.log
 
 re: 	fclean all
 

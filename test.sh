@@ -1,17 +1,18 @@
 #! bin/bash
 
 # remove old results
-rm std.log ft.log
+rm std.log ft.log ft_err.log std_err.log
 
 # compile
 make
 
 # execute and save results
+echo " -------------------- * "
 echo "time for std:"
-time ./std_containers > std.log 2> std_err.log
+time ./std_containers 42 > std.log 2> std_err.log
 echo " -------------------- * "
 echo "time for ft:"
-time ./ft_containers > ft.log 2> ft_err.log
+time ./ft_containers 42 > ft.log 2> ft_err.log
 echo " -------------------- * "
 
 

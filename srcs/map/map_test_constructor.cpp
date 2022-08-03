@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:38:55 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/15 15:38:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:11:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	map_test_creation()
 	named_pair									result;
 
 	
-	// insert 1 to 10 pair of "coucou" in map1
-	// insert (1 to 10) * 2 pair of "coucou" in map2
 	named_pair	pair_to_insert;
 
 	for (int i = 0; i < 10; i++)

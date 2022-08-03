@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 19:23:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 13:11:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:45:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,47 +95,47 @@ namespace ft
 	{};
 
 	template <typename T>
-	struct is_integer : ft::false_type
+	struct is_integral : ft::false_type
 	{};
 
 	template <>
-	struct is_integer<bool> : true_type
+	struct is_integral<bool> : true_type
 	{};
 
 	template <>
-	struct is_integer<char> : true_type
+	struct is_integral<char> : true_type
 	{};
 
 	template <>
-	struct is_integer<signed char> : true_type
+	struct is_integral<signed char> : true_type
 	{};
 
 	template <>
-	struct is_integer<unsigned char> : true_type
+	struct is_integral<unsigned char> : true_type
 	{};
 
 	template <>
-	struct is_integer<short> : true_type
+	struct is_integral<short> : true_type
 	{};
 
 	template <>
-	struct is_integer<unsigned short> : true_type
+	struct is_integral<unsigned short> : true_type
 	{};
 
 	template <>
-	struct is_integer<int> : true_type
+	struct is_integral<int> : true_type
 	{};
 
 	template <>
-	struct is_integer<unsigned int> : true_type
+	struct is_integral<unsigned int> : true_type
 	{};
 
 	template <>
-	struct is_integer<long> : true_type
+	struct is_integral<long> : true_type
 	{};
 
 	template <>
-	struct is_integer<unsigned long> : true_type
+	struct is_integral<unsigned long> : true_type
 	{};
 	
 

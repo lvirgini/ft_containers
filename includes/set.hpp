@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:02:34 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/05/03 12:01:57 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:46:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ class set
 		typedef typename m_tree_type::const_reverse_iterator	reverse_iterator;
 		typedef typename m_tree_type::const_reverse_iterator	const_reverse_iterator;
 
-		typedef typename iterator_traits<iterator>::difference_type		difference_type;
+		typedef typename iterators_traits<iterator>::difference_type		difference_type;
 	/* -------------------------------------------------------------------------- */
 
 	
@@ -87,7 +87,7 @@ class set
 
 		template <typename InputIterator>
 		set(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
-		typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL )
 		: m_alloc(alloc), m_comp(comp), m_tree(first, last, comp, alloc)
 		{}
 
@@ -240,7 +240,7 @@ class set
 	*/
 
 		template <typename InputIterator>
-		void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL )
+		void	insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL )
 		{
 				m_tree.insert(first, last);
 		}

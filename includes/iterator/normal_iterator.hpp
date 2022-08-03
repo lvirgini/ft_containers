@@ -6,14 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:08:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/24 12:11:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:42:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_ITERATOR_HPP
 # define VECTOR_ITERATOR_HPP
 
-# include "iterator_traits.hpp"
+# include "iterators_traits.hpp"
 # include "type_traits.hpp"
 # include <iostream>
 
@@ -25,7 +25,7 @@ template <typename Iterator, typename Container>
 class	normal_iterator
 {
 	private:
-		typedef ft::iterator_traits<Iterator>			__trait_type;
+		typedef ft::iterators_traits<Iterator>			__trait_type;
 		Iterator										_current;
 	
 	

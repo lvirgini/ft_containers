@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:55:57 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/04/23 17:23:36 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:17:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,24 @@ void	vector_test_vector(void)
 	PRINT("test reserve() : for vector created with 5 capacity and no value :");
 
 
-	PRINT("try reserve(-1)");
-	try
-	{
-		std_v.reserve(-1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	// PRINT("try reserve(-1)");
+	// try
+	// {
+	// 	std_v.reserve(-1);
+	// }
+	// catch(const std::exception& e)
+	// {
+	// 	std::cerr << e.what() << std::endl;
+	// }
 
-	try
-	{
-		ft_v.reserve(-1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	// try
+	// {
+	// 	ft_v.reserve(-1);
+	// }
+	// catch(const std::exception& e)
+	// {
+	// 	std::cerr << e.what() << std::endl;
+	// }
 
 	PRINT("reserve(666)");
 	std_v.reserve(666);
