@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 10:13:38 by lvirgini          #+#    #+#             */
-/*   Updated: 2022/08/03 09:00:31 by lvirgini         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:46:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include "TreeNode.hpp"
 # include "Rb_tree_iterator.hpp"
+# include "reverse_iterator.hpp"
 # include "pair.hpp"
 # include "usefull.hpp"
 
@@ -115,6 +116,7 @@ class Rb_tree
 
 		typedef ft::Rb_tree<Value, Compare, Alloc>		self;
 
+
 	private:
 
 		node_pointer			_root;
@@ -122,6 +124,7 @@ class Rb_tree
 		allocator_type			_allocator;
 		node_allocator_type		_node_allocator;
 		node_pointer			_sentinel;
+
 		Compare					_comp;
 
 	/* -------------------------------------------------------------------------- */
@@ -251,6 +254,7 @@ class Rb_tree
 		{
 			return const_reverse_iterator(begin());
 		}
+
 
 /* -------------------------------------------------------------------------- */
 /*                                Capacity                                    */
@@ -416,11 +420,6 @@ class Rb_tree
 			return iterator(_find(_root, value));
 		}
 
-		void	erase(iterator position)
-		{
-			if (position != end())
-				_delete(position._node);
-		}
 
 private:
 		node_pointer _find(node_pointer current, const value_type & key) const
@@ -731,7 +730,6 @@ void	_delete(node_pointer to_dell)
 	node_pointer successor = to_dell;
 	node_pointer parent = to_dell->parent;
 
-	debug_print_btree_structure();
 	bool original_color = to_dell->color;
 	bool child_is_left = to_dell->is_left();
 	
@@ -924,25 +922,6 @@ void	_delete_fixup(node_pointer current, node_pointer parent, bool is_left)
 				_deallocate_node(current);
 				current = NULL;
 			}
-		}
-		
-	/*
-	** destroy and deallocate node
-	*/
-
-		void	_destroy_node(node_pointer current)
-		{
-			_allocator.destroy(current->get_value_pointer());
-			_deallocate_node(current);
-		}
-
-	/*
-	** deallocate node without destroy value (usefull for sentinel)
-	*/
-		void	_deallocate_node(node_pointer current)
-		{
-			_node_allocator.destroy(current);
-			_node_allocator.deallocate(current, 1);
 		}
 
 	/*
